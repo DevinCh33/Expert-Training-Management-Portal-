@@ -4,7 +4,6 @@
 // Write your JavaScript code.
 var priceRange = document.getElementById("price-range");
 var priceDisplay = document.getElementById("price-display");
-var 
 priceRange.addEventListener("input", function () {
     priceDisplay.innerHTML = "RM" + priceRange.value;
 });
