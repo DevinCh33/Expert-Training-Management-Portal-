@@ -1,0 +1,141 @@
+﻿@page
+@model ETMP.Pages.BrowseTrainingModel
+@{
+    ViewData["Title"] = "Browse for Trainings";
+}
+<script src="/js/site.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    #filter-btn,
+    #sort-btn,
+    #submit-btn {
+        flex: 1;
+        margin: 0 20px;
+        padding: 10px;
+        border-radius: 30px;
+        background-color: white;
+        color: black;
+        font-size: 29px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    #sort-btn {
+        border-radius: 0px;
+    }
+
+    #search-bar {
+        flex: 2;
+        padding: 10px;
+        padding-right: 400px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        font-size: 29px;
+        outline: none;
+        white-space: nowrap;
+    }
+
+    #filter-btn:hover,
+    #sort-btn:hover,
+    #submit-btn:hover {
+        background-color: grey;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<div class="container">
+    <form>
+        <button id="filter-btn">Filter</button>
+        <input type="text" id="search-bar" placeholder="Search for Training">
+        <button type="submit" id="submit-btn">Submit</button>
+        <button id="sort-btn">Sort By</button>
+        <div class="hidden">
+            <label for="sort-by">Sort by:</label>
+            <select id="sort-by">
+                <option value="date">Date</option>
+                <option value="price">Price</option>
+                <option value="duration">Duration</option>
+            </select>
+            <label for="sort-order">Sort order:</label>
+            <input type="radio" id="sort-asc" name="sort-order" value="asc" checked>
+            <label for="sort-asc">Ascending</label>
+            <input type="radio" id="sort-desc" name="sort-order" value="desc">
+            <label for="sort-desc">Descending</label>
+        </div>
+    </form>
+</div>
+<div class="hidden">
+    <div class="filterOptionsContainer">
+        <form>
+            <div>
+                <label>Category:</label>
+                <div>
+                    <label>
+                        <input type="checkbox" name="category" value="Business">
+                        Business
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="IT">
+                        IT
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="Photography">
+                        Photography
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="Self-help">
+                        Self-help
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label for="price-range">Price Range:</label>
+                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1"><br />
+                <span id="price-display">RM500</span>
+            </div>
+            <div>
+                <label>Discount</label>
+                <span>
+                    <input type="checkbox" name="discount" value="yes">
+                </span>
+            </div>
+            <div>
+                <label>Date Range:</label>
+                <div>
+                    <label>From:</label>
+                    <input type="date" name="start_date"></br>
+                    <label>To:</label>
+                    <input type="date" name="end_date">
+                </div>
+            </div>
+            <div>
+                <button type="submit">Apply Filters</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
