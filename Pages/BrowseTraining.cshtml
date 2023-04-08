@@ -39,7 +39,7 @@
     }
 
     #sort-btn {
-        border-radius: 0px;
+        border-radius: 0px;   
     }
 
     #search-bar {
@@ -59,7 +59,7 @@
         background-color: grey;
     }
 
-    .hidden {
+    .hidden, .filterOptionsContainer {
         display: none;
     }
 </style>
@@ -70,71 +70,61 @@
         <input type="text" id="search-bar" placeholder="Search for Training">
         <button type="submit" id="submit-btn">Submit</button>
         <button id="sort-btn">Sort By</button>
-        <div class="hidden">
-            <label for="sort-by">Sort by:</label>
-            <select id="sort-by">
-                <option value="date">Date</option>
-                <option value="price">Price</option>
-                <option value="duration">Duration</option>
-            </select>
-            <label for="sort-order">Sort order:</label>
-            <input type="radio" id="sort-asc" name="sort-order" value="asc" checked>
-            <label for="sort-asc">Ascending</label>
-            <input type="radio" id="sort-desc" name="sort-order" value="desc">
-            <label for="sort-desc">Descending</label>
+    </form>
+</div>
+
+
+
+
+<div class="filterOptionsContainer">
+    <form>
+        <div>
+            <label>Category:</label>
+            <div>
+                <label>
+                    <input type="checkbox" name="category" value="Business">
+                    Business
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="IT">
+                    IT
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="Photography">
+                    Photography
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="Self-help">
+                    Self-help
+                </label>
+            </div>
+        </div>
+        <div>
+            <label for="price-range">Price Range:</label>
+            <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1"><br />
+            <span id="price-display">RM500</span>
+        </div>
+        <div>
+            <label>Discount</label>
+            <span>
+                <input type="checkbox" name="discount" value="yes">
+            </span>
+        </div>
+        <div>
+            <label>Date Range:</label>
+            <div>
+                <label>From:</label>
+                <input type="date" name="start_date"></br>
+                <label>To:</label>
+                <input type="date" name="end_date">
+            </div>
+        </div>
+        <div>
+            <button type="submit">Apply Filters</button>
         </div>
     </form>
 </div>
-<div class="hidden">
-    <div class="filterOptionsContainer">
-        <form>
-            <div>
-                <label>Category:</label>
-                <div>
-                    <label>
-                        <input type="checkbox" name="category" value="Business">
-                        Business
-                    </label>
-                    <label>
-                        <input type="checkbox" name="category" value="IT">
-                        IT
-                    </label>
-                    <label>
-                        <input type="checkbox" name="category" value="Photography">
-                        Photography
-                    </label>
-                    <label>
-                        <input type="checkbox" name="category" value="Self-help">
-                        Self-help
-                    </label>
-                </div>
-            </div>
-            <div>
-                <label for="price-range">Price Range:</label>
-                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1"><br />
-                <span id="price-display">RM500</span>
-            </div>
-            <div>
-                <label>Discount</label>
-                <span>
-                    <input type="checkbox" name="discount" value="yes">
-                </span>
-            </div>
-            <div>
-                <label>Date Range:</label>
-                <div>
-                    <label>From:</label>
-                    <input type="date" name="start_date"></br>
-                    <label>To:</label>
-                    <input type="date" name="end_date">
-                </div>
-            </div>
-            <div>
-                <button type="submit">Apply Filters</button>
-            </div>
-        </form>
-    </div>
-</div>
+
 
 
 

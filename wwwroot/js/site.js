@@ -7,3 +7,14 @@ var priceDisplay = document.getElementById("price-display");
 priceRange.addEventListener("input", function () {
     priceDisplay.innerHTML = "RM" + priceRange.value;
 });
+
+var filterOptionsContainer = document.getElementsByClassName("filterOptionsContainer");
+var filterBtn = document.getElementById("filter-btn");
+
+filterBtn.addEventListener("click", function () {
+    if (filterOptionsContainer.style.display === "none") {
+        filterOptionsContainer.style.display = "block";
+    } else {
+        filterOptionsContainer.style.display = "none";
+    }
+});
