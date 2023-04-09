@@ -18,3 +18,4 @@ filterBtn.addEventListener("click", function () {
         filterOptionsContainer.style.display = "none";
     }
 });
+

@@ -62,6 +62,105 @@
     .hidden, .filterOptionsContainer {
         display: none;
     }
+
+    /*drop down*/
+    		.dropContainer {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			z-index: 1;
+			top: 60px;
+			background-color: white;
+			border-radius: 30px;
+			padding: 10px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			left: 0px; /* Adjusted to move the dropdown content to the left */
+		}
+
+		.dropdown:hover .dropdown-content,
+		.dropdown:focus-within .dropdown-content {
+			display: block;
+		}
+
+		.dropdown-content a {
+			display: block;
+			padding: 10px 15px;
+			text-decoration: none;
+			color: black;
+			font-size: 24px;
+			cursor: pointer;
+			white-space: nowrap;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #E5E5E5;
+			color: black;
+			border-radius:30px;
+		}
+
+		#sort-btn {
+			flex: 1;
+			margin: 0 20px;
+			padding: 10px 20px;
+			border-radius: 30px;
+			background-color: #3498DB;
+			color: white;
+			font-size: 28px;
+			cursor: pointer;
+			white-space: nowrap;
+			border: none;
+		}
+
+		#sort-btn:hover,
+		#sort-btn:focus {
+			background-color: #2980B9;
+		}
+
+		.icon {
+			display: inline-block;
+			height: 28px;
+			width: 28px;
+			margin-right: 10px;
+			vertical-align: middle;
+		}
+
+		.icon-duration {
+			background-image: url('https://img.icons8.com/material-rounded/24/000000/clock--v1.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 20px 20px;
+		}
+
+		.icon-date {
+			background-image: url('https://img.icons8.com/material-rounded/24/000000/calendar--v1.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 20px 20px;
+		}
+
+		.icon-price {
+			background-image: url('https://img.icons8.com/material-rounded/24/000000/money--v1.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 20px 20px;
+		}
+
+		.icon-name {
+			background-image: url('https://img.icons8.com/material-rounded/24/000000/user--v1.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 20px 20px;
+		}
 </style>
 
 <div class="container">
@@ -69,7 +168,28 @@
         <button id="filter-btn">Filter</button>
         <input type="text" id="search-bar" placeholder="Search for Training">
         <button type="submit" id="submit-btn">Submit</button>
-        <button id="sort-btn">Sort By</button>
+        <div class="dropContainer">
+            <div class="dropdown">
+                <button id="sort-btn">Sort By</button>
+                <div class="dropdown-content">
+                    <a href="#" class="sort-option" data-sort="duration">
+                        <span class="icon icon-duration"></span>
+                        Duration
+                    </a>
+                    <a href="#" class="sort-option" data-sort="date">
+                        <span class="icon icon-date"></span>
+                        Date
+                    </a>
+                    <a href="#" class="sort-option" data-sort="price">
+                        <span class="icon icon-price"></span>
+                        Price
+                    </a>
+                    <a href="#" class="sort-option" data-sort="name">
+                        <span class="icon icon-name"></span>
+                        Name
+                    </a>
+                </div>
+            </div>
     </form>
 </div>
 
