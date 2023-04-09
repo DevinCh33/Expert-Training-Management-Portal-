@@ -5,13 +5,32 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>Expert Training Management Portal</h1>
-<div class="row">
+<style>
+    .form-main-container {
+        width: 100%;
+        min-height: 100vh;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+</style>
+
+
+
+<div class="form-main-container">
     <div class="col-md-4">
-        <section>
+        <center><h3>Expert Training Management Portal</h3></center>
+        <hr />
+        <section class="mt-5">
             <form id="account" method="post">
-                <h2>Login</h2>
-                <hr />
+                <center><h6>Login</h6></center>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
@@ -29,23 +48,10 @@
                     </p>
                 </div>
                 <div>
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
                 <div class="mt-2">
                     <button type="button" class="w-100 btn btn-lg btn-primary" asp-page="./ForgotPassword">Register</button>
-                </div>
-                <div>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
                 </div>
             </form>
         </section>
