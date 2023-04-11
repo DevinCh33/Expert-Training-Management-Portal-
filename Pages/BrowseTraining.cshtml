@@ -6,9 +6,21 @@
 <script src="/js/site.js"></script>
 
 <style>
-    #filter-container, #searchBarContainer, #submitContainer, #sortContainer{
+    #filter-container, #searchBarContainer, #submitContainer, #sortContainer,#sortAscDesContainer   {
         display:inline-block;
         margin:10px;
+    }
+
+
+    #applyFilterBtn {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .item-vertical {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     #filter-btn, #search-bar, #submit-btn, #sort-btn {
@@ -120,6 +132,27 @@
     #filter-btn:focus + .filterInterface {
         transform: translateX(300px);
     }
+    .filterOptions{
+        display:block;
+        font-size:30px;
+        border:solid;
+        margin:auto;
+        margin-bottom:10px;
+        margin-left:10px;
+        padding-left:20px;
+        padding-bottom:10px;
+        word-wrap: break-word; /* set the word-wrap property to break-word */;
+        overflow:hidden;
+        
+    }
+
+    .filterOptionsContainer{
+        font-size:40px;
+        height: 100%;
+        width: 100%;
+    }
+
+
 
     
 </style>
@@ -131,6 +164,14 @@
         </div>
         <div id="searchBarContainer">
             <input type="text" id="search-bar" placeholder="Search for Training">
+            <div id="sortAscDesContainer">
+                <label>
+                    <input type="radio" name="sortDirection" value="ascendant"> Asc
+                </label>
+                <label>
+                    <input type="radio" name="sortDirection" value="descendant"> Desc
+                </label>
+            </div>
         </div>
         <div id="submitContainer">
             <button type="submit" id="submit-btn">Submit</button>
@@ -160,10 +201,10 @@
 </div>
 
 <div class= "filterInterface">
-    <h1>Filter Interface</h1>
+    <h1>Filters</h1>
     <div class="filterOptionsContainer">
         <form>
-            <label>Category:</label>
+            <label>Categories:</label>
             <div class="filterOptions">
                 <label>
                     <input type="checkbox" name="category" value="Business">
@@ -184,14 +225,16 @@
             </div>
             <div class="filterOptions">
                 <label for="price-range">Price Range:</label>
-                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1"><br />
+                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1" />
+                <br />
                 <span id="price-display">RM500</span>
+                <br />
                 <label>Discount</label>
                 <span>
                     <input type="checkbox" name="discount" value="yes">
                 </span>
             </div>
-            <div>
+            <div class="filterOptions">
                 <label>Date Range:</label>
                 <div>
                     <label>From:</label>
@@ -200,9 +243,10 @@
                     <input type="date" name="end_date">
                 </div>
             </div>
-            <div>
-                <button type="submit">Apply Filters</button>
+            <div class="applyFilterBtnContainer">
+                <button id="applyFilterBtn" type="submit">Apply Filters</button>
             </div>
         </form>
     </div>
 </div>
+
