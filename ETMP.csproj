@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\NewFolder1\green_gradient_background.jpg" />
+    <Content Remove="wwwroot\NewFolder\green_gradient_background.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.15" />
@@ -21,7 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\NewFolder\" />
+    <None Include="wwwroot\images\green_gradient_background.jpg" />
+    <None Include="wwwroot\NewFolder1\green_gradient_background.jpg" />
+    <None Include="wwwroot\NewFolder\green_gradient_background.jpg" />
   </ItemGroup>
 
 </Project>

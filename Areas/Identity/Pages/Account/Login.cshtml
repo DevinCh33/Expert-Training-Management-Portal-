@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Log in";
+    ViewBag.Title = "Login";
+    Layout = "~/Pages/Shared/_LoginLayout.cshtml";
 }
 
 <style>
@@ -10,6 +12,8 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        background-color: #4158D0;
+        background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
     }
 
     .container-login{
@@ -37,6 +41,9 @@
         text-align: right;
     }
 </style>
+
+<body class="bg-container">
+</body>
 
 <div class="container-login">
     <div>
