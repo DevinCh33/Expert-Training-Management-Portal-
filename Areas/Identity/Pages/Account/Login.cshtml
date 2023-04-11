@@ -6,55 +6,70 @@
 }
 
 <style>
-    .form-main-container {
+    .bg-container{
         width: 100%;
-        min-height: 100vh;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        padding: 15px;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
+        height: 100%;
+        overflow: hidden;
     }
 
+    .container-login{
+        background-color: #FFFFFF;
+        position: relative;
+        margin: auto;
+        margin-top: 100px;
+        width: 350px;
+        height: 450px;
+        padding: 20px;
+        border-radius: 0.25em;
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .input-simplified{
+        border: 0;
+        outline: 0;
+        background: transparent;
+        border-bottom: 1px solid black;
+        width: 100%;
+    }
+
+    .forgot-pw{
+        text-align: right;
+    }
 </style>
 
-
-
-<div class="form-main-container">
-    <div class="col-md-4">
-        <center><h3>Expert Training Management Portal</h3></center>
-        <hr />
-        <section class="mt-5">
+<div class="container-login">
+    <div>
+        <div class="mb-5">
+            <h4>Expert Training Management Portal</h4>
+        </div>
+        <section>
             <form id="account" method="post">
-                <center><h6>Login</h6></center>
+                <center><h4>Login</h4></center>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="Input.Email" class="form-label"></label>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="input-simplified" autocomplete="username" aria-required="true" placeholder="Email" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="input-simplified" autocomplete="current-password" aria-required="true" placeholder="Password"/>   
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div>
-                    <p>
+                    <p class="forgot-pw">
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
-                <div class="mt-2">
+                <div class="mt-3">
                     <button type="button" class="w-100 btn btn-lg btn-primary" asp-page="./ForgotPassword">Register</button>
                 </div>
             </form>
+
         </section>
+
     </div>
 </div>
 

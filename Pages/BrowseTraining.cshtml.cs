@@ -19,7 +19,7 @@ namespace ETMP.Pages
         }
         public void OnGet()
         {
-            //Trainings = _context.Trainings.ToList();
+            Trainings = _context.Trainings.ToList();
         }
     }
 }
