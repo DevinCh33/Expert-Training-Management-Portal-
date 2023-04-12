@@ -45,7 +45,7 @@ var dots = document.querySelectorAll(".dot");
 
 var slideIndex = 1;
 showSlides(slideIndex);
-
+    
 // Next/previous controls
 arrows.forEach(arrow => {
     arrow.addEventListener("click", () => {
