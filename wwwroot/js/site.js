@@ -28,3 +28,17 @@ $(document).ready(function () {
         $(".filterInterface").toggleClass("visible");
     });
 });
+
+const dropdown = document.getElementById("training-options");
+const form-add = document.getElementById("add-training");
+
+// Add an event listener to the dropdown
+dropdown.addEventListener("change", function () {
+    // If the selected option is "option1", show the form
+    if (dropdown.value === "remove-training") {
+        form-add.style.display = "none";
+        alert("Hello, world!");
+    } else {
+        form-add.style.display = "block";
+    }
+});
