@@ -11,6 +11,11 @@
         margin:10px;
     }
 
+        #sortAscDesContainer{
+            margin-left:150px;
+            
+        }
+
 
     #applyFilterBtn {
         display: block;
@@ -152,9 +157,73 @@
         width: 100%;
     }
 
+    .slideshowContainer {
+        position: relative;
+        margin: 0 auto;
+        width: 800px;
+        height: 800px;
+        overflow: hidden;
+    }
 
+    .imageContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
 
-    
+        .imageContainer.active {
+            opacity: 1;
+        }
+        .imageContainer img {
+
+        }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background-color: #000;
+        color: #fff;
+        font-size: 30px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .prev {
+        left: 0;
+    }
+
+    .next {
+        right: 0;
+    }
+
+    .dotsContainer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #bbb;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+        .dot.active {
+            background-color: #717171;
+        }
 </style>
 
 <div class="buttonAndSearchBarContainer">
@@ -164,14 +233,6 @@
         </div>
         <div id="searchBarContainer">
             <input type="text" id="search-bar" placeholder="Search for Training">
-            <div id="sortAscDesContainer">
-                <label>
-                    <input type="radio" name="sortDirection" value="ascendant"> Asc
-                </label>
-                <label>
-                    <input type="radio" name="sortDirection" value="descendant"> Desc
-                </label>
-            </div>
         </div>
         <div id="submitContainer">
             <button type="submit" id="submit-btn">Submit</button>
@@ -197,8 +258,17 @@
                 </a>
             </div>
         </div>
+        <div id="sortAscDesContainer">
+            <label>
+                <input type="radio" name="sortDirection" value="ascendant"> Asc
+            </label>
+            <label>
+                <input type="radio" name="sortDirection" value="descendant"> Desc
+            </label>
+        </div>
     </form>
 </div>
+
 
 <div class= "filterInterface">
     <h1>Filters</h1>
@@ -249,4 +319,29 @@
         </form>
     </div>
 </div>
+
+<div class="slideshowContainer">
+    <div class="imageContainer active">
+        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    </div>
+    <div class="imageContainer">
+        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    </div>
+    <div class="imageContainer">
+        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    </div>
+    <div class="arrow prev">&#10094;</div>
+    <div class="arrow next">&#10095;</div>
+    <div class="dotsContainer">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+
+
+
+
+
 
