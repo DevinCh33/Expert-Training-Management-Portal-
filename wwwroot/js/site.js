@@ -4,6 +4,9 @@
 // Write your JavaScript code.
 var sortBtn = document.querySelector("#sort-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
+var priceRange = document.getElementById("price-range");
+var priceDisplay = document.getElementById("price-display");
+
 
 sortBtn.addEventListener("mouseenter", function () {
     dropdownContent.classList.add("active");
@@ -17,8 +20,7 @@ dropdownContent.addEventListener("mouseleave", function () {
     dropdownContent.classList.remove("active");
 });
 
-var priceRange = document.getElementById("price-range");
-var priceDisplay = document.getElementById("price-display");
+
 priceRange.addEventListener("input", function () {
     priceDisplay.innerHTML = "RM" + priceRange.value;
 });
@@ -29,16 +31,48 @@ $(document).ready(function () {
     });
 });
 
-const dropdown = document.getElementById("training-options");
-const form-add = document.getElementById("add-training");
-
-// Add an event listener to the dropdown
-dropdown.addEventListener("change", function () {
-    // If the selected option is "option1", show the form
-    if (dropdown.value === "remove-training") {
-        form-add.style.display = "none";
-        alert("Hello, world!");
-    } else {
-        form-add.style.display = "block";
-    }
+$(document).ready(function () {
+    $("#applyFilterBtn").click(function () {
+        $(".filterInterface").toggleClass("visible");
+    });
 });
+
+
+var slideshowContainer = document.querySelector(".slideshowContainer");
+var imageContainers = document.querySelectorAll(".imageContainer");
+var arrows = document.querySelectorAll(".arrow");
+var dots = document.querySelectorAll(".dot");
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+arrows.forEach(arrow => {
+    arrow.addEventListener("click", () => {
+        if (arrow.classList.contains("prev")) {
+            showSlides(slideIndex -= 1);
+        } else {
+            showSlides(slideIndex += 1);
+        }
+    });
+});
+
+// Thumbnail image controls
+dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        showSlides(slideIndex = index + 1);
+    });
+});
+
+function showSlides(n) {
+    if (n > imageContainers.length) {
+        slideIndex = 1;
+    }
+    if (n < 1) {
+        slideIndex = imageContainers.length;
+    }
+    imageContainers.forEach(container => container.classList.remove("active"));
+    dots.forEach(dot => dot.classList.remove("active"));
+    imageContainers[slideIndex - 1].classList.add("active");
+    dots[slideIndex - 1].classList.add("active");
+}
