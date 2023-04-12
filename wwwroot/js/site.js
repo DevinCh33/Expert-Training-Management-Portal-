@@ -30,3 +30,49 @@ $(document).ready(function () {
         $(".filterInterface").toggleClass("visible");
     });
 });
+
+$(document).ready(function () {
+    $("#applyFilterBtn").click(function () {
+        $(".filterInterface").toggleClass("visible");
+    });
+});
+
+
+var slideshowContainer = document.querySelector(".slideshowContainer");
+var imageContainers = document.querySelectorAll(".imageContainer");
+var arrows = document.querySelectorAll(".arrow");
+var dots = document.querySelectorAll(".dot");
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+arrows.forEach(arrow => {
+    arrow.addEventListener("click", () => {
+        if (arrow.classList.contains("prev")) {
+            showSlides(slideIndex -= 1);
+        } else {
+            showSlides(slideIndex += 1);
+        }
+    });
+});
+
+// Thumbnail image controls
+dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        showSlides(slideIndex = index + 1);
+    });
+});
+
+function showSlides(n) {
+    if (n > imageContainers.length) {
+        slideIndex = 1;
+    }
+    if (n < 1) {
+        slideIndex = imageContainers.length;
+    }
+    imageContainers.forEach(container => container.classList.remove("active"));
+    dots.forEach(dot => dot.classList.remove("active"));
+    imageContainers[slideIndex - 1].classList.add("active");
+    dots[slideIndex - 1].classList.add("active");
+}
