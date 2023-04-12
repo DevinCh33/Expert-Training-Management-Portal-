@@ -76,3 +76,16 @@ function showSlides(n) {
     imageContainers[slideIndex - 1].classList.add("active");
     dots[slideIndex - 1].classList.add("active");
 }
+
+// Dropdown menu selection that will show the respective form based on the selection for administrator training manager (Add/Remove/Edit)
+var dropdown = document.getElementById("training-options");
+var addForm = document.getElementById("add-training");
+
+dropdown.addEventListener("change", function () {
+    if (dropdown.value === "remove-training") {
+        addForm.style.display = "none";
+        alert("Hello, world!");
+    } else {
+        addForm.style.display = "block";
+    }
+});
