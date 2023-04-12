@@ -6,8 +6,8 @@ var sortBtn = document.querySelector("#sort-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
 var priceRange = document.getElementById("price-range");
 var priceDisplay = document.getElementById("price-display");
-
-
+var testJavaBtn1 = document.getElementById("testJavaBtn1");
+//sort button - drop down
 sortBtn.addEventListener("mouseenter", function () {
     dropdownContent.classList.add("active");
 });
@@ -20,11 +20,11 @@ dropdownContent.addEventListener("mouseleave", function () {
     dropdownContent.classList.remove("active");
 });
 
-
+//price change for slider
 priceRange.addEventListener("input", function () {
     priceDisplay.innerHTML = "RM" + priceRange.value;
 });
-
+//filter button
 $(document).ready(function () {
     $("#filter-btn").click(function () {
         $(".filterInterface").toggleClass("visible");
@@ -37,7 +37,7 @@ $(document).ready(function () {
     });
 });
 
-
+//slideshow
 var slideshowContainer = document.querySelector(".slideshowContainer");
 var imageContainers = document.querySelectorAll(".imageContainer");
 var arrows = document.querySelectorAll(".arrow");
@@ -89,3 +89,14 @@ dropdown.addEventListener("change", function () {
         addForm.style.display = "block";
     }
 });
+
+
+//testing java
+
+
+/*testJavaBtn1.addEventListener("click", function () {
+    alert("Java Worked!");
+});*/
+
+
+
