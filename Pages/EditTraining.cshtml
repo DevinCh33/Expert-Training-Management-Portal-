@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "EditTraining";
 }
+<script type="text/javascript" src="/js/site.js"></script>
 
 <style>
     body{
@@ -38,10 +39,14 @@
     }
 
     input[type="text"], textarea, #training-options {
-        border-radius: 10px; /* set the border radius to 10px */
-        padding: 5px; /* add some padding for visual appeal */
-        border: 1px solid #ccc; /* add a border to the element */
+        border-radius: 10px; 
+        padding: 5px; 
+        border: 1px solid #ccc; 
     }
+
+    /*#add-training{
+        display: none;
+    }*/
 </style>
 
 <div class="leftMargin">
@@ -54,7 +59,7 @@
         </select>
     </form>
 
-    <form method="post">
+    <form id="add-training" method="post">
         <label for="training-name">Training Name:</label>
         <input type="text" id="training-name" name="training-name" placeholder="Training Name" required><br>
 
@@ -73,5 +78,30 @@
 
         <input type="submit" value="Add Training">
     </form>
+    <br />
+    <form id="remove-training" method="post">
+        <label for="training-list">Select a training:</label>
+        <select id="training-list" name="training-list">
+            <option value="training1">Education Training</option>
+            <option value="training2">IT Training</option>
+            <option value="training3">Literature Training</option>
+        </select>
 
+        <div class="form-group">
+            <label for="price-range">Price: RM123</label>
+            <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1">
+            <span id="price-display">RM500</span>
+        </div>
+
+        <div class="form-group">
+            <label for="training-itinerary">Training Itinerary:</label>
+            <textarea id="training-itinerary" name="training-itinerary" placeholder="Enter the training itinerary and details" rows="5" cols="30" required></textarea>
+        </div>
+
+        <label for="training-venue">Training Venue:</label>
+        <input type="text" id="training-venue" name="training-venue" placeholder="Venue" required><br>
+
+        <input type="submit" value="Edit Training">
+    </form>
 </div>
+
