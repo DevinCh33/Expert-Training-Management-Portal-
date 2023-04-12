@@ -4,7 +4,6 @@
 // Write your JavaScript code.
 var sortBtn = document.querySelector("#sort-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
-
 sortBtn.addEventListener("mouseenter", function () {
     dropdownContent.classList.add("active");
 });
@@ -29,16 +28,14 @@ $(document).ready(function () {
     });
 });
 
-const dropdown = document.getElementById("training-options");
-const form-add = document.getElementById("add-training");
+var dropdown = document.getElementById("training-options");
+var addForm = document.getElementById("add-training");
 
-// Add an event listener to the dropdown
 dropdown.addEventListener("change", function () {
-    // If the selected option is "option1", show the form
     if (dropdown.value === "remove-training") {
-        form-add.style.display = "none";
+        addForm.style.display = "none";
         alert("Hello, world!");
     } else {
-        form-add.style.display = "block";
+        addForm.style.display = "block";
     }
 });
