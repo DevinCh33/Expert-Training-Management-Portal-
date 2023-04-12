@@ -1,8 +1,10 @@
-﻿namespace ETMP.Model
+﻿using MessagePack;
+
+namespace ETMP.Model
 {
     public class TrainingModel
     {
-        public int TrainingId { get; set; }
+        public int Id { get; set; }
         public string TrainingName { get; set; }
         public int TrainingPrice { get; set; }
         public string TrainingItinerary { get; set; }
