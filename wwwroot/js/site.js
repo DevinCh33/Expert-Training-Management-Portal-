@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 
+/*
 var sortBtn = document.querySelector("#sort-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
 var priceRange = document.getElementById("price-range");
@@ -76,7 +77,7 @@ function showSlides(n) {
     dots.forEach(dot => dot.classList.remove("active"));
     trainingContainers[slideIndex - 1].classList.add("active");
     dots[slideIndex - 1].classList.add("active");
-}
+}*/
 
 
 

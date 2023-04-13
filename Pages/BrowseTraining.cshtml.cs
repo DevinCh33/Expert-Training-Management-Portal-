@@ -1,10 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using ETMP.Model;
 using ETMP.Data;
-using System.Collections.Generic;
-using System.Linq;
+using ETMP.Model;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ETMP.Pages
 {
