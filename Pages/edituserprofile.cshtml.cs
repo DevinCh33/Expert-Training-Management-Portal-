@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;o
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ETMP.Pages

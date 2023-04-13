@@ -3,138 +3,350 @@
 @{
     ViewData["Title"] = "Browse for Trainings";
 }
-<script src="/js/site.js"></script>
+<script src="/js/site.js" asp-append-version="true"></script>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f2f2f2;
+    #filter-container, #searchBarContainer, #submitContainer, #sortContainer,#sortAscDesContainer   {
+        display:inline-block;
+        margin:10px;
     }
 
-    .container {
+        #sortAscDesContainer{
+            margin-left:150px;
+            
+        }
+
+
+    #applyFilterBtn {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .item-vertical {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #filter-btn, #search-bar, #submit-btn, #sort-btn {
+        font-size: 30px;
+        border-radius: 30px;
+        padding:10px;
+        width:100%;
+    }
+    #filter-btn:hover, #submit-btn:hover, #sort-btn:hover{
+        background-color:grey;
+    }
+
+    #search-bar{
+        padding-left: 25px;
+    }
+    #searchBarContainer{
+        width:850px;
+    }
+    #sortContainer{
+        position: relative;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+        border-radius:25px;
+    }
+
+        .dropdown-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+
+        }
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #ddd;
+                border-radius: 25px;
+            }
+
+    /* Show the dropdown menu on hover */
+    #sort-btn:hover + .dropdown-content {
+        display: block;
+    }
+
+    .icon {
+        display: inline-block;
+        height: 28px;
+        width: 28px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .icon-duration {
+        background-image: url('https://img.icons8.com/material-rounded/24/000000/clock--v1.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px 20px;
+    }
+
+    .icon-date {
+        background-image: url('https://img.icons8.com/material-rounded/24/000000/calendar--v1.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px 20px;
+    }
+
+    .icon-price {
+        background-image: url('https://img.icons8.com/material-rounded/24/000000/money--v1.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px 20px;
+    }
+
+    .icon-name {
+        background-image: url('https://img.icons8.com/material-rounded/24/000000/user--v1.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px 20px;
+    }
+
+    .filterInterface {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        height: 100%;
+        width: 300px;
+        background-color: #fff;
+        z-index: 999;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .filterInterface.visible {
+            transform: translateX(300px);
+        }
+
+    #filter-btn:focus + .filterInterface {
+        transform: translateX(300px);
+    }
+    .filterOptions{
+        display:block;
+        font-size:30px;
+        border:solid;
+        margin:auto;
+        margin-bottom:10px;
+        margin-left:10px;
+        padding-left:20px;
+        padding-bottom:10px;
+        word-wrap: break-word; /* set the word-wrap property to break-word */
+        overflow:hidden;
+        
+    }
+
+    .filterOptionsContainer{
+        font-size:40px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .slideshowContainer {
+        position: relative;
+        margin: 0 auto;
+        width: 800px;
+        height: 800px;
+        overflow: hidden;
+    }
+
+    .imageContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.5s ease;
     }
 
-    #filter-btn,
-    #sort-btn,
-    #submit-btn {
-        flex: 1;
-        margin: 0 20px;
-        padding: 10px;
-        border-radius: 30px;
-        background-color: white;
-        color: black;
-        font-size: 29px;
+        .imageContainer.active {
+            opacity: 1;
+        }
+        .imageContainer img {
+
+        }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background-color: #000;
+        color: #fff;
+        font-size: 30px;
+        text-align: center;
         cursor: pointer;
-        white-space: nowrap;
+        user-select: none;
     }
 
-    #sort-btn {
-        border-radius: 0px;
+    .prev {
+        left: 0;
     }
 
-    #search-bar {
-        flex: 2;
-        padding: 10px;
-        padding-right: 400px;
-        border: 1px solid #ccc;
-        border-radius: 30px;
-        font-size: 29px;
-        outline: none;
-        white-space: nowrap;
+    .next {
+        right: 0;
     }
 
-    #filter-btn:hover,
-    #sort-btn:hover,
-    #submit-btn:hover {
-        background-color: grey;
+    .dotsContainer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
-    .hidden {
-        display: none;
+    .dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #bbb;
+        margin: 0 5px;
+        cursor: pointer;
     }
+
+        .dot.active {
+            background-color: #717171;
+        }
 </style>
 
-<div class="container">
+<div class="buttonAndSearchBarContainer">
     <form>
-        <button id="filter-btn">Filter</button>
-        <input type="text" id="search-bar" placeholder="Search for Training">
-        <button type="submit" id="submit-btn">Submit</button>
-        <button id="sort-btn">Sort By</button>
-        <div class="hidden">
-            <label for="sort-by">Sort by:</label>
-            <select id="sort-by">
-                <option value="date">Date</option>
-                <option value="price">Price</option>
-                <option value="duration">Duration</option>
-            </select>
-            <label for="sort-order">Sort order:</label>
-            <input type="radio" id="sort-asc" name="sort-order" value="asc" checked>
-            <label for="sort-asc">Ascending</label>
-            <input type="radio" id="sort-desc" name="sort-order" value="desc">
-            <label for="sort-desc">Descending</label>
+        <div id="filter-container">
+            <button type="button" id="filter-btn">Filter</button>
+        </div>
+        <div id="searchBarContainer">
+            <input type="text" id="search-bar" placeholder="Search for Training">
+        </div>
+        <div id="submitContainer">
+            <button type="submit" id="submit-btn">Submit</button>
+        </div>
+        <div id="sortContainer">
+            <button id="sort-btn">Sort By</button>
+            <div class="dropdown-content">
+                <a href="#" class="sort-option">
+                    <span class="icon icon-name"></span>
+                    Name
+                </a>
+                <a href="#" class="sort-option">
+                    <span class="icon icon-date"></span>
+                    Date
+                </a>
+                <a href="#" class="sort-option">
+                    <span class="icon icon-price"></span>
+                    Price
+                </a>
+                <a href="#" class="sort-option">
+                    <span class="icon icon-duration"></span>
+                    Duration
+                </a>
+            </div>
+        </div>
+        <div id="sortAscDesContainer">
+            <label>
+                <input type="radio" name="sortDirection" value="ascendant"> Asc
+            </label>
+            <label>
+                <input type="radio" name="sortDirection" value="descendant"> Desc
+            </label>
         </div>
     </form>
 </div>
-<div class="hidden">
+
+
+<div class= "filterInterface">
+    <h1>Filters</h1>
     <div class="filterOptionsContainer">
         <form>
-            <div>
-                <label>Category:</label>
-                <div>
-                    <label>
-                        <input type="checkbox" name="category" value="Business">
-                        Business
-                    </label>
-                    <label>
-                        <input type="checkbox" name="category" value="IT">
-                        IT
-                    </label>
-                    <label>
-                        <input type="checkbox" name="category" value="Photography">
-                        Photography
-                    </label>
-                    <label>
-                        <input type="checkbox" name="category" value="Self-help">
-                        Self-help
-                    </label>
-                </div>
+            <label>Categories:</label>
+            <div class="filterOptions">
+                <label>
+                    <input type="checkbox" name="category" value="Business">
+                    Business
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="IT">
+                    IT
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="Photography">
+                    Photography
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="Self-help">
+                    Self-help
+                </label>
             </div>
-            <div>
+            <div class="filterOptions">
                 <label for="price-range">Price Range:</label>
-                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1"><br />
+                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1" />
+                <br />
                 <span id="price-display">RM500</span>
-            </div>
-            <div>
+                <br />
                 <label>Discount</label>
                 <span>
                     <input type="checkbox" name="discount" value="yes">
                 </span>
             </div>
-            <div>
+            <div class="filterOptions">
                 <label>Date Range:</label>
                 <div>
                     <label>From:</label>
-                    <input type="date" name="start_date"></br>
+                    <input type="date" name="start_date"><br />
                     <label>To:</label>
                     <input type="date" name="end_date">
                 </div>
             </div>
-            <div>
-                <button type="submit">Apply Filters</button>
+            <div class="applyFilterBtnContainer">
+                <button id="applyFilterBtn" type="submit">Apply Filters</button>
             </div>
         </form>
     </div>
 </div>
+
+<div class="slideshowContainer">
+    <div class="imageContainer active">
+        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    </div>
+    <div class="imageContainer">
+        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    </div>
+    <div class="imageContainer">
+        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    </div>
+    <div class="arrow prev">&#10094;</div>
+    <div class="arrow next">&#10095;</div>
+    <div class="dotsContainer">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+<!--
+    <div>
+        <button id="testJavaBtn1">Test Java Now!</button>
+    </div>
+-->
+
+
+
+
 
 
 
