@@ -1,0 +1,33 @@
+﻿@page
+@model ETMP.Pages.AddTrainingModel
+@{
+    ViewData["Title"] = "AddTraining";
+}
+
+<style>
+    body {
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://theengineeringmindset.com/wp-content/uploads/2019/05/Blueprint-background.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .leftMargin {
+        margin-left: 50px;
+    }
+
+    /*#add-training{
+            display: none;
+        }*/
+</style>
+
+<div class="leftMargin">
+    <p>Training Name: @Model.TrainingName</p>
+    <p>Training Price: @Model.TrainingPrice</p>
+    <p>Training Category: @Model.TrainingCategory</p>
+    <p>Training Venue: @Model.TrainingVenue</p>
+    <p>Training Itinerary: @Model.TrainingItinerary</p>
+    <p>Training Availability: @Model.IsAvailable</p>
+    <button onclick="window.location.href = '/Index'">
+        Go Back
+    </button>
+</div>
