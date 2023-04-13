@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ETMP.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<TrainingModel> Trainings { get; set; }
 
