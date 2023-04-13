@@ -1,6 +1,4 @@
-﻿using MessagePack;
-
-namespace ETMP.Model
+﻿namespace ETMP.Model
 {
     public class TrainingModel
     {
