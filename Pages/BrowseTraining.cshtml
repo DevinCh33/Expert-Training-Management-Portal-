@@ -28,7 +28,7 @@
         align-items: center;
     }
 
-    #filter-btn, #search-bar, #submit-btn, #sort-btn {
+    #filter-btn, #search-bar, #submit-btn, #sort-btn, .proceedBtn {
         font-size: 30px;
         border-radius: 30px;
         padding:10px;
@@ -160,31 +160,35 @@
     .slideshowContainer {
         position: relative;
         margin: 0 auto;
-        width: 800px;
+        width: 1200px;
         height: 800px;
         overflow: hidden;
     }
 
-    .imageContainer {
+    .trainingContainer {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 50%;
         opacity: 0;
         transition: opacity 0.5s ease;
+        border:dotted;
+        display: flex;
+        flex-direction: row;
     }
 
-        .imageContainer.active {
+        .trainingContainer.active {
             opacity: 1;
         }
-        .imageContainer img {
-
+        .trainingContainer img {
+            height:50%;
+            width:50%;
         }
 
     .arrow {
         position: absolute;
-        top: 50%;
+        top: 25%;
         transform: translateY(-50%);
         width: 50px;
         height: 50px;
@@ -203,10 +207,14 @@
     .next {
         right: 0;
     }
+    
+    .arrow:hover{
+        background-color:grey;
+    }
 
     .dotsContainer {
         position: absolute;
-        bottom: 20px;
+        bottom: 400px;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -219,11 +227,50 @@
         background-color: #bbb;
         margin: 0 5px;
         cursor: pointer;
+
     }
 
         .dot.active {
             background-color: #717171;
         }
+
+    .trainingImageContainer, .trainingDescriptionContainer {
+        width: 50%;
+    }
+
+    .trainingImageContainer img{
+       padding:30px;
+        width:100%;
+        height:100%;
+
+    }
+
+    .trainingDescriptionContainer{
+        text-align:justify;
+        padding-top:30px;
+    }
+
+    .proceedBtn{
+        width:auto;
+        font-size: 15px;
+    }
+
+    /*
+    .trainingContainer.active .proceedBtn:hover {
+        background-color: grey;
+    }
+
+    .trainingContainer .proceedBtn:hover {
+        background-color: grey;
+    }
+    */
+
+    .trainingDescriptionContainer p{
+        font-size:20px;
+    }
+
+    
+
 </style>
 
 <div class="buttonAndSearchBarContainer">
@@ -321,14 +368,38 @@
 </div>
 
 <div class="slideshowContainer">
-    <div class="imageContainer active">
-        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    <div class="trainingContainer active">
+        <div class="trainingImageContainer">
+            <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+        </div>
+        <div class="trainingDescriptionContainer">
+            <h1>Training 1</h1>
+            <p>Training Description: Placeholder description</p>
+            <p>Fee: </p>
+            <button class="proceedBtn">Proceed</button>
+        </div>
     </div>
-    <div class="imageContainer">
-        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    <div class="trainingContainer">
+        <div class="trainingImageContainer">
+            <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+        </div>
+        <div class="trainingDescriptionContainer">
+            <h1>Training 2</h1>
+            <p>Training Description: Placeholder description</p>
+            <p>Fee: </p>
+            <button class="proceedBtn">Proceed</button>
+        </div>
     </div>
-    <div class="imageContainer">
-        <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+    <div class="trainingContainer">
+        <div class="trainingImageContainer">
+            <img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" />
+        </div>
+        <div class="trainingDescriptionContainer">
+            <h1>Training 3</h1>
+            <p>Training Description: Placeholder description</p>
+            <p>Fee: </p>
+            <button class="proceedBtn">Proceed</button>
+        </div>
     </div>
     <div class="arrow prev">&#10094;</div>
     <div class="arrow next">&#10095;</div>
@@ -338,11 +409,9 @@
         <span class="dot"></span>
     </div>
 </div>
-<!--
-    <div>
-        <button id="testJavaBtn1">Test Java Now!</button>
-    </div>
--->
+
+
+
 
 
 

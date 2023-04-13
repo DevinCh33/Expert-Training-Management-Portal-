@@ -40,7 +40,7 @@ $(document).ready(function () {
 
 //slideshow
 var slideshowContainer = document.querySelector(".slideshowContainer");
-var imageContainers = document.querySelectorAll(".imageContainer");
+var trainingContainers = document.querySelectorAll(".trainingContainer");
 var arrows = document.querySelectorAll(".arrow");
 var dots = document.querySelectorAll(".dot");
 
@@ -66,17 +66,19 @@ dots.forEach((dot, index) => {
 });
 
 function showSlides(n) {
-    if (n > imageContainers.length) {
+    if (n > trainingContainers.length) {
         slideIndex = 1;
     }
     if (n < 1) {
-        slideIndex = imageContainers.length;
+        slideIndex = trainingContainers.length;
     }
-    imageContainers.forEach(container => container.classList.remove("active"));
+    trainingContainers.forEach(container => container.classList.remove("active"));
     dots.forEach(dot => dot.classList.remove("active"));
-    imageContainers[slideIndex - 1].classList.add("active");
+    trainingContainers[slideIndex - 1].classList.add("active");
     dots[slideIndex - 1].classList.add("active");
 }
+
+
 
 
 // Broken when used along the sort by button in browse training
@@ -101,13 +103,6 @@ dropdown.addEventListener("change", function () {
     }
 });
 
-
-//testing java
-
-
-/*testJavaBtn1.addEventListener("click", function () {
-    alert("Java Worked!");
-});*/
 
 
 
