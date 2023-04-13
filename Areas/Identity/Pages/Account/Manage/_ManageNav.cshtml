@@ -1,5 +1,4 @@
-﻿@using ETMP.Areas.Identity.Data;
-@inject SignInManager<ETMPUser> SignInManager
+﻿@inject SignInManager<IdentityUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

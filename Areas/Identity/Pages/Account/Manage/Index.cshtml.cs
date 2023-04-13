@@ -2,25 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using ETMP.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace ETMP.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<ETMPUser> _userManager;
-        private readonly SignInManager<ETMPUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public IndexModel(
-            UserManager<ETMPUser> userManager,
-            SignInManager<ETMPUser> signInManager)
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -50,12 +46,14 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        /// 
+
+        /*public string CompanyName { get; set; }
+       
+        public string CompanyMailingAddress { get; set; }*/
+
         public class InputModel
         {
-            [DataType(DataType.Text)]
-            [Display(Name = "Company name")]
-            public string CompanyName { get; set; }
-
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -63,20 +61,33 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            /*[CompanyName]
+            [Display(Name = "Company Name")]
+            public string CompanyName { get; set; }*/
+
+            /*[CompanyMailingAddress]
+            [Display(Name = "Company Mailing Address")]
+            public string CompanyMailingAddress { get; set; }*/
         }
 
-        private async Task LoadAsync(ETMPUser user)
+        private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            /*var companyName = await _userManager.GetCompanyNameAsync(user);
+            var companyMailingAddress = await _userManager.GetCompanyMailingAddressAsync(user);*/
 
             Username = userName;
 
             Input = new InputModel
             {
-                CompanyName = user.CompanyName,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                /*CompanyName = companyName,
+                CompanyMailingAddress= companyMailingAddress*/
             };
+
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -116,12 +127,28 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if(Input.CompanyName != user.CompanyName)
+            /*var companyName = await _userManager.GetCompanyNameAsync(user);
+            if (Input.companyName != companyName)
             {
-                user.CompanyName = Input.CompanyName;
+                var setcompanyNameResult = await _userManager.SetCompanyNameAsync(user, Input.CompanyName);
+                if (!setcompanyNameResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set new Company Name.";
+                    return RedirectToPage();
+                }
             }
 
-            await _userManager.UpdateAsync(user);
+            var companyMailingAddress = await _userManager.GetCompanyMailingAddressAsync(user);
+            if (Input.companyMailingAddress != companyMailingAddress)
+            {
+                var setcompanyMailingAddress = await _userManager.SetcompanyMailingAddress(user, Input.CompanyMailingAddress);
+                if (!setcompanyNameResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set new Company Mailing Address.";
+                    return RedirectToPage();
+                }
+            }*/
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
