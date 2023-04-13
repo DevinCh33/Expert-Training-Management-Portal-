@@ -14,6 +14,7 @@ namespace ETMP.Pages
         public string? TrainingVenue { get; set; }
         public string? TrainingCategory { get; set; }
         public Boolean Availability { get; set; }
+        public string IsAvailable { get; set; } = "";
 
         private readonly ApplicationDbContext _context;
 
@@ -43,14 +44,22 @@ namespace ETMP.Pages
                 TrainingCategory = "TrainingCategory123221";
             }
 
+
             TrainingModel trainingModel = new TrainingModel();
             trainingModel.TrainingName = TrainingName;
             trainingModel.TrainingPrice = TrainingPrice;
             trainingModel.TrainingItinerary = TrainingItinerary;
             trainingModel.TrainingVenue = TrainingVenue;
             trainingModel.TrainingCategory = TrainingCategory;
-            trainingModel.Availability = true;
+            trainingModel.Availability = false;
 
+            if(Availability == true)
+            {
+                IsAvailable = "Yes";
+            } else
+            {
+                IsAvailable = "No";
+            }
             _context.Trainings.Add(trainingModel);
             _context.SaveChanges();
         }
