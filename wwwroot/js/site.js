@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 
-/*
+
 var sortBtn = document.querySelector("#sort-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
 var priceRange = document.getElementById("price-range");
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
 //slideshow
 var slideshowContainer = document.querySelector(".slideshowContainer");
-var imageContainers = document.querySelectorAll(".imageContainer");
+var trainingContainers = document.querySelectorAll(".trainingContainer");
 var arrows = document.querySelectorAll(".arrow");
 var dots = document.querySelectorAll(".dot");
 
@@ -67,18 +67,116 @@ dots.forEach((dot, index) => {
 });
 
 function showSlides(n) {
-    if (n > imageContainers.length) {
+    if (n > trainingContainers.length) {
         slideIndex = 1;
     }
     if (n < 1) {
-        slideIndex = imageContainers.length;
+        slideIndex = trainingContainers.length;
     }
-    imageContainers.forEach(container => container.classList.remove("active"));
+    trainingContainers.forEach(container => container.classList.remove("active"));
     dots.forEach(dot => dot.classList.remove("active"));
-    imageContainers[slideIndex - 1].classList.add("active");
+    trainingContainers[slideIndex - 1].classList.add("active");
     dots[slideIndex - 1].classList.add("active");
-}*/
+}
 
+
+//suggest and recommendation function for search bar
+var searchBar = document.querySelector("#search-bar");
+var suggestionsContainer = document.querySelector("#suggestions-container");
+
+// Function to show dropdown suggestions
+function showDropdownSuggestions(query) {
+    // Clear any existing suggestions
+    suggestionsContainer.innerHTML = "";
+
+    // TODO: Implement logic to fetch and display dropdown suggestions based on user input
+    var dropdownSuggestions = ["Suggestion 1", "Suggestion 2", "Suggestion 3"];
+    dropdownSuggestions.forEach((suggestion) => {
+        if (suggestion.toLowerCase().includes(query.toLowerCase())) {
+            var suggestionElement = document.createElement("div");
+            suggestionElement.classList.add("suggestion");
+            suggestionElement.textContent = suggestion;
+
+            // Add click listener to select the suggestion
+            suggestionElement.addEventListener("click", () => {
+                searchBar.value = suggestion;
+                suggestionsContainer.innerHTML = "";
+            });
+
+            // Add suggestion to the suggestions container
+            suggestionsContainer.appendChild(suggestionElement);
+        }
+    });
+
+    // Show the suggestions container
+    suggestionsContainer.style.display = "block";
+}
+
+// Function to show internal search bar suggestions
+function showInternalSuggestions(query) {
+    // Clear any existing suggestions
+    suggestionsContainer.innerHTML = "";
+
+    // TODO: Implement logic to fetch and display internal suggestions
+    var internalSuggestions = ["apple", "banana", "orange"];
+    internalSuggestions.forEach((suggestion) => {
+        if (suggestion.toLowerCase().includes(query.toLowerCase())) {
+            var suggestionElement = document.createElement("div");
+            suggestionElement.classList.add("suggestion");
+
+            // Split the suggestion into two parts: before and after the matched query
+            var queryIndex = suggestion.toLowerCase().indexOf(query.toLowerCase());
+            var beforeQuery = suggestion.slice(0, queryIndex);
+            var afterQuery = suggestion.slice(queryIndex + query.length);
+
+            // Create two span elements: one for the matched query, and one for the rest of the suggestion
+            var querySpan = document.createElement("span");
+            querySpan.textContent = suggestion.slice(queryIndex, queryIndex + query.length);
+            querySpan.classList.add("highlight");
+            var restSpan = document.createElement("span");
+            restSpan.textContent = afterQuery;
+
+            // Add the two span elements to the suggestion element
+            suggestionElement.appendChild(document.createTextNode(beforeQuery));
+            suggestionElement.appendChild(querySpan);
+            suggestionElement.appendChild(document.createTextNode(restSpan.textContent));
+
+            // Add click listener to select the suggestion
+            suggestionElement.addEventListener("click", () => {
+                searchBar.value = suggestion;
+                suggestionsContainer.innerHTML = "";
+            });
+
+            // Add suggestion to the suggestions container
+            suggestionsContainer.appendChild(suggestionElement);
+        }
+    });
+
+    // Show the suggestions container
+    suggestionsContainer.style.display = "block";
+}
+
+// Add input listener to show suggestions
+searchBar.addEventListener("input", (event) => {
+    var query = event.target.value;
+    showDropdownSuggestions(query);
+    showInternalSuggestions(query);
+});
+
+// Hide suggestions container when user clicks outside of it
+document.addEventListener("click", (event) => {
+    if (!event.target.closest("#searchBarContainer")) {
+        suggestionsContainer.style.display = "none";
+    }
+});
+
+
+
+
+
+
+
+/*
 
 // Broken when used along the sort by button in browse training
 // Dropdown menu selection that will show the respective form based on the selection for administrator training manager (Add/Remove/Edit)
@@ -101,14 +199,8 @@ dropdown.addEventListener("change", function () {
     editForm.style.display = "none";
     }
 });
+*/
 
-
-//testing java
-
-
-/*testJavaBtn1.addEventListener("click", function () {
-    alert("Java Worked!");
-});*/
 
 
 
