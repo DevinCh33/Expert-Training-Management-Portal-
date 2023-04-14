@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 
 namespace ETMP.Areas.Identity.Pages.Account.Manage
 {
@@ -51,67 +50,45 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         /// 
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Text)]
-            [Display(Name = "Username")]
-            public string Username { get; set; }
-
-            [DataType(DataType.Text)]
-            [Display(Name = "Company Name")]
+            [Display(Name = "Organisation Name")]
             public string OrganisationName { get; set; }
 
+            [Display(Name = "Organisation Mailing Address")]
             [DataType(DataType.Text)]
-            [Display(Name = "Company Mailing Address")]
             public string OrganisationMailingAddress { get; set; }
 
-            [DataType(DataType.Text)]
             [Display(Name = "Gender")]
+            [DataType(DataType.Text)]
             public string Gender { get; set; }
 
-            [DataType(DataType.Text)]
             [Display(Name = "First Name")]
+            [DataType(DataType.Text)]
             public string FirstName { get; set; }
 
-            [DataType(DataType.Text)]
             [Display(Name = "Last Name")]
-            public string LastName { get; set; }
-
             [DataType(DataType.Text)]
-            [Display(Name = "Profile Picture")]
-            public byte[] ProfilePicture { get; set; }
+            public string LastName { get; set; }
 
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-           
         }
 
         private async Task LoadAsync(ETMPUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var organisationName = user.OrganisationName;
-            var organisationMailingAddress = user.OrganisationMailingAddress;
-            var gender = user.Gender;
-            var firstName = user.FirstName;
-            var lastName = user.LastName;
-            var profilePicture = user.ProfilePicture;
-            
-            Username = userName;
 
+            Username = userName;
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber,
-                Username = userName,
-                OrganisationName = organisationName,
-                OrganisationMailingAddress = organisationMailingAddress,
-                Gender = gender,
-                FirstName = firstName,
-                LastName = lastName,
-                ProfilePicture = profilePicture
+                OrganisationName = user.OrganisationName,
+                OrganisationMailingAddress = user.OrganisationMailingAddress,
+                Gender = user.Gender,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = phoneNumber
             };
         }
 
@@ -127,12 +104,7 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public HttpRequest GetRequest()
-        {
-            return Request;
-        }
-
-        public async Task<IActionResult> OnPostAsync(HttpRequest request)
+        public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -157,41 +129,30 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-
             if (Input.OrganisationName != user.OrganisationName)
             {
                 user.OrganisationName = Input.OrganisationName;
             }
+
             if (Input.OrganisationMailingAddress != user.OrganisationMailingAddress)
             {
                 user.OrganisationMailingAddress = Input.OrganisationMailingAddress;
             }
+
             if (Input.Gender != user.Gender)
             {
                 user.Gender = Input.Gender;
             }
+
             if (Input.FirstName != user.FirstName)
             {
                 user.FirstName = Input.FirstName;
             }
+
             if (Input.LastName != user.LastName)
             {
                 user.LastName = Input.LastName;
             }
-
-            if (Request.Form.Files.Count > 0)
-            {
-                IFormFile file = Request.Form.Files.FirstOrDefault();
-                using (var dataStream = new MemoryStream())
-                {
-                    await file.CopyToAsync(dataStream);
-                    user.ProfilePicture = dataStream.ToArray();
-                }
-                await _userManager.UpdateAsync(user);
-            }
-
-
-
 
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
