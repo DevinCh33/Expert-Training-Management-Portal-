@@ -28,6 +28,8 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public string Username { get; set; }
 
+        public string Gender { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -74,12 +76,13 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
+            var gender = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             /*var companyName = await _userManager.GetCompanyNameAsync(user);
             var companyMailingAddress = await _userManager.GetCompanyMailingAddressAsync(user);*/
 
             Username = userName;
-
+            Gender = gender;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
