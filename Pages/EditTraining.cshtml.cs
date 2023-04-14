@@ -3,21 +3,43 @@ using ETMP.Data;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using ETMP.Models;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 namespace ETMP.Pages
 {
     public class EditTrainingModel : PageModel
     {
         [BindProperty]
         public TrainingModel Training { get; set; }
+
+        private readonly ApplicationDbContext _context;
+        public string SelectedTraining { get; set; }
+        public List<SelectListItem> TrainingNames { get; set; }
+
+        public EditTrainingModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult OnPostAddButton()
         {
             return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability });
         }
+        public async Task<IActionResult> OnGetAsync()
+        {
+            TrainingNames = await _context.Trainings
+                .Select(t => new SelectListItem
+                {
+                    Value = t.TrainingName,
+                    Text = t.TrainingName
+                })
+                .ToListAsync();
 
+            return Page();
+        }
+            /*
         public void OnGet()
         {
-            /*
             if (string.IsNullOrEmpty(training.TrainingName))
             {
                 training.TrainingName = "TestTraining12334";
@@ -48,7 +70,7 @@ namespace ETMP.Pages
 
             _context.Trainings.Add(trainingModel1);
             _context.SaveChanges();
-            */
         }
+            */
     }
 }
