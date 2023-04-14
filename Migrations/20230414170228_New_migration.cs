@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class resettingDB : Migration
+    public partial class New_migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,7 @@ namespace ETMP.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     OrganisationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrganisationMailingAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingTeamName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
