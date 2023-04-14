@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ETMP.Pages
+namespace ETMP.Pages.Shared
 {
-    public class Index1Model : PageModel
+    public class JS_testingModel : PageModel
     {
         public void OnGet()
         {
