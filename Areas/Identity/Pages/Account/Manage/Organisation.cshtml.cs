@@ -57,6 +57,10 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Organisation Mailing Address")]
             [DataType(DataType.Text)]
             public string OrganisationMailingAddress { get; set; }
+
+            [Display(Name = "Training Team Name")]
+            [DataType(DataType.Text)]
+            public string TrainingTeamName { get; set; }
         }
 
         private async Task LoadAsync(ETMPUser user)
@@ -67,7 +71,8 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 OrganisationName = user.OrganisationName,
-                OrganisationMailingAddress = user.OrganisationMailingAddress
+                OrganisationMailingAddress = user.OrganisationMailingAddress,
+                TrainingTeamName = user.TrainingTeamName
             };
         }
 
@@ -105,6 +110,11 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             if (Input.OrganisationMailingAddress != user.OrganisationMailingAddress)
             {
                 user.OrganisationMailingAddress = Input.OrganisationMailingAddress;
+            }
+
+            if (Input.TrainingTeamName != user.TrainingTeamName)
+            {
+                user.TrainingTeamName = Input.TrainingTeamName;
             }
 
             await _userManager.UpdateAsync(user);
