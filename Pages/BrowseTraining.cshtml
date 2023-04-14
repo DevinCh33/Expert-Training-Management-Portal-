@@ -40,6 +40,7 @@
 
     #search-bar{
         padding-left: 25px;
+        
     }
     #searchBarContainer{
         width:850px;
@@ -255,7 +256,52 @@
         font-size:20px;
     }
 
-    
+    #searchBarContainer {
+        position: relative;
+    }
+
+    #suggestions-container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-top: none;
+        z-index: 999;
+        border-radius:25px;
+    }
+
+    .suggestion {
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 25px;
+    }
+
+        .suggestion:hover {
+            background-color: #f2f2f2;
+        }
+
+    .highlight {
+        opacity: 0.5;
+    }
+
+    .highlight-text {
+        opacity: 0.5;
+    }
+
+        .highlight-text::after {
+            content: attr(data-after);
+            opacity: 1;
+        }
+
+        .highlight-text::selection {
+            background-color: transparent;
+        }
+
+
+
+
 
 </style>
 
@@ -266,7 +312,11 @@
         </div>
         <div id="searchBarContainer">
             <input type="text" id="search-bar" placeholder="Search for Training">
+            <div id="suggestions-container"></div>
         </div>
+
+
+
         <div id="submitContainer">
             <button type="submit" id="submit-btn">Submit</button>
         </div>
