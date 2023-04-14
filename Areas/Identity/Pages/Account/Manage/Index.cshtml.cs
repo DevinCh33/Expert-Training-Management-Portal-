@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +12,12 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ETMPUser> _userManager;
+        private readonly SignInManager<ETMPUser> _signInManager;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<ETMPUser> userManager,
+            SignInManager<ETMPUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -27,6 +28,8 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+
+        public string Gender { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -71,15 +74,16 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             public string CompanyMailingAddress { get; set; }*/
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(ETMPUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
+            var gender = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             /*var companyName = await _userManager.GetCompanyNameAsync(user);
             var companyMailingAddress = await _userManager.GetCompanyMailingAddressAsync(user);*/
 
             Username = userName;
-
+            Gender = gender;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,

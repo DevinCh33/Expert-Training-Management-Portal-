@@ -38,4 +38,8 @@
     <None Include="wwwroot\NewFolder\green_gradient_background.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

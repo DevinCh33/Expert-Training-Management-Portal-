@@ -1,4 +1,4 @@
-﻿namespace ETMP.Model
+﻿namespace ETMP.Models
 {
     public class TrainingModel
     {
@@ -8,6 +8,6 @@
         public string TrainingItinerary { get; set; }
         public string TrainingVenue { get; set; }
         public string TrainingCategory { get; set; }
-        public Boolean Availability { get; set; }
+        public bool Availability { get; set; }
     }
 }
