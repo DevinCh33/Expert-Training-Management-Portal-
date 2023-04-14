@@ -44,14 +44,13 @@ namespace ETMP.Pages
                 TrainingCategory = "TrainingCategory123221";
             }
 
-
             TrainingModel trainingModel = new TrainingModel();
             trainingModel.TrainingName = TrainingName;
             trainingModel.TrainingPrice = TrainingPrice;
             trainingModel.TrainingItinerary = TrainingItinerary;
             trainingModel.TrainingVenue = TrainingVenue;
             trainingModel.TrainingCategory = TrainingCategory;
-            trainingModel.Availability = false;
+            trainingModel.Availability = Availability;
 
             if(Availability == true)
             {

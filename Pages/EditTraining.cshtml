@@ -78,6 +78,13 @@
         <label for="training-venue">Training Category:</label>
         <input type="text" id="training-category" placeholder="Category" required asp-for="Training.TrainingCategory"><br>
 
+        <div>
+            <label form="training-availability">Is this training Available?
+                <input type="radio" id="traininig-availability" value="true" asp-for="Training.Availability" /> Yes
+                <input type="radio" id="traininig-availability" value="false" asp-for="Training.Availability" /> No
+            </label>
+        </div>
+
         <input type="submit" value="Add Training" asp-page-handler="AddButton">
     </form>
     <br />
