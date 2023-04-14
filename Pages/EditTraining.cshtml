@@ -89,14 +89,14 @@
     </form>
     <br />
 </div>
+<br/>
 <div class="leftMargin">
-    <form id="edit-training" method="post" style="display:none;">
+    <label for="TrainiigNameDropdownList">
+        Training Name:
+        <select asp-for="SelectedTraining" asp-items="@Model.TrainingNames"></select><br /> 
+    </label>
+    <form id="edit-training" method="post" style="display:block;">
         <input asp-for="Training.Id" type="hidden" />
-
-        <div>
-            <label asp-for="Training.TrainingName">Training Name:</label>
-            <input asp-for="Training.TrainingName" />
-        </div>
 
         <div>
             <label asp-for="Training.TrainingPrice">Training Price:</label>
@@ -125,10 +125,8 @@
 
         <div>
             <button type="submit">Save</button>
-            <a asp-page="Index">Cancel</a>
         </div>
-
-        <select asp-for="SelectedTraining" asp-items="@Model.TrainingNames"></select>
+        
 
     </form>
 
