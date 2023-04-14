@@ -4,7 +4,7 @@ namespace ETMP.Models
 {
     public class ETMPUser : IdentityUser
     {
-        public string CompanyName { get; set; }
-        public string CompanyMailingAddress { get; set; }
+        public string ? CompanyName { get; set; }
+        public string ? CompanyMailingAddress { get; set; }
     }
 }
