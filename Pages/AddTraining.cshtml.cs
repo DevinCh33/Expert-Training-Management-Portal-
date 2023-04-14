@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ETMP.Data;
-using ETMP.Model;
+using ETMP.Models;
 
 namespace ETMP.Pages
 {

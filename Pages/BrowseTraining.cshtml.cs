@@ -1,5 +1,5 @@
 using ETMP.Data;
-using ETMP.Model;
+using ETMP.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ETMP.Pages
@@ -19,7 +19,7 @@ namespace ETMP.Pages
 
         public void OnGet()
         {
-            Trainings = _context.Trainings.ToList();
+            //Trainings = _context.Trainings.ToList();
         }
     }
 }
