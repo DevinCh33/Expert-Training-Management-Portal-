@@ -93,6 +93,7 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             var companyMailingAddress = await _userManager.GetCompanyMailingAddressAsync(user);*/
 
             Username = userName;
+
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
@@ -173,7 +174,7 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             }
 
 
-
+            /*
             if (Input.CompanyName != user.CompanyName)
             {
                 user.CompanyName = Input.CompanyName;
@@ -187,7 +188,7 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
-            return RedirectToPage();
+            return RedirectToPage();*/
         }
     }
 }
