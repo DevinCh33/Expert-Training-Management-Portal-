@@ -1,4 +1,4 @@
-/*using System;
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,17 +7,19 @@ using Microsoft.Extensions.Logging;
 
 namespace ETMP.Areas.Identity.Pages.Account.Manage
 {
-    public class OrganisationProfileModel : PageModel
+    public class OrganisationModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<PersonalDataModel> _logger;*/
+        private readonly ILogger<PersonalDataModel> _logger;
 
 
 
-/*public string CompanyName { get; set; }
+public string OrganisationName { get; set; }
 
-public string CompanyMailingAddress { get; set; }*/
-/*   public OrganisationProfileModel(
+public string OrganisationMailingAddress { get; set; }
+
+public string TrainingTeamName { get; set; }
+        public OrganisationModel(
        UserManager<IdentityUser> userManager,
        ILogger<PersonalDataModel> logger)
    {
@@ -37,4 +39,3 @@ public string CompanyMailingAddress { get; set; }*/
    }
 }
 }
-*/
