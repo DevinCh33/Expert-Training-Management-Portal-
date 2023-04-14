@@ -180,12 +180,13 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
 
             if (Request.Form.Files.Count > 0)
             {
-                IFormFile file = request.Form.Files.FirstOrDefault();
+                IFormFile file = Request.Form.Files.FirstOrDefault();
                 using (var dataStream = new MemoryStream())
                 {
                     await file.CopyToAsync(dataStream);
                     user.ProfilePicture = dataStream.ToArray();
                 }
+                await _userManager.UpdateAsync(user);
             }
 
 
