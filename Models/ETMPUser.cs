@@ -6,11 +6,9 @@ namespace ETMP.Models
     {
         public string ? OrganisationName { get; set; }
         public string ? OrganisationMailingAddress { get; set; }
-
-        public string? Gender { get; set; }
-
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public byte[]? ProfilePicture { get; set; }
+        public string ? Gender { get; set; }
+        public string ? FirstName { get; set; }
+        public string ? LastName { get; set; }
+        public byte[] ? ProfilePicture { get; set; }
     }
 }

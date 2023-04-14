@@ -48,37 +48,43 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         /// 
-
-
-
         public class InputModel
         {
-            [DataType(DataType.Text)]
-            [Display(Name = "Company Name")]
-            public string CompanyName { get; set; }
-
-            [Display(Name = "Company Mailing Address")]
-            [DataType(DataType.Text)]
-            public string CompanyMailingAddress { get; set; }
-
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [DataType(DataType.Text)]
             [Display(Name = "Username")]
             public string Username { get; set; }
 
+            [DataType(DataType.Text)]
+            [Display(Name = "Company Name")]
+            public string OrganisationName { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Company Mailing Address")]
+            public string OrganisationMailingAddress { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            [DataType(DataType.Text)]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
+
+            [DataType(DataType.Text)]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-            
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+
+            [DataType(DataType.Text)]
             [Display(Name = "Profile Picture")]
             public byte[] ProfilePicture { get; set; }
 
+            [Phone]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
            
         }
 
@@ -86,23 +92,24 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var organisationName = user.OrganisationName;
+            var organisationMailingAddress = user.OrganisationMailingAddress;
+            var gender = user.Gender;
             var firstName = user.FirstName;
             var lastName = user.LastName;
             var profilePicture = user.ProfilePicture;
-            /*var companyName = await _userManager.GetCompanyNameAsync(user);
-            var companyMailingAddress = await _userManager.GetCompanyMailingAddressAsync(user);*/
-
+            
             Username = userName;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
                 Username = userName,
+                OrganisationName = organisationName,
+                OrganisationMailingAddress = organisationMailingAddress,
+                Gender = gender,
                 FirstName = firstName,
                 LastName = lastName,
                 ProfilePicture = profilePicture
-
-
-
             };
         }
 
@@ -148,17 +155,26 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var firstName = user.FirstName;
-            var lastName = user.LastName;
-            if (Input.FirstName != firstName)
+
+            if (Input.OrganisationName != user.OrganisationName)
+            {
+                user.OrganisationName = Input.OrganisationName;
+            }
+            if (Input.OrganisationMailingAddress != user.OrganisationMailingAddress)
+            {
+                user.OrganisationMailingAddress = Input.OrganisationMailingAddress;
+            }
+            if (Input.Gender != user.Gender)
+            {
+                user.Gender = Input.Gender;
+            }
+            if (Input.FirstName != user.FirstName)
             {
                 user.FirstName = Input.FirstName;
-                await _userManager.UpdateAsync(user);
             }
-            if (Input.LastName != lastName)
+            if (Input.LastName != user.LastName)
             {
                 user.LastName = Input.LastName;
-                await _userManager.UpdateAsync(user);
             }
 
             if (Request.Form.Files.Count > 0)
@@ -169,20 +185,9 @@ namespace ETMP.Areas.Identity.Pages.Account.Manage
                     await file.CopyToAsync(dataStream);
                     user.ProfilePicture = dataStream.ToArray();
                 }
-                await _userManager.UpdateAsync(user);
             }
 
 
-
-            if (Input.CompanyName != user.CompanyName)
-            {
-                user.CompanyName = Input.CompanyName;
-            }
-
-            if (Input.CompanyMailingAddress != user.CompanyMailingAddress)
-            {
-                user.CompanyMailingAddress = Input.CompanyMailingAddress;
-            }
 
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
