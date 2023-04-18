@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ETMP.Data;
 namespace ETMP.Models
 {
     public class TrainingModel
@@ -45,6 +46,8 @@ namespace ETMP.Models
 
 
     }
-
 }
+
+
+
 

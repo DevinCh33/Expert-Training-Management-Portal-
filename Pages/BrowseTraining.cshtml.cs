@@ -1,31 +1,15 @@
 using ETMP.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace ETMP.Pages
 {
     public class BrowseTrainingModel : PageModel
     {
-        public List <TrainingModel> trainingModels = new List<TrainingModel>();
+        public List<TrainingModel> trainings { get; set; }
 
-        public void OnGet()
-        {
-            TrainingModel trainingModel = new TrainingModel();
-            trainingModels = trainingModel.GetTrainingData();
-
-            if (trainingModels != null && trainingModels.Count > 0)
-            {
-                // Access the first item in the list
-                TrainingModel firstTraining = trainingModels[0];
-                // Do something with the item
-            }
-        }
-
-
-
+        
     }
 }
-
-
-
 
