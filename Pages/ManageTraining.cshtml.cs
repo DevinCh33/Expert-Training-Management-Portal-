@@ -31,7 +31,14 @@ namespace ETMP.Pages
         {
             _context = context;
         }
+        public IActionResult OnPostRedirectToNewPage()
+        {
+            // Set the Id in TempData
+            TempData["Id"] = _context.Trainings;
 
+            // Redirect to the new page
+            return RedirectToPage("/EditTraining");
+        }
         public IActionResult OnPostAddButton()
         {
             return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability });
