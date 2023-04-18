@@ -3,6 +3,20 @@
 @{
     ViewData["Title"] = "EditTraining";
 }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<style>
+    body {
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://theengineeringmindset.com/wp-content/uploads/2019/05/Blueprint-background.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
 
 <div class="leftMargin">
     <h1>Training Editor</h1>
@@ -17,14 +31,19 @@
         </div>
 
         <div class="form-group">
-            <label for="training-itinerary">Training Itinerary:</label>
+            <label for="training-description">Training Description:</label><br />
+            <textarea id="training-description" value="@Model.Training.TrainingDescription" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="training-itinerary">Training Itinerary:</label><br/>
             <textarea id="training-itinerary" value="@Model.Training.TrainingItinerary" rows="5" cols="30" required asp-for="Training.TrainingItinerary"></textarea>
         </div>
 
         <label for="training-venue">Training Venue:</label>
         <input type="text" id="training-venue placeholder="Venue" required value="@Model.Training.TrainingVenue" asp-for="Training.TrainingVenue"><br>
 
-        <label for="training-venue">Training Category:</label>
+        <label for="training-category">Training Category:</label>
         <input type="text" id="training-category" placeholder="Category" required value="@Model.Training.TrainingCategory" asp-for="Training.TrainingCategory"><br>
 
         <div>

@@ -41,7 +41,7 @@ namespace ETMP.Pages
         }
         public IActionResult OnPostAddButton()
         {
-            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability });
+            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription });
         }
 
         public async Task<IActionResult> OnGetAsync(string name)
