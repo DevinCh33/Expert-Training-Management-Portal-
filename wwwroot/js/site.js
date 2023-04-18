@@ -176,6 +176,8 @@ document.addEventListener("click", (event) => {
 
 
 
+*/
+
 // Broken when used along the sort by button in browse training
 // Dropdown menu selection that will show the respective form based on the selection for administrator training manager (Add/Remove/Edit)
 var dropdown = document.getElementById("training-options");
@@ -195,8 +197,9 @@ dropdown.addEventListener("change", function () {
     } else if (dropdown.value === "add-training") {
     addForm.style.display = "block";
     editForm.style.display = "none";
-    }
-});
+
+
+
 
 
 
