@@ -14,6 +14,7 @@ namespace ETMP.Pages
         public string? TrainingName { get; set; }
         public int TrainingPrice { get; set; }
         public string? TrainingItinerary { get; set; }
+        public string? TrainingDescription { get; set; }
         public string? TrainingVenue { get; set; }
         public string? TrainingCategory { get; set; }
         public Boolean Availability { get; set; }
@@ -39,7 +40,7 @@ namespace ETMP.Pages
             if (await TryUpdateModelAsync<TrainingModel>(
                 trainingToUpdate,
                 "training",   // Prefix for form value.
-                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability))
+                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
             {
                 await _context.SaveChangesAsync();
               

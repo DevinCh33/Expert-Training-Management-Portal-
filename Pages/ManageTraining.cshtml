@@ -4,6 +4,8 @@
     ViewData["Title"] = "ManageTraining";
 }   
 
+<script src="/js/site.js" asp-append-version="true"></script>
+
 <style>
     body{
         background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://theengineeringmindset.com/wp-content/uploads/2019/05/Blueprint-background.png);
@@ -40,7 +42,8 @@
     input[type="text"], textarea, #training-options, #select-training {
         border-radius: 10px; 
         padding: 5px; 
-        border: 1px solid #ccc; 
+        border: 1px solid #EEEEEE;
+        table-layout: fixed;
     }
 
     /*#add-training{
@@ -53,6 +56,8 @@
         border-color: black;
     }
 </style>
+
+<h1>Training Manager</h1>
 
 <div class="leftMargin">
     <form id="training-action" method="post">
@@ -84,6 +89,11 @@
         <label for="training-venue">Training Category:</label>
         <input type="text" id="training-category" placeholder="Category" required asp-for="Training.TrainingCategory"><br>
 
+        <div class="form-group">
+            <label for="training-itinerary">Training Description:</label>
+            <textarea id="training-itinerary" placeholder="Enter the training description" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
+        </div>
+
         <div>
             <label form="training-availability">Is this training Available?
                 <input type="radio" id="traininig-availability" value="true" asp-for="Training.Availability" /> Yes
@@ -97,11 +107,35 @@
 </div>
 <div class="leftMargin">
     <form id="edit-training" method="post" style="display:none;">
-        <label for="TrainingNameDropdownList">
-            Training Name:
-            <select id="select-training" asp-for="SelectedTraining" asp-items="@Model.TrainingNames"></select><br />
-        </label><br />
         <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Itinerary
+                    </th>
+                    <th>
+                        Venue
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Availability
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
             <tbody>
                 @foreach (var item in Model.EditTraining)
                 {
@@ -113,78 +147,37 @@
                             @Html.DisplayFor(modelItem => item.TrainingPrice)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrainingVenue)
+                            @Html.DisplayFor(modelItem => item.TrainingItinerary)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrainingItinerary)
+                            @Html.DisplayFor(modelItem => item.TrainingVenue)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.TrainingCategory)
                         </td>
+                        @if(item.Availability == true)
+                        {
+                            <td>
+                                Yes
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                No
+                            </td>
+                        }
                         <td>
-                            @Html.DisplayFor(modelItem => item.Availability)
+                            @Html.DisplayFor(modelItem => item.TrainingDescription)
                         </td>
                         <td>
                             <a asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
-                    <br />
                 }
-                </tbody>
+            </tbody>
         </table>
+
     </form>
-        
-
-    <!--
-                /*
-                <div class="form-group">
-                    <label asp-for="EditTraining.TrainingPrice"></label>
-                    <input asp-for="EditTraining.TrainingPrice" value="TrainingName" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="EditTraining.TrainingItinerary"></label>
-                    <input asp-for="EditTraining.TrainingItinerary" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="EditTraining.TrainingVenue"></label>
-                    <input asp-for="EditTraining.TrainingVenue" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="EditTraining.TrainingCategory"></label>
-                    <input asp-for="EditTraining.TrainingCategory" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="EditTraining.Availability"></label>
-                    <input asp-for="EditTraining.Availability" class="form-control" readonly />
-                </div>
-                */
-
-    <form id="edit-training" method="post" style="display:none;">
-        <label for="training-list">Select a training:</label>
-        <select id="training-list" name="training-list">
-            <option value="training1">Education Training</option>
-            <option value="training2">IT Training</option>
-            <option value="training3">Literature Training</option>
-        </select>
-
-        <div class="form-group">
-            <label for="price-range">Price: RM123</label>
-            <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1">
-            <span id="price-display">RM500</span>
-        </div>
-
-        <div class="form-group">
-            <label for="training-itinerary">Training Itinerary:</label>
-            <textarea id="training-itinerary" name="training-itinerary" placeholder="Enter the training itinerary and details" rows="5" cols="30" required></textarea>
-        </div>
-
-        <label for="training-venue">Training Venue:</label>
-        <input type="text" id="training-venue" name="training-venue" placeholder="Venue" required><br>
-
-        <input type="submit" name="submit" value="Edit Training">
-    </form>
-    -->
 </div>
-
