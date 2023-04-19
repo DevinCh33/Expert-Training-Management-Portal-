@@ -385,24 +385,12 @@
         return -1;
     }
 
-    function filterTable(columnName, filterValue, isMaxFilter = false) {
+    function filterTable(columnName, filterValue) {
         let columnIdx = columnIndex(columnName);
         let minPriceFilter = $('#minPriceFilter').val();
         let maxPriceFilter = $('#maxPriceFilter').val();
-        if (columnIdx !== -1) {
-            // Clear previous search
-            table.column(columnIdx).search('');
-
-            // Apply filter for min price
-            if (!isMaxFilter) {
-                table.column(columnIdx).search('^\$?\d\.?\d$|' + '(?!^$)' + '(?=.' + filterValue + ').+', true, false);
-            }
-
-            // Apply filter for max price
-            if (isMaxFilter) {
-                table.column(columnIdx).search('^\$?\d\.?\d$|' + '(?!^$)(?=.-' + maxPriceFilter + ').+', true, false);
-            }
-            table.draw();
+        if (columnIdx == 2) {
+            
         }
     }
 </script>
