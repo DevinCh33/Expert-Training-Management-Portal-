@@ -1,9 +1,16 @@
 ﻿@page
-@model ETMP.Pages.BrowseTrainingModel
+@model ETMP.Pages.BrowseTraining
 @{
     ViewData["Title"] = "Browse for Trainings";
 }
-<script src="/js/site.js" asp-append-version="true"></script>
+
+@using ETMP.Models
+<!-- Include CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+
+<!-- Include JavaScript/jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
 
 <style>
@@ -301,151 +308,90 @@
 
 </style>
 
-<div class="buttonAndSearchBarContainer">
-    <form method="post">
-        <div id="filter-container">
-            <button type="button" id="filter-btn">Filter</button>
-        </div>
-        <div id="searchBarContainer">
-            <input name="search-bar" type="text" id="search-bar" placeholder="Search for Training" class="form-control input-lg" autofocus/>
-            <div id="suggestions-container"></div>
-        </div>
 
 
 
-        <div id="submitContainer">
-            <button name="search-bar-ok" type="button" id="submit-btn">Submit</button>
-        </div>
-        <div id="sortContainer">
-            <button id="sort-btn">Sort By</button>
-            <div class="dropdown-content">
-                <a href="#" class="sort-option">
-                    <span class="icon icon-name"></span>
-                    Name
-                </a>
-                <a href="#" class="sort-option">
-                    <span class="icon icon-date"></span>
-                    Date
-                </a>
-                <a href="#" class="sort-option">
-                    <span class="icon icon-price"></span>
-                    Price
-                </a>
-                <a href="#" class="sort-option">
-                    <span class="icon icon-duration"></span>
-                    Duration
-                </a>
-            </div>
-        </div>
-        <div id="sortAscDesContainer">
-            <label>
-                <input type="radio" name="sortDirection" value="ascendant"> Asc
-            </label>
-            <label>
-                <input type="radio" name="sortDirection" value="descendant"> Desc
-            </label>
-        </div>
-    </form>
-</div>
+<!--
+<form method="get">
+    <label for="sortColumn">Sort By:</label>
+    <select id="sortColumn" name="sortColumn">
+        <option value="TrainingName">Training Name</option>
+        <option value="TrainingPrice">Training Price</option>
+    </select>
+
+    <label for="sortOrder">Order:</label>
+    <select id="sortOrder" name="sortOrder">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+    <button type="submit">Sort</button>
+</form>
+-->
 
 
-<div class="filterInterface">
-    <h1>Filters</h1>
-    <div class="filterOptionsContainer">
-        <form>
-            <label>Categories:</label>
-            <div class="filterOptions">
-                <label>
-                    <input type="checkbox" name="category" value="Business">
-                    Business
-                </label>
-                <label>
-                    <input type="checkbox" name="category" value="IT">
-                    IT
-                </label>
-                <label>
-                    <input type="checkbox" name="category" value="Photography">
-                    Photography
-                </label>
-                <label>
-                    <input type="checkbox" name="category" value="Self-help">
-                    Self-help
-                </label>
-            </div>
-            <div class="filterOptions">
-                <label for="price-range">Price Range:</label>
-                <input type="range" id="price-range" name="price-range" min="500" max="10000" value="1" />
-                <br />
-                <span id="price-display">RM500</span>
-                <br />
-                <label>Discount</label>
-                <span>
-                    <input type="checkbox" name="discount" value="yes">
-                </span>
-            </div>
-            <div class="filterOptions">
-                <label>Date Range:</label>
-                <div>
-                    <label>From:</label>
-                    <input type="date" name="start_date"><br />
-                    <label>To:</label>
-                    <input type="date" name="end_date">
-                </div>
-            </div>
-            <div class="applyFilterBtnContainer">
-                <button id="applyFilterBtn" type="submit">Apply Filters</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="slideshowContainer">
-    <div class="trainingContainer active">
-        <div class="trainingImageContainer">
-            <a href="https://www.w3schools.com/cssref/sel_hover.php"><img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" /></a>
-        </div>
-        @if (Model.trainingModels != null && Model.trainingModels.Count > 0)
+<button onclick="sortTable('Training Name')">Sort by Name</button>
+<button onclick="sortTable('Training Price')">Sort by Price</button>
+<input type="text" onchange="filterTable('Training Category', this.value)" placeholder="Filter by Category">
+<input type="number" id="minPriceFilter" onchange="filterTable('Training Price', this.value)" placeholder="Min Price">
+<input type="number" id="maxPriceFilter" onchange="filterTable('Training Price', this.value)" placeholder="Max Price">
+<table id="myTable">
+    <thead>
+        <tr>
+            <th>Training Id</th>
+            <th>Training Name</th>
+            <th>Training Price</th>
+            <th>Training Itinerary</th>
+            <th>Training Venue</th>
+            <th>Training Category</th>
+            <th>Availability</th>
+            <th>Training Description</th>
+            <!-- add more columns as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var training in Model.Trainings)
         {
-            <div class="trainingDescriptionContainer">
-                <h1>Training Name:@Model.trainingModels[0].TrainingName</h1>
-                <p>Training Category:@Model.trainingModels[0].TrainingCategory </p>
-                <p>Training Description: @Model.trainingModels[0].TrainingDescription</p>
-                <p>Fee:@Model.trainingModels[0].TrainingPrice </p>
-            </div>
+            <tr>
+                <td>@training.Id</td>
+                <td>@training.TrainingName</td>
+                <td>@training.TrainingPrice</td>
+                <td>@training.TrainingItinerary</td>
+                <td>@training.TrainingVenue</td>
+                <td>@training.TrainingCategory</td>
+                <td>@training.Availability</td>
+                <td>@training.TrainingDescription</td>
+            </tr>
         }
-        else
-        {
-            <p>Model.trainingModels.Count = @Model.trainingModels.Count</p>
-        }
-    </div>
-    <div class="trainingContainer">
-        <div class="trainingImageContainer">
-            <a href="https://www.w3schools.com/cssref/sel_hover.php"><img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" /></a>
-        </div>
-        <div class="trainingDescriptionContainer">
-            <h1>Training 2</h1>
-            <p>Training Category: </p>
-            <p>Training Description: Placeholder description</p>
-            <p>Fee: </p>
+    </tbody>
+</table>
 
-        </div>
-    </div>
-    <div class="trainingContainer">
-        <div class="trainingImageContainer">
-            <a href="https://www.w3schools.com/cssref/sel_hover.php"><img src="https://myenglishmatters.com/wp-content/uploads/2020/11/placeholder.png" /></a>
-        </div>
-        <div class="trainingDescriptionContainer">
-            <h1>Training 3</h1>
-            <p>Training Category: </p>
-            <p>Training Description: Placeholder description</p>
-            <p>Fee: </p>
-        </div>
-    </div>
-    <div class="arrow prev">&#10094;</div>
-    <div class="arrow next">&#10095;</div>
-    <div class="dotsContainer">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-    </div>
-</div>
+<script>
+    let table = $('#myTable').DataTable({
+        responsive: true
+    });
+
+    function sortTable(columnName) {
+        table.order([columnIndex(columnName), 'asc']).draw();
+    }
+
+    function columnIndex(columnName) {
+        let headers = table.columns().header();
+        for (let i = 0; i < headers.length; i++) {
+            if (headers[i].innerText === columnName) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function filterTable(columnName, filterValue) {
+        let columnIdx = columnIndex(columnName);
+        let minPriceFilter = $('#minPriceFilter').val();
+        let maxPriceFilter = $('#maxPriceFilter').val();
+        if (columnIdx == 2) {
+            @foreach
+        }
+    }
+</script>
+
