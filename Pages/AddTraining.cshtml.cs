@@ -13,6 +13,7 @@ namespace ETMP.Pages
         public string? TrainingItinerary { get; set; }
         public string? TrainingVenue { get; set; }
         public string? TrainingCategory { get; set; }
+        public string? TrainingDescription { get; set; }
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
 
@@ -50,6 +51,7 @@ namespace ETMP.Pages
             trainingModel.TrainingItinerary = TrainingItinerary;
             trainingModel.TrainingVenue = TrainingVenue;
             trainingModel.TrainingCategory = TrainingCategory;
+            trainingModel.TrainingDescription = TrainingDescription;
             trainingModel.Availability = Availability;
 
             if(Availability == true)

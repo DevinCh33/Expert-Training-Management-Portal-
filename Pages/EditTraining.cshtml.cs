@@ -1,76 +1,53 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using ETMP.Data;
-using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc;
 using ETMP.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+
+#nullable disable
+
 namespace ETMP.Pages
 {
     public class EditTrainingModel : PageModel
     {
-        [BindProperty]
         public TrainingModel Training { get; set; }
-
+        public string? TrainingName { get; set; }
+        public int TrainingPrice { get; set; }
+        public string? TrainingItinerary { get; set; }
+        public string? TrainingDescription { get; set; }
+        public string? TrainingVenue { get; set; }
+        public string? TrainingCategory { get; set; }
+        public Boolean Availability { get; set; }
         private readonly ApplicationDbContext _context;
-        public string SelectedTraining { get; set; }
-        public List<SelectListItem> TrainingNames { get; set; }
-
         public EditTrainingModel(ApplicationDbContext context)
         {
             _context = context;
         }
+        public IActionResult OnGet(int id)
+        {
+            var training = _context.Trainings.FirstOrDefault(t => t.Id == id);
 
-        public IActionResult OnPostAddButton()
-        {
-            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability });
-        }
-        public async Task<IActionResult> OnGetAsync()
-        {
-            TrainingNames = await _context.Trainings
-                .Select(t => new SelectListItem
-                {
-                    Value = t.TrainingName,
-                    Text = t.TrainingName
-                })
-                .ToListAsync();
+            // Bind the retrieved training data to the model properties
+            Training = training;
 
             return Page();
         }
-            /*
-        public void OnGet()
+
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (string.IsNullOrEmpty(training.TrainingName))
+            var trainingToUpdate = await _context.Trainings.FindAsync(id);
+
+            if (await TryUpdateModelAsync<TrainingModel>(
+                trainingToUpdate,
+                "training",   // Prefix for form value.
+                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
             {
-                training.TrainingName = "TestTraining12334";
+                await _context.SaveChangesAsync();
+              
+                return RedirectToPage("./Index");
             }
-
-            if (string.IsNullOrEmpty(training.TrainingItinerary))
-            {
-                training.TrainingItinerary = "TrainingItinerary234545";
-            }
-
-            if (string.IsNullOrEmpty(training.TrainingVenue))
-            {
-                training.TrainingVenue = "TrainingVenue2231";
-            }
-
-            if (string.IsNullOrEmpty(training.TrainingCategory))
-            {
-                training.TrainingCategory = "TrainingCategory123221";
-            }
-
-            TrainingModel trainingModel1 = new TrainingModel();
-            trainingModel1.TrainingName = training.TrainingName;
-            trainingModel1.TrainingPrice = training.TrainingPrice;
-            trainingModel1.TrainingItinerary = training.TrainingItinerary;
-            trainingModel1.TrainingVenue = training.TrainingVenue;
-            trainingModel1.TrainingCategory = training.TrainingCategory;
-            trainingModel1.Availability = training.Availability;
-
-            _context.Trainings.Add(trainingModel1);
-            _context.SaveChanges();
+            return Page();
         }
-            */
     }
 }
+

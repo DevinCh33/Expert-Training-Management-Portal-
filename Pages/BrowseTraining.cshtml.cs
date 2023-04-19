@@ -1,26 +1,31 @@
-using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 
 namespace ETMP.Pages
 {
     public class BrowseTrainingModel : PageModel
     {
-        private readonly ILogger<BrowseTrainingModel> _logger;
-        private readonly ApplicationDbContext _context;
-
-        public List<TrainingModel> Trainings { get; set; }
-
-        public BrowseTrainingModel(ILogger<BrowseTrainingModel> logger, ApplicationDbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
+        public List <TrainingModel> trainingModels = new List<TrainingModel>();
 
         public void OnGet()
         {
-            //Trainings = _context.Trainings.ToList();
+            TrainingModel trainingModel = new TrainingModel();
+            trainingModels = trainingModel.GetTrainingData();
+
+            if (trainingModels != null && trainingModels.Count > 0)
+            {
+                // Access the first item in the list
+                TrainingModel firstTraining = trainingModels[0];
+                // Do something with the item
+            }
         }
+
+
+
     }
 }
+
+
+
 
