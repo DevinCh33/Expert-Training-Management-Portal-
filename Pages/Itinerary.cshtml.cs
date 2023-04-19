@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ETMP.Pages
 {
-    public class Index1Model : PageModel
+    public class ItineraryModel : PageModel
     {
         public void OnGet()
         {
