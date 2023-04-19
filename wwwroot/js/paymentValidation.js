@@ -121,7 +121,37 @@ function checkState() {
     return selected;
 }
 
+// Use a regular expression to validate the zip code format
+function checkZip() { 
+    var zipRegex = /^\d{5}$/;
+    if (!zipRegex.test(zip)) {
+        alert('Please enter a valid zip code.');
+        return false;
+     }
+}
+function checkPostcode() {
+    var postcode = document.getElementById("postcode").value;
+    var pattern = /[0-9]/;
+    var isOk = true;
+    if (postcode == "") {
+        isOk = false;
+        gErrorMsg = gErrorMsg + "Please enter your postcode";
+    }
+    else if (postcode.length > 5) {
+        isOk = false;
+        gErrorMsg = gErrorMsg + "Do not enter more than 5 numbers!";
+    }
 
+    else if (!pattern.test(postcode)) {
+        gErrorMsg = gErrorMsg + "Invalid postcode!";
+        isOk = false;
+    }
+    if (!isOk) {
+        document.getElementById("postcode").style.cssText += "border: 2px solid red";
+    }
+
+    return isOk;
+}
 
 function checkSubject() {
     var subject = document.getElementById("sbj").value;
