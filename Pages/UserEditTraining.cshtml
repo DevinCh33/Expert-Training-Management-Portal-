@@ -16,5 +16,77 @@
 
 <div class="leftMargin">
     <h1>Edit Your Purchased Training Here</h1>
-    <p>List of Training:</p>
+    <h2>List of Training:</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Itinerary
+                </th>
+                <th>
+                    Venue
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Availability
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.EditTraining)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingItinerary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingVenue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingCategory)
+                </td>
+                @if(item.Availability == true)
+                        {
+                <td>
+                    Yes
+                </td>
+                        }
+                        else
+                        {
+                <td>
+                    No
+                </td>
+                        }
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingDescription)
+                </td>
+                <td>
+                    <a asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+                }
+        </tbody>
+    </table>
+
 </div>

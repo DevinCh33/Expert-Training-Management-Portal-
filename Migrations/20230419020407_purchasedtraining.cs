@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class New_migration : Migration
+    public partial class purchasedtraining : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,25 +27,6 @@ namespace ETMP.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Trainings",
-                schema: "Identity",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainingName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainingPrice = table.Column<int>(type: "int", nullable: false),
-                    TrainingItinerary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainingVenue = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Availability = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trainings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,6 +82,33 @@ namespace ETMP.Migrations
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Trainings",
+                schema: "Identity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainingName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingPrice = table.Column<int>(type: "int", nullable: false),
+                    TrainingItinerary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingVenue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Availability = table.Column<bool>(type: "bit", nullable: false),
+                    TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ETMPUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trainings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Trainings_User_ETMPUserId",
+                        column: x => x.ETMPUserId,
+                        principalSchema: "Identity",
+                        principalTable: "User",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +218,12 @@ namespace ETMP.Migrations
                 schema: "Identity",
                 table: "RoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trainings_ETMPUserId",
+                schema: "Identity",
+                table: "Trainings",
+                column: "ETMPUserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
