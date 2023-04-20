@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230420125931_dbWithRoles")]
-    partial class dbWithRoles
+    [Migration("20230420134714_updateDB")]
+    partial class updateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,7 +124,9 @@ namespace ETMP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainingDescription")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingImgURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainingItinerary")

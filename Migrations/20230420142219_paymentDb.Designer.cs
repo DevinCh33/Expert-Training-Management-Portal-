@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230420090316_add 1 url")]
-    partial class add1url
+    [Migration("20230420142219_paymentDb")]
+    partial class paymentDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,9 @@ namespace ETMP.Migrations
                     b.Property<string>("TrainingDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TrainingImgURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TrainingItinerary")
                         .HasColumnType("nvarchar(max)");
 
@@ -140,7 +143,7 @@ namespace ETMP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainings", "Identity");
+                    b.ToTable("TrainingModel", "Identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -223,12 +226,10 @@ namespace ETMP.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -265,12 +266,10 @@ namespace ETMP.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
