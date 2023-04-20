@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:Migrations/20230420140949_ligma.cs
-    public partial class ligma : Migration
-========
-    public partial class test : Migration
->>>>>>>> e554f333f92d62ed1dab3c69b9ae9371a9737bb2:Migrations/20230420134309_test.cs
+    public partial class dbWithRoles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,8 +42,7 @@ namespace ETMP.Migrations
                     TrainingVenue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Availability = table.Column<bool>(type: "bit", nullable: false),
-                    TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrainingImgURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

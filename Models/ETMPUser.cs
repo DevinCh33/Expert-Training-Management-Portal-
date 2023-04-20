@@ -10,5 +10,6 @@ namespace ETMP.Models
         public string ? Gender { get; set; }
         public string ? FirstName { get; set; }
         public string ? LastName { get; set; }
+        public string ? PurchasedTraining { get; set; }
     }
 }
