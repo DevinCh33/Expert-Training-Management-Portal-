@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230420125931_dbWithRoles")]
-    partial class dbWithRoles
+    [Migration("20230420141403_user")]
+    partial class user
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,9 @@ namespace ETMP.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PurchasedTraining")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -124,7 +127,9 @@ namespace ETMP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainingDescription")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingImgURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainingItinerary")

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class dbWithRoles : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,7 +42,8 @@ namespace ETMP.Migrations
                     TrainingVenue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Availability = table.Column<bool>(type: "bit", nullable: false),
-                    TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingImgURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
