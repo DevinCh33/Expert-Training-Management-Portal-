@@ -46,26 +46,27 @@
                 </th>
             </tr>
         </thead>
+        <!--
         <tbody>
-            @foreach (var item in Model.EditTraining)
+            foreach (var item in Model.EditTraining)
                 {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TrainingName)
+                    Html.DisplayFor(modelItem => item.TrainingName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TrainingPrice)
+                    Html.DisplayFor(modelItem => item.TrainingPrice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TrainingItinerary)
+                    Html.DisplayFor(modelItem => item.TrainingItinerary)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TrainingVenue)
+                    Html.DisplayFor(modelItem => item.TrainingVenue)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TrainingCategory)
+                    Html.DisplayFor(modelItem => item.TrainingCategory)
                 </td>
-                @if(item.Availability == true)
+                if(item.Availability == true)
                         {
                 <td>
                     Yes
@@ -78,15 +79,17 @@
                 </td>
                         }
                 <td>
-                    @Html.DisplayFor(modelItem => item.TrainingDescription)
+                    Html.DisplayFor(modelItem => item.TrainingDescription)
                 </td>
                 <td>
-                    <a asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
+                    <a asp-page="./EditTraining" asp-route-id="item.Id">Edit</a> |
+                    <a asp-page="./DeleteTraining" asp-route-id="item.Id">Delete</a>
                 </td>
             </tr>
                 }
         </tbody>
     </table>
+
+        -->
 
 </div>
