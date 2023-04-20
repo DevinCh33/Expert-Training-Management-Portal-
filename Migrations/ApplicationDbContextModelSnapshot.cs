@@ -109,6 +109,36 @@ namespace ETMP.Migrations
                     b.ToTable("User", "Identity");
                 });
 
+            modelBuilder.Entity("ETMP.Models.PaymentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CVV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("cType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("cardNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("expiration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payment", "Identity");
+                });
+
             modelBuilder.Entity("ETMP.Models.TrainingModel", b =>
                 {
                     b.Property<int>("Id")
