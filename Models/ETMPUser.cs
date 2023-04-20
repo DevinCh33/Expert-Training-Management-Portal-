@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace ETMP.Models
 {
@@ -10,5 +10,6 @@ namespace ETMP.Models
         public string ? Gender { get; set; }
         public string ? FirstName { get; set; }
         public string ? LastName { get; set; }
+        public string ? PurchasedTraining { get; set; }
     }
 }
