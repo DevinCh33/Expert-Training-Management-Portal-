@@ -13,6 +13,7 @@ namespace ETMP.Models
         public string? TrainingCategory { get; set; }
         public bool Availability { get; set; }
         public string? TrainingDescription { get; set; }
+        public string? TrainingImgURL { get; set; }
 
     }
 
