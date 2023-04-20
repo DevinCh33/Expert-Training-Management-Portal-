@@ -3,35 +3,60 @@
 @{
     ViewData["Title"] = "EditTraining";
 }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<style>
+    body {
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://theengineeringmindset.com/wp-content/uploads/2019/05/Blueprint-background.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
 
 <div class="leftMargin">
     <h1>Training Editor</h1>
 
     <form id="edit-training" method="post">
-        <label for="training-name">Training Name:</label>
+        <label for="training-name">Training Name:</label><br />
         <input type="text" id="training-name" placeholder="Training Name" required value="@Model.Training.TrainingName" asp-for="Training.TrainingName"><br>
 
+        <br />
         <div class="form-group">
-            <label for="price-range">Price Range: <span id="price-display">RM500</span></label>
-            <input type="range" id="price-range" min="500" max="10000" value="500" asp-for="Training.TrainingPrice">
+            <label for="price-range">Price Range: <span id="price-display">RM500</span></label><br />
+            <input type="range" id="price-range" min="500" max="10000" value="500" asp-for="Training.TrainingPrice"><br />
         </div>
 
+        <br />
         <div class="form-group">
-            <label for="training-itinerary">Training Itinerary:</label>
-            <textarea id="training-itinerary" value="@Model.Training.TrainingItinerary" rows="5" cols="30" required asp-for="Training.TrainingItinerary"></textarea>
+            <label for="training-description">Training Description:</label><br />
+            <textarea id="training-description" value="@Model.Training.TrainingDescription" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea><br />
         </div>
 
-        <label for="training-venue">Training Venue:</label>
+        <br />
+        <div class="form-group">
+            <label for="training-itinerary">Training Itinerary:</label><br/>
+            <textarea id="training-itinerary" value="@Model.Training.TrainingItinerary" rows="5" cols="30" required asp-for="Training.TrainingItinerary"></textarea><br />
+        </div>
+
+        <br />
+        <label for="training-venue">Training Venue:</label><br />
         <input type="text" id="training-venue placeholder="Venue" required value="@Model.Training.TrainingVenue" asp-for="Training.TrainingVenue"><br>
 
-        <label for="training-venue">Training Category:</label>
+        <br />
+        <label for="training-category">Training Category:</label><br />
         <input type="text" id="training-category" placeholder="Category" required value="@Model.Training.TrainingCategory" asp-for="Training.TrainingCategory"><br>
 
+        <br />
         <div>
             <label form="training-availability">
                 Is this training Available?
-                <input type="radio" id="traininig-availability" value="true" asp-for="Training.Availability" /> Yes
-                <input type="radio" id="traininig-availability" value="false" asp-for="Training.Availability" /> No
+                <br /><input type="radio" id="traininig-availability" value="true" asp-for="Training.Availability" /> Yes
+                <br /><input type="radio" id="traininig-availability" value="false" asp-for="Training.Availability" /> No
             </label>
         </div>
 

@@ -1,30 +1,55 @@
+using ETMP.Data;
 using ETMP.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace ETMP.Pages
 {
-    [Authorize(Roles = "Admin, Member")]
-    public class BrowseTrainingModel : PageModel
+    public class BrowseTraining : PageModel
     {
-        public List <TrainingModel> trainingModels = new List<TrainingModel>();
+        public List<TrainingModel> Trainings { get; set; }
+        private readonly ApplicationDbContext _context;
 
-        public void OnGet()
+        public BrowseTraining(ApplicationDbContext context)
         {
-            TrainingModel trainingModel = new TrainingModel();
-            trainingModels = trainingModel.GetTrainingData();
-
-            if (trainingModels != null && trainingModels.Count > 0)
-            {
-                // Access the first item in the list
-                TrainingModel firstTraining = trainingModels[0];
-                // Do something with the item
-            }
+            
+            _context = context;
+            
         }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            Trainings = await _context.Trainings.ToListAsync();
+            return Page();
+        }
+        /*
+        public async Task<IActionResult> OnGetTrainingAsync(string sortColumn = "TrainingName", string sortOrder = "asc")
+        {
+            var trainingsQuery = _context.Trainings.AsQueryable();
+
+            switch (sortColumn.ToLower())
+            {
+                case "trainingname":
+                    trainingsQuery = sortOrder.ToLower() == "desc"
+                        ? trainingsQuery.OrderByDescending(t => t.TrainingName)
+                        : trainingsQuery.OrderBy(t => t.TrainingName);
+                    break;
+                case "trainingprice":
+                    trainingsQuery = sortOrder.ToLower() == "desc"
+                        ? trainingsQuery.OrderByDescending(t => t.TrainingPrice)
+                        : trainingsQuery.OrderBy(t => t.TrainingPrice);
+                    break;
+                    // add more cases for other sortable columns as needed
+            }
+
+            Trainings = await trainingsQuery.ToListAsync();
+
+            return Page();
+        }*/
+
+
     }
 }
-
-
 
 

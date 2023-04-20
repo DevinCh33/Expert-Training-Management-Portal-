@@ -1,7 +1,8 @@
-using ETMP.Data;
+﻿using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ETMP.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,10 @@ builder.Services.AddIdentity<ETMPUser, IdentityRole>(
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,6 +45,12 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+};
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -63,5 +74,6 @@ using (var scope = app.Services.CreateScope())
 
     IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
 }
+//app.MapTrainingModelEndpoints();
 
 app.Run();

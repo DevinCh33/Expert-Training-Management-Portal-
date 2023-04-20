@@ -1,0 +1,120 @@
+﻿@page
+@model EmailModel
+@{
+    ViewData["Title"] = "Manage Email";
+    ViewData["ActivePage"] = ManageNavPages.Email;
+}
+
+<style>
+    /* Add custom styles here */
+    body {
+        background-color: #f8f9fa; /* Set background color */
+        font-family: Arial, sans-serif; /* Set font family */
+    }
+
+    h3 {
+        color: #007bff; /* Set text color */
+        margin-top: 30px; /* Add top margin */
+        text-align: center; /* Center align text */
+    }
+
+    .row {
+        display: flex; /* Use flexbox for row layout */
+        justify-content: center; /* Center align row items */
+        margin-top: 50px; /* Add top margin */
+    }
+
+    .col-md-6 {
+        width: 50%; /* Set column width */
+        padding: 20px; /* Add padding */
+        background-color: #ffffff; /* Set background color */
+        border: 1px solid #dddddd; /* Add border */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
+        text-align: center; /* Center align column items */
+    }
+
+    .form-floating {
+        margin-bottom: 15px; /* Add bottom margin */
+    }
+
+    input.form-control {
+        border-radius: 0; /* Remove input border radius */
+    }
+
+    label.form-label {
+        color: #6c757d; /* Set label color */
+    }
+
+    #update-profile-button {
+        background-color: #28a745; /* Set button background color */
+        border-color: #28a745; /* Set button border color */
+        border-radius: 0; /* Remove button border radius */
+        margin-top: 20px; /* Add top margin */
+        width: 100%; /* Set button width to 100% */
+        padding: 10px; /* Add padding */
+        font-weight: bold; /* Set button font weight */
+        transition: background-color 0.3s, border-color 0.3s; /* Add transition effect */
+    }
+
+        #update-profile-button:hover {
+            background-color: #218838; /* Set button background color on hover */
+            border-color: #218838; /* Set button border color on hover */
+        }
+
+    #change-email-button {
+        background-color: #28a745; /* Set button background color */
+        border-color: #28a745; /* Set button border color */
+        border-radius: 0; /* Remove button border radius */
+        margin-top: 20px; /* Add top margin */
+        width: 100%; /* Set button width to 100% */
+        padding: 10px; /* Add padding */
+        font-weight: bold; /* Set button font weight */
+        transition: background-color 0.3s, border-color 0.3s; /* Add transition effect */
+    }
+
+        #change-email-button:hover {
+            background-color: #218838; /* Set button background color on hover */
+            border-color: #218838; /* Set button border color on hover */
+        }
+</style>
+
+
+
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="email-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @if (Model.IsEmailConfirmed)
+            {
+                <div class="form-floating input-group">
+                    <input asp-for="Email" class="form-control" disabled />
+                        <div class="input-group-append">
+                            <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
+                        </div>
+                    <label asp-for="Email" class="form-label"></label>
+                </div>
+            }
+            else
+            {
+                <div class="form-floating">
+                    <input asp-for="Email" class="form-control" disabled />
+                    <label asp-for="Email" class="form-label"></label>
+                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                </div>
+            }
+            <div class="form-floating">
+                <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" />
+                <label asp-for="Input.NewEmail" class="form-label"></label>
+                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+            </div>
+            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">Change Email</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
