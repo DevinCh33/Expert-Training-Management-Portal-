@@ -1,9 +1,11 @@
 using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin, Member")]
     public class BrowseTrainingModel : PageModel
     {
         public List <TrainingModel> trainingModels = new List<TrainingModel>();
@@ -20,9 +22,6 @@ namespace ETMP.Pages
                 // Do something with the item
             }
         }
-
-
-
     }
 }
 

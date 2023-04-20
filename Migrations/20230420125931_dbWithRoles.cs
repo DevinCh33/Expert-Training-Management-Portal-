@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class New_migration : Migration
+    public partial class dbWithRoles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,12 +36,13 @@ namespace ETMP.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainingName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrainingName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrainingPrice = table.Column<int>(type: "int", nullable: false),
-                    TrainingItinerary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainingVenue = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Availability = table.Column<bool>(type: "bit", nullable: false)
+                    TrainingItinerary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingVenue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Availability = table.Column<bool>(type: "bit", nullable: false),
+                    TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,8 +132,8 @@ namespace ETMP.Migrations
                 schema: "Identity",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -181,8 +182,8 @@ namespace ETMP.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

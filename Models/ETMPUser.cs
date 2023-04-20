@@ -10,5 +10,15 @@ namespace ETMP.Models
         public string? Gender { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+
+        /*
+        public List<TrainingModel> TrainingsPurchased = new List<TrainingModel>();
+
+        public List<TrainingModel> TrainingsList
+        {
+            get { return TrainingsPurchased; }
+            set { TrainingsPurchased = value; }
+        }
+        */
     }
 }
