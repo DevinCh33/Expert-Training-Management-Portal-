@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:Migrations/20230420134714_updateDB.Designer.cs
-    [Migration("20230420134714_updateDB")]
-    partial class updateDB
-========
-    [Migration("20230420134309_test")]
-    partial class test
->>>>>>>> e554f333f92d62ed1dab3c69b9ae9371a9737bb2:Migrations/20230420134309_test.Designer.cs
+    [Migration("20230420143226_addedPaymentIntoDB")]
+    partial class addedPaymentIntoDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,6 +83,9 @@ namespace ETMP.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PurchasedTraining")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -112,6 +110,36 @@ namespace ETMP.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("User", "Identity");
+                });
+
+            modelBuilder.Entity("ETMP.Models.PaymentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CVV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("cType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("cardNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("expiration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payment", "Identity");
                 });
 
             modelBuilder.Entity("ETMP.Models.TrainingModel", b =>

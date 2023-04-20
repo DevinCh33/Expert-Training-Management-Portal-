@@ -6,6 +6,22 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to ETMP</h1>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>You're logged in</p>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <p>You're ETMP admin</p>
+        }
+        else if (User.IsInRole("Member"))
+        {
+            <p>You're ETMP member</p>
+        }
+    }
+
+
+
     <p>Another signature</p>
     <p>Signed by Eiton Ng Zie Teng Commit 2</p>
     <p>Signed by Eiton</p>
