@@ -7,334 +7,68 @@
 @using ETMP.Models
 <!-- Include CSS -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
-
-<!-- Include JavaScript/jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
-
 <style>
-    #filter-container, #searchBarContainer, #submitContainer, #sortContainer, #sortAscDesContainer {
-        display: inline-block;
-        margin: 10px;
-    }
-
-    #sortAscDesContainer {
-        margin-left: 150px;
-    }
-
-
-    #applyFilterBtn {
-        display: block;
-        margin: 0 auto;
-    }
-
-    .item-vertical {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #filter-btn, #search-bar, #submit-btn, #sort-btn, .proceedBtn {
-        font-size: 30px;
-        border-radius: 30px;
-        padding: 10px;
-        width: 100%;
-    }
-
-        #filter-btn:hover, #submit-btn:hover, #sort-btn:hover {
-            background-color: grey;
-        }
-
-    #search-bar {
-        padding-left: 25px;
-    }
-
-    #searchBarContainer {
-        width: 850px;
-    }
-
-    #sortContainer {
+    .slideshow-container {
         position: relative;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
     }
 
-    .dropdown-content {
-        display: none;
+    .slideshow-slide {
         position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         opacity: 0;
-        transition: opacity 0.2s ease-in-out;
-        border-radius: 25px;
+        transition: opacity 1s ease-in-out;
+        display:flex;
+        flex-wrap:wrap;
     }
 
-        .dropdown-content.active {
-            display: block;
+        .slideshow-slide.active {
             opacity: 1;
         }
 
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-            /* Change color of dropdown links on hover */
-            .dropdown-content a:hover {
-                background-color: #ddd;
-                border-radius: 25px;
-            }
-
-    /* Show the dropdown menu on hover */
-    #sort-btn:hover + .dropdown-content {
-        display: block;
-    }
-
-    .icon {
-        display: inline-block;
-        height: 28px;
-        width: 28px;
-        margin-right: 10px;
-        vertical-align: middle;
-    }
-
-    .icon-duration {
-        background-image: url('https://img.icons8.com/material-rounded/24/000000/clock--v1.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 20px 20px;
-    }
-
-    .icon-date {
-        background-image: url('https://img.icons8.com/material-rounded/24/000000/calendar--v1.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 20px 20px;
-    }
-
-    .icon-price {
-        background-image: url('https://img.icons8.com/material-rounded/24/000000/money--v1.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 20px 20px;
-    }
-
-    .icon-name {
-        background-image: url('https://img.icons8.com/material-rounded/24/000000/user--v1.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 20px 20px;
-    }
-
-    .filterInterface {
-        position: fixed;
-        top: 0;
-        left: -300px;
-        height: 100%;
-        width: 300px;
-        background-color: #fff;
-        z-index: 999;
-        transition: transform 0.3s ease-in-out;
-    }
-
-        .filterInterface.visible {
-            transform: translateX(300px);
-        }
-
-    #filter-btn:focus + .filterInterface {
-        transform: translateX(300px);
-    }
-
-    .filterOptions {
-        display: block;
-        font-size: 30px;
-        border: solid;
-        margin: auto;
+    .training-name {
+        font-size: 24px;
         margin-bottom: 10px;
-        margin-left: 10px;
-        padding-left: 20px;
-        padding-bottom: 10px;
-        word-wrap: break-word; /* set the word-wrap property to break-word */
-        overflow: hidden;
     }
 
-    .filterOptionsContainer {
-        font-size: 40px;
-        height: 100%;
-        width: 100%;
+    .training-price {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 
-    .slideshowContainer {
-        position: relative;
-        margin: 0 auto;
-        width: 1200px;
-        height: 800px;
-        overflow: hidden;
+    .training-description {
+        font-size: 16px;
     }
-
-    .trainingContainer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50%;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        border: dotted;
-        display: flex;
-        flex-direction: row;
-    }
-
-        .trainingContainer.active {
-            opacity: 1;
-        }
-
-        .trainingContainer img {
-            height: 50%;
-            width: 50%;
-        }
-
-    .arrow {
-        position: absolute;
-        top: 25%;
-        transform: translateY(-50%);
-        width: 50px;
-        height: 50px;
-        background-color: #000;
-        color: #fff;
-        font-size: 30px;
-        text-align: center;
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .prev {
-        left: 0;
-    }
-
-    .next {
-        right: 0;
-    }
-
-    .arrow:hover {
-        background-color: grey;
-    }
-
-    .dotsContainer {
-        position: absolute;
-        bottom: 400px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .dot {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #bbb;
-        margin: 0 5px;
-        cursor: pointer;
-    }
-
-        .dot.active {
-            background-color: #717171;
-        }
-
-    .trainingImageContainer, .trainingDescriptionContainer {
-        width: 50%;
-    }
-
-        .trainingImageContainer img {
-            padding: 30px;
-            width: 100%;
-            height: 100%;
-        }
-
-    .trainingDescriptionContainer {
-        text-align: justify;
-        padding-top: 30px;
-    }
-
-
-        .trainingDescriptionContainer p {
-            font-size: 20px;
-        }
-
-    #searchBarContainer {
-        position: relative;
-    }
-
-    #suggestions-container {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-top: none;
-        z-index: 999;
-        border-radius: 25px;
-    }
-
-    .suggestion {
-        padding: 10px;
-        cursor: pointer;
-        border-radius: 25px;
-    }
-
-        .suggestion:hover {
-            background-color: #f2f2f2;
-        }
-
-    .highlight {
-        opacity: 0.5;
-    }
-
-    .highlight-text {
-        opacity: 0.5;
-    }
-
-        .highlight-text::after {
-            content: attr(data-after);
-            opacity: 1;
-        }
-
-        .highlight-text::selection {
-            background-color: transparent;
-        }
 
 </style>
 
+<div class="slideshow-container">
+    @foreach (var training in Model.Trainings)
+    {
+        <div class="slideshow-slide">
+            <div class="ssimgContainer">
+                <img src=@training.TrainingImgURL>
+            </div>
+            <div class="ssdescription" onclick="fillSearchBar('@training.TrainingName')">
+                <h3 class="training-name">@training.TrainingName</h3>
+                <p class="training-price">@training.TrainingPrice</p>
+                <p class="training-description">@training.TrainingDescription</p>
+            </div>
+        </div>
+    }
+</div>
 
-
-
-<!--
-<form method="get">
-    <label for="sortColumn">Sort By:</label>
-    <select id="sortColumn" name="sortColumn">
-        <option value="TrainingName">Training Name</option>
-        <option value="TrainingPrice">Training Price</option>
-    </select>
-
-    <label for="sortOrder">Order:</label>
-    <select id="sortOrder" name="sortOrder">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-    </select>
-
-    <button type="submit">Sort</button>
-</form>
--->
-
-
-<button onclick="sortTable('Training Name')">Sort by Name</button>
-<button onclick="sortTable('Training Price')">Sort by Price</button>
-<input type="text" onchange="filterTable('Training Category', this.value)" placeholder="Filter by Category">
-<input type="number" id="minPriceFilter" onchange="filterTable('Training Price', this.value)" placeholder="Min Price">
-<input type="number" id="maxPriceFilter" onchange="filterTable('Training Price', this.value)" placeholder="Max Price">
 <table id="myTable">
     <thead>
         <tr>
@@ -366,32 +100,120 @@
     </tbody>
 </table>
 
+<div>
+    <button id="sortByName">Sort by Name (asc)</button>
+    <button id="sortByPrice">Sort by Price (asc)</button>
+</div>
+
+<div id="priceRangeContainer">
+    <label for="priceRangeSlider">Filter by Price Range:</label>
+    <div id="priceRangeSlider"></div>
+    <span id="priceRangeLabel"></span>
+</div>
+<div>
+    <label for="categoryDropdown">Filter by Category:</label>
+    <select id="categoryDropdown">
+        <option value="">All Categories</option>
+        @foreach (var training in Model.Trainings)
+        {
+            <option value="@training.TrainingCategory">@training.TrainingCategory</option>
+        }
+    </select>
+</div>
+
+
+
+
 <script>
     let table = $('#myTable').DataTable({
         responsive: true
     });
 
-    function sortTable(columnName) {
-        table.order([columnIndex(columnName), 'asc']).draw();
+    let sortByName = 'asc';
+    let sortByPrice = 'asc';
+
+    // Sorting by name
+    $('#sortByName').click(() => {
+        if (sortByName === 'asc') {
+            table.order([1, 'asc']).draw();
+            sortByName = 'desc';
+        } else {
+            table.order([1, 'desc']).draw();
+            sortByName = 'asc';
+        }
+    });
+
+    // Sorting by price
+    $('#sortByPrice').click(() => {
+        if (sortByPrice === 'asc') {
+            table.order([2, 'asc']).draw();
+            sortByPrice = 'desc';
+        } else {
+            table.order([2, 'desc']).draw();
+            sortByPrice = 'asc';
+        }
+    });
+
+    // Set up the slider
+    let priceRangeSlider = $('#priceRangeSlider');
+    let priceRangeLabel = $('#priceRangeLabel');
+
+    priceRangeSlider.slider({
+        range: true,
+        min: 0,
+        max: 15000,
+        values: [0, 15000],
+        step: 10,
+        slide: function (event, ui) {
+            priceRangeLabel.text('$' + ui.values[0] + ' - $' + ui.values[1]);
+            table.draw();
+        }
+    });
+
+    // Add the initial price range label
+    priceRangeLabel.text('$' + priceRangeSlider.slider('values', 0) + ' - $' + priceRangeSlider.slider('values', 1));
+
+    // Filter the table based on the price range slider
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            let minPrice = priceRangeSlider.slider('values', 0);
+            let maxPrice = priceRangeSlider.slider('values', 1);
+            let price = parseFloat(data[2].replace(/[^0-9.-]/g, ''));
+            return price >= minPrice && price <= maxPrice;
+        }
+    );
+
+    // Filter the table based on the category dropdown
+    $('#categoryDropdown').change(() => {
+        let category = $('#categoryDropdown').val();
+        table.column(5).search(category).draw();
+    });
+
+    let slides = document.querySelectorAll('.slideshow-slide');
+    let currentSlide = 0;
+
+    function showSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
     }
 
-    function columnIndex(columnName) {
-        let headers = table.columns().header();
-        for (let i = 0; i < headers.length; i++) {
-            if (headers[i].innerText === columnName) {
-                return i;
-            }
-        }
-        return -1;
+    showSlide(currentSlide);
+
+    setInterval(function () {
+        showSlide(currentSlide + 1);
+    }, 3000);
+
+
+    
+    function fillSearchBar(TrainingName){
+        console.log("Clicked training name: " + TrainingName);
+        $('.dataTables_filter input').val(TrainingName).keyup();
     }
 
-    function filterTable(columnName, filterValue) {
-        let columnIdx = columnIndex(columnName);
-        let minPriceFilter = $('#minPriceFilter').val();
-        let maxPriceFilter = $('#maxPriceFilter').val();
-        if (columnIdx == 2) {
-            @foreach
-        }
-    }
+
 </script>
+
+
+
 
