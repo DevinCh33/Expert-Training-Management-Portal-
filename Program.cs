@@ -12,8 +12,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ETMPUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<ETMPUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddDefaultTokenProviders()
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddIdentity<ETMPUser, IdentityRole>(
+    options =>
+    {
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddRoles<IdentityRole>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -50,6 +62,18 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+
+    var userMgr = services.GetRequiredService<UserManager<ETMPUser>>();
+    var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
+}
 //app.MapTrainingModelEndpoints();
 
 app.Run();
