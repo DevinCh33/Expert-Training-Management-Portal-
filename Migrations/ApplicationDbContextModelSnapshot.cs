@@ -117,14 +117,13 @@ namespace ETMP.Migrations
                     b.Property<bool>("Availability")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ETMPUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("TrainingCategory")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainingDescription")
+                        .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TrainingImgURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainingItinerary")
@@ -140,8 +139,6 @@ namespace ETMP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ETMPUserId");
 
                     b.ToTable("Trainings", "Identity");
                 });
@@ -279,13 +276,6 @@ namespace ETMP.Migrations
                     b.ToTable("UserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("ETMP.Models.TrainingModel", b =>
-                {
-                    b.HasOne("ETMP.Models.ETMPUser", null)
-                        .WithMany("PurchasedTraining")
-                        .HasForeignKey("ETMPUserId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -335,11 +325,6 @@ namespace ETMP.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ETMP.Models.ETMPUser", b =>
-                {
-                    b.Navigation("PurchasedTraining");
                 });
 #pragma warning restore 612, 618
         }
