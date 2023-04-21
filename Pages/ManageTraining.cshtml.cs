@@ -43,6 +43,10 @@ namespace ETMP.Pages
         {
             return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription });
         }
+        public IActionResult OnPostUserButton()
+        {
+            return RedirectToPage("/ConfirmPayment");
+        }
 
         public async Task<IActionResult> OnGetAsync(string name)
         {

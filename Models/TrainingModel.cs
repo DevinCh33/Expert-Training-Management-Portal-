@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ETMP.Data;
+using Newtonsoft.Json;
+
 namespace ETMP.Models
 {
     public class TrainingModel
