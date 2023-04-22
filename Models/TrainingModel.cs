@@ -14,6 +14,8 @@ namespace ETMP.Models
         public bool Availability { get; set; }
         public string? TrainingDescription { get; set; }
         public string? TrainingImgURL { get; set; }
+        public DateTime TrainingStartDateTime { get; set; }
+        public DateTime TrainingEndDateTime { get; set; }
 
     }
 

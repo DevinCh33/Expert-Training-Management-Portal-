@@ -104,6 +104,8 @@
                 <th>Training Category</th>
                 <th>Availability</th>
                 <th>Training Description</th>
+                <th>Training Start Date & Time</th>
+                <th>Training End Date & Time</th>
                 <!-- add more columns as needed -->
             </tr>
         </thead>
@@ -119,6 +121,8 @@
                     <td>@training.TrainingCategory</td>
                     <td>@training.Availability</td>
                     <td>@training.TrainingDescription</td>
+                    <td>@training.TrainingStartDateTime</td>
+                    <td>@training.TrainingEndDateTime</td>
                 </tr>
             }
         </tbody>
@@ -146,6 +150,7 @@
         }
     </select>
 </div>
+
 
 
 
@@ -246,6 +251,9 @@
             console.log('The slideshow container does not have the "active" class applied to it.');
         }
     }
+
+
+
 
 </script>
 

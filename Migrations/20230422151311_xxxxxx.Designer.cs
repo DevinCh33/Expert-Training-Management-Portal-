@@ -4,6 +4,7 @@ using ETMP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230422151311_xxxxxx")]
+    partial class xxxxxx
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +129,7 @@ namespace ETMP.Migrations
                     b.Property<string>("TrainingDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TrainingEndDateTime")
+                    b.Property<DateTime>("TrainingEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TrainingImgURL")
@@ -141,7 +144,7 @@ namespace ETMP.Migrations
                     b.Property<int>("TrainingPrice")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TrainingStartDateTime")
+                    b.Property<DateTime>("TrainingStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TrainingVenue")
