@@ -19,6 +19,7 @@ namespace ETMP.Pages
         public TrainingModel EditTraining { get; set; }
         private string _itinerary;
         private string _venue;
+        public System.DateTime ReleaseDate { get; set; } = System.DateTime.Now;
         private readonly UserManager<ETMPUser> _userManager;
         private readonly SignInManager<ETMPUser> _signInManager;
 
@@ -69,6 +70,8 @@ namespace ETMP.Pages
                 {
                     edited.TrainingItinerary = EditTraining.TrainingItinerary;
                     edited.TrainingVenue = EditTraining.TrainingVenue;
+                    edited.TrainingStartDateTime = EditTraining.TrainingStartDateTime;
+                    edited.TrainingEndDateTime = EditTraining.TrainingEndDateTime;
                 }
             }
             var toSave = JsonConvert.SerializeObject(_trainingList);

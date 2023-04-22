@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230421064407_migrationdsds")]
-    partial class migrationdsds
+    [Migration("20230422165414_pleaseWork")]
+    partial class pleaseWork
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,6 +159,9 @@ namespace ETMP.Migrations
                     b.Property<string>("TrainingDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("TrainingEndDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("TrainingImgURL")
                         .HasColumnType("nvarchar(max)");
 
@@ -170,6 +173,9 @@ namespace ETMP.Migrations
 
                     b.Property<int>("TrainingPrice")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("TrainingStartDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TrainingVenue")
                         .HasColumnType("nvarchar(max)");
