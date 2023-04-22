@@ -1,13 +1,16 @@
 using ETMP.Data;
 using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETMP.Pages
 {
+    //[Authorize(Roles = "Admin,Member")]
     public class BrowseTraining : PageModel
     {
+        
         public List<TrainingModel> Trainings { get; set; }
         private readonly ApplicationDbContext _context;
 

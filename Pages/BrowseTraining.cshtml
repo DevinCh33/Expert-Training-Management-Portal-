@@ -16,8 +16,9 @@
     .slideshow-container {
         position: relative;
         width: 100%;
-        height: 200px;
+        height: 500px;
         overflow: hidden;
+        
     }
 
     .slideshow-slide {
@@ -37,8 +38,9 @@
         }
 
     .training-name {
-        font-size: 24px;
+        font-size: 36px;
         margin-bottom: 10px;
+        
     }
 
     .training-price {
@@ -50,55 +52,79 @@
     .training-description {
         font-size: 16px;
     }
+    .ssimgContainer img {
+        height:100%;
+        width:100%;
+    }
+
+    .slideshow-container, .myTableContainer {
+        margin:10px;
+    }
+
+    .ssimgContainer{
+        width:50%;
+        height:100%;
+    }
+    .ssdescription{
+        padding-left:20px;
+        
+    }
+
+    .slideshow-container, .slideshow-container,.ssimgContainer{
+        border:dashed;
+    }
 
 </style>
 
 <div class="slideshow-container">
     @foreach (var training in Model.Trainings)
     {
-        <div class="slideshow-slide">
+        <div class="slideshow-slide" onclick="fillSearchBar('@training.TrainingName')">
             <div class="ssimgContainer">
                 <img src=@training.TrainingImgURL>
             </div>
-            <div class="ssdescription" onclick="fillSearchBar('@training.TrainingName')">
-                <h3 class="training-name">@training.TrainingName</h3>
-                <p class="training-price">@training.TrainingPrice</p>
-                <p class="training-description">@training.TrainingDescription</p>
+            <div class="ssdescription" >
+                <h1 class="training-name" >@training.TrainingName</h1>
+                <p class="training-price">Price : @training.TrainingPrice</p>
+                <p class="training-description">Description :@training.TrainingDescription</p>
             </div>
         </div>
     }
 </div>
 
-<table id="myTable">
-    <thead>
-        <tr>
-            <th>Training Id</th>
-            <th>Training Name</th>
-            <th>Training Price</th>
-            <th>Training Itinerary</th>
-            <th>Training Venue</th>
-            <th>Training Category</th>
-            <th>Availability</th>
-            <th>Training Description</th>
-            <!-- add more columns as needed -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var training in Model.Trainings)
-        {
+<div class="myTableContainer">
+    <table id="myTable">
+        <thead>
             <tr>
-                <td>@training.Id</td>
-                <td>@training.TrainingName</td>
-                <td>@training.TrainingPrice</td>
-                <td>@training.TrainingItinerary</td>
-                <td>@training.TrainingVenue</td>
-                <td>@training.TrainingCategory</td>
-                <td>@training.Availability</td>
-                <td>@training.TrainingDescription</td>
+                <th>Training Id</th>
+                <th>Training Name</th>
+                <th>Training Price</th>
+                <th>Training Itinerary</th>
+                <th>Training Venue</th>
+                <th>Training Category</th>
+                <th>Availability</th>
+                <th>Training Description</th>
+                <!-- add more columns as needed -->
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var training in Model.Trainings)
+            {
+                <tr>
+                    <td>@training.Id</td>
+                    <td>@training.TrainingName</td>
+                    <td>@training.TrainingPrice</td>
+                    <td>@training.TrainingItinerary</td>
+                    <td>@training.TrainingVenue</td>
+                    <td>@training.TrainingCategory</td>
+                    <td>@training.Availability</td>
+                    <td>@training.TrainingDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 <div>
     <button id="sortByName">Sort by Name (asc)</button>
@@ -125,7 +151,7 @@
 
 
 <script>
-    let table = $('#myTable').DataTable({
+    var table = $('#myTable').DataTable({
         responsive: true
     });
 
@@ -188,7 +214,7 @@
         let category = $('#categoryDropdown').val();
         table.column(5).search(category).draw();
     });
-
+    //slideshow
     let slides = document.querySelectorAll('.slideshow-slide');
     let currentSlide = 0;
 
@@ -205,12 +231,21 @@
     }, 3000);
 
 
-    
-    function fillSearchBar(TrainingName){
-        console.log("Clicked training name: " + TrainingName);
-        $('.dataTables_filter input').val(TrainingName).keyup();
+
+
+    function fillSearchBar(trainingName) {
+            table.search(trainingName).draw();
     }
 
+
+    var slideshowContainer = document.querySelector('.slideshow-slide');
+    function fillSearchBar(trainingName) {
+        if (slideshowContainer.classList.contains('active')) {
+            table.search(trainingName).draw();
+        } else {
+            console.log('The slideshow container does not have the "active" class applied to it.');
+        }
+    }
 
 </script>
 
