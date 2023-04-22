@@ -1,95 +1,36 @@
 ﻿@page
 @model ETMP.Pages.UserEditTrainingModel
+
 @{
     ViewData["Title"] = "UserEditTraining";
 }
 
-<style>
-    header{
-        font-weight: bold;
-    }
+<h1>Edit Purchased Training : @Model.EditTraining.TrainingName</h1>
 
-    .leftMargin{
-        margin-left: 50px;
-    }
-</style>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-floating">
+                <input asp-for="EditTraining.TrainingVenue" class="form-control" />
+                <label asp-for="EditTraining.TrainingVenue" class="form-label"> </label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="EditTraining.TrainingItinerary" class="form-control" />
+                <label asp-for="EditTraining.TrainingItinerary" class="form-label"> </label>
+            </div>
 
-<div class="leftMargin">
-    <h1>Edit Your Purchased Training Here</h1>
-    <h2>List of Training:</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    Itinerary
-                </th>
-                <th>
-                    Venue
-                </th>
-                <th>
-                    Category
-                </th>
-                <th>
-                    Availability
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <!--
-        <tbody>
-            foreach (var item in Model.EditTraining)
-                {
-            <tr>
-                <td>
-                    Html.DisplayFor(modelItem => item.TrainingName)
-                </td>
-                <td>
-                    Html.DisplayFor(modelItem => item.TrainingPrice)
-                </td>
-                <td>
-                    Html.DisplayFor(modelItem => item.TrainingItinerary)
-                </td>
-                <td>
-                    Html.DisplayFor(modelItem => item.TrainingVenue)
-                </td>
-                <td>
-                    Html.DisplayFor(modelItem => item.TrainingCategory)
-                </td>
-                if(item.Availability == true)
-                        {
-                <td>
-                    Yes
-                </td>
-                        }
-                        else
-                        {
-                <td>
-                    No
-                </td>
-                        }
-                <td>
-                    Html.DisplayFor(modelItem => item.TrainingDescription)
-                </td>
-                <td>
-                    <a asp-page="./EditTraining" asp-route-id="item.Id">Edit</a> |
-                    <a asp-page="./DeleteTraining" asp-route-id="item.Id">Delete</a>
-                </td>
-            </tr>
-                }
-        </tbody>
-    </table>
-
-        -->
-
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
