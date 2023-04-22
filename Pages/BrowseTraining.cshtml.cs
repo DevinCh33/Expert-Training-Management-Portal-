@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ETMP.Pages
 {
-    //[Authorize(Roles = "Admin,Member")]
+    [Authorize(Roles = "Admin, Member")]
     public class BrowseTraining : PageModel
     {
         

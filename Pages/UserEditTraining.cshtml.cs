@@ -1,17 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ETMP.Data;
+using ETMP.Models;
+using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace ETMP.Pages
 {
     public class UserEditTrainingModel : PageModel
     {
-        private readonly ILogger<UserEditTrainingModel> _logger;
+        [BindProperty]
+        public TrainingModel EditTraining { get; set; }
+        private string _itinerary;
+        private string _venue;
+        private readonly UserManager<ETMPUser> _userManager;
+        private readonly SignInManager<ETMPUser> _signInManager;
 
-        public UserEditTrainingModel(ILogger<UserEditTrainingModel> logger)
+        public UserEditTrainingModel(UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
-            _logger = logger;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
-        public void OnGet()
+
+        public string Itinerary
         {
+            get { return _itinerary; }
+            set { _itinerary = value; }
+        }
+        public string Venue
+        {
+            get { return _venue; }
+            set { _venue = value; }
+        }
+
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user.PurchasedTraining != null)
+            {
+                var _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
+
+                foreach(var i in _trainingList)
+                {
+                    if(i.Id == id)
+                    {
+                        EditTraining = i; 
+                        break;
+                    }
+                }
+            }
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
+
+            foreach (var edited in _trainingList)
+            {
+                if (edited.Id == id)
+                {
+                    edited.TrainingItinerary = EditTraining.TrainingItinerary;
+                    edited.TrainingVenue = EditTraining.TrainingVenue;
+                }
+            }
+            var toSave = JsonConvert.SerializeObject(_trainingList);
+            user.PurchasedTraining = toSave;
+
+            await _userManager.UpdateAsync(user);
+            await _signInManager.RefreshSignInAsync(user);
+
+            return RedirectToPage("./UserListOfTraining");
         }
     }
 }

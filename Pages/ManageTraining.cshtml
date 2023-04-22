@@ -102,6 +102,7 @@
         </div>
 
         <input type="submit" value="Add Training" asp-page-handler="AddButton">
+        <input type="submit" value="Test Add Training to User" asp-page-handler="UserButton">
     </form>
     <br />
 </div>
@@ -172,7 +173,8 @@
                         </td>
                         <td>
                             <a asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
+                            <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a> |
+                            <a asp-page="./ConfirmPayment" asp-route-id="@item.Id">UserTest</a>
                         </td>
                     </tr>
                 }

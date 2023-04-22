@@ -5,7 +5,7 @@
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class modifyurl : Migration
+    public partial class restart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

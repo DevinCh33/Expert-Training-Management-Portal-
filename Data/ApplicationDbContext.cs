@@ -9,6 +9,8 @@ namespace ETMP.Data
     {
         public DbSet<TrainingModel> Trainings { get; set; }
 
+        public DbSet<PaymentModel> Payment { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

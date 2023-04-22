@@ -1,0 +1,20 @@
+﻿@page
+@model ETMP.Pages.ConfirmPaymentModel
+
+@{
+    ViewData["Title"] = "ConfirmPayment";
+}
+
+<h1>Please Wait a Moment</h1>
+
+<hr />
+
+<div class="text-center mt-100">
+    <h1>Updating...</h1>
+</div>
+
+<meta http-equiv="refresh" content="1; ./TrainingPurchased?Training=@Model.PurchasedTraining" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
