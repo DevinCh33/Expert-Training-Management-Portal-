@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class pleaseWork : Migration
+    public partial class dcvbgfdf : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

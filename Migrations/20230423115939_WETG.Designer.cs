@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230422165414_pleaseWork")]
-    partial class pleaseWork
+    [Migration("20230423115939_WETG")]
+    partial class WETG
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
