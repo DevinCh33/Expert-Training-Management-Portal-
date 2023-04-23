@@ -20,16 +20,17 @@
                 <label asp-for="EditTraining.TrainingItinerary" class="form-label"> </label>
             </div>
             <div class="form-floating">
-                <input type="datetime-local" asp-for="EditTraining.TrainingStartDateTime" value="@Model.ReleaseDate" class="form-control" />
+                <input type="datetime-local" id="StartFrom" asp-for="EditTraining.TrainingStartDateTime" value="@Model.ReleaseDate" class="form-control" />
                 <label asp-for="EditTraining.TrainingStartDateTime" class="form-label"> </label>
             </div>
             <div class="form-floating">
-                <input type="datetime-local" asp-for="EditTraining.TrainingEndDateTime" value="@Model.ReleaseDate" class="form-control" />
+                <input type="datetime-local" id="EndOn" asp-for="EditTraining.TrainingEndDateTime" value="@Model.ReleaseDate" class="form-control" />
                 <label asp-for="EditTraining.TrainingEndDateTime" class="form-label"> </label>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <span asp-validation-for="ErrorMsg" class="text-danger"></span>
+                <input type="submit" id="submitButton" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -39,6 +40,28 @@
     <a asp-page="./Index">Back to List</a>
 </div>
 
+<script>
+    const startFromInput = document.getElementById('StartFrom');
+    const endOnInput = document.getElementById('EndOn');
+
+    startFromInput.addEventListener('change', checkDateRange);
+    endOnInput.addEventListener('change', checkDateRange);
+
+    function checkDateRange() {
+        const startFromValue = new Date(startFromInput.value);
+        const endOnValue = new Date(endOnInput.value);
+
+        if (startFromValue > endOnValue) {
+            submitButton.disabled = true;
+            alert('End date must be greater than start date.');
+        } else {
+            submitButton.disabled = false;
+        }
+    }
+
+</script>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

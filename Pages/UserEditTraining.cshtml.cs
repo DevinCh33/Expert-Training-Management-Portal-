@@ -17,8 +17,7 @@ namespace ETMP.Pages
     {
         [BindProperty]
         public TrainingModel EditTraining { get; set; }
-        private string _itinerary;
-        private string _venue;
+        public string ErrorMsg { get; set; }
         public System.DateTime ReleaseDate { get; set; } = System.DateTime.Now;
         private readonly UserManager<ETMPUser> _userManager;
         private readonly SignInManager<ETMPUser> _signInManager;
@@ -27,17 +26,6 @@ namespace ETMP.Pages
         {
             _userManager = userManager;
             _signInManager = signInManager;
-        }
-
-        public string Itinerary
-        {
-            get { return _itinerary; }
-            set { _itinerary = value; }
-        }
-        public string Venue
-        {
-            get { return _venue; }
-            set { _venue = value; }
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -63,6 +51,12 @@ namespace ETMP.Pages
         {
             var user = await _userManager.GetUserAsync(User);
             var _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
+
+            if(EditTraining.TrainingStartDateTime >= EditTraining.TrainingEndDateTime)
+            {
+                ErrorMsg = "Please select an appropriate date";
+                return Page();
+            }
 
             foreach (var edited in _trainingList)
             {

@@ -64,7 +64,6 @@
         <label for="training-options">Select an action:</label>
         <select id="training-options" name="training-options">
             <option value="add-training">Add Training</option>
-            <option value="remove-training">Remove Training</option>
             <option value="edit-training">Edit Training</option>
         </select>
     </form>
@@ -74,8 +73,10 @@
         <input type="text" id="training-name" placeholder="Training Name" required asp-for="Training.TrainingName"><br>
 
         <div class="form-group">
-            <label for="price-range">Price Range: <span id="price-display">RM500</span></label>
-            <input type="range" id="price-range" min="500" max="10000" value="500" asp-for="Training.TrainingPrice">
+            <label for="price-range">Price Range: RM 
+                <input type="number" id="price-value" value="500" asp-for="Training.TrainingPrice">
+            </label>
+            
         </div>
 
         <div class="form-group">
@@ -102,7 +103,6 @@
         </div>
 
         <input type="submit" value="Add Training" asp-page-handler="AddButton">
-        <input type="submit" value="Test Add Training to User" asp-page-handler="UserButton">
     </form>
     <br />
 </div>
@@ -173,8 +173,7 @@
                         </td>
                         <td>
                             <a asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a> |
-                            <a asp-page="./ConfirmPayment" asp-route-id="@item.Id">UserTest</a>
+                            <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
@@ -183,3 +182,23 @@
 
     </form>
 </div>
+
+<script>
+
+    // Broken when used along the sort by button in browse training
+    // Dropdown menu selection that will show the respective form based on the selection for administrator training manager (Add/Remove/Edit)
+    var dropdown = document.getElementById("training-options");
+    var addForm = document.getElementById("add-training");
+    //var removeForm = document.getElementById("remove-training");
+    var editForm = document.getElementById("edit-training");
+
+    dropdown.addEventListener("change", function () {
+        if (dropdown.value === "edit-training") {
+            addForm.style.display = "none";
+            editForm.style.display = "block";
+        } else if (dropdown.value === "add-training") {
+            addForm.style.display = "block";
+            editForm.style.display = "none";
+        }
+    });
+ </script>
