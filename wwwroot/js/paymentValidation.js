@@ -9,11 +9,12 @@ function validateForm() {
     var fnameOK = chkFullName();
     var emailOK = chkEmail();
     var addressOk = checkAddress();
-    var cityOk = checkCity();
     var stateOk = checkState();
-    var postcodeOk = checkPostcode();
-    var subjectOk = checkSubject();
-    if (fnameOK && emailOK && addressOk && cityOk && stateOk && postcodeOk && subjectOk) {
+    var zipOk = checkZip();
+    var cnameOK = chkCardName();
+    var cardnumberOk = checkCardNumber();
+    var expmonthOk = checkExpMonth();
+    if (fnameOK && emailOK && addressOk && zipOk && stateOk && cnameOK && cardnumberOk && expmonthOk) {
         isAllOK = true;
     }
     else {
