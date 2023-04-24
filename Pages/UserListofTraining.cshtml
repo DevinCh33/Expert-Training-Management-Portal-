@@ -1,0 +1,87 @@
+﻿@page
+@model ETMP.Pages.UserListOfTrainingModel
+@{
+    ViewData["Title"] = "UserListOfTraining";
+}
+
+<style>
+    header{
+        font-weight: bold;
+    }
+
+    .leftMargin{
+        margin-left: 50px;
+    }
+</style>
+
+<div class="leftMargin">
+    <h1>Edit Your Purchased Training Here</h1>
+    <h2>List of Training:</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Venue
+                </th>
+                <th>
+                    Itinerary
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TrainingList)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingVenue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingItinerary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingStartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingEndDateTime)
+                </td>
+                <td>
+                    <a asp-page="./UserEditTraining" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+                }
+        </tbody>
+    </table>
+</div>

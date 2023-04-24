@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class addedPaymentIntoDB : Migration
+    public partial class dcvbgfdf : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,7 +61,9 @@ namespace ETMP.Migrations
                     TrainingCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Availability = table.Column<bool>(type: "bit", nullable: false),
                     TrainingDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrainingImgURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TrainingImgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingStartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TrainingEndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

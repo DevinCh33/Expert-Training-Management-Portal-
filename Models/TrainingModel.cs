@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ETMP.Data;
+using Newtonsoft.Json;
+
 namespace ETMP.Models
 {
     public class TrainingModel
@@ -14,6 +16,10 @@ namespace ETMP.Models
         public bool Availability { get; set; }
         public string? TrainingDescription { get; set; }
         public string? TrainingImgURL { get; set; }
+        public DateTime TrainingStartDateTime { get; set; }
+        public DateTime TrainingEndDateTime { get; set; }
+
+        public TimeSpan Duration => TrainingEndDateTime - TrainingStartDateTime;
 
     }
 

@@ -7,11 +7,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ETMP.Data;
 using ETMP.Models;
+using Newtonsoft.Json;
 
 namespace ETMP.Pages
 {
     public class ConfirmPaymentModel : PageModel
     {
+        [BindProperty]
+        public TrainingModel Training { get; set; }
+        public string ? PurchasedTraining { get; set; }
+        public string? TrainingName { get; set; }
+        public int TrainingPrice { get; set; }
+        public string? TrainingItinerary { get; set; }
+        public string? TrainingDescription { get; set; }
+        public string? TrainingVenue { get; set; }
+        public string? TrainingCategory { get; set; }
+        public Boolean Availability { get; set; }
         private readonly ETMP.Data.ApplicationDbContext _context;
 
         public ConfirmPaymentModel(ETMP.Data.ApplicationDbContext context)
@@ -19,27 +30,32 @@ namespace ETMP.Pages
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
+            var training = _context.Trainings.FirstOrDefault(t => t.Id == id);
+
+            // Bind the retrieved training data to the model properties
+            Training = training;
+
+            PurchasedTraining = JsonConvert.SerializeObject(Training);
+
             return Page();
         }
 
-        [BindProperty]
-        public TrainingModel TrainingModel { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-          if (!ModelState.IsValid || _context.Trainings == null || TrainingModel == null)
+            var trainingToUpdate = await _context.Trainings.FindAsync(id);
+
+            if (await TryUpdateModelAsync<TrainingModel>(
+                trainingToUpdate,
+                "training",   // Prefix for form value.
+                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
             {
-                return Page();
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
             }
-
-            _context.Trainings.Add(TrainingModel);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
