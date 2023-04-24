@@ -1,5 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Sprint 1 ready (done)
 #nullable disable
 
 using ETMP.Models;
@@ -13,6 +12,7 @@ namespace ETMP.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
+        // Inject Dependency of Identity Framework and Logger
         private readonly SignInManager<ETMPUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
@@ -22,16 +22,9 @@ namespace ETMP.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
+        // Data-binding with cshtml
         [BindProperty]
         public InputModel Input { get; set; }
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        public string ReturnUrl { get; set; }
-
-        [TempData]
-        public string ErrorMessage { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -41,23 +34,16 @@ namespace ETMP.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
-
-            [Display(Name = "Remember me?")]
-            public bool RememberMe { get; set; }
         }
+
+        // Able to return to the previously working page
+        public string ReturnUrl { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
-            }
-
             returnUrl ??= Url.Content("~/");
 
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
         }
@@ -66,22 +52,17 @@ namespace ETMP.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             if (ModelState.IsValid)
             {
-                // Enabled password failures to trigger account lockout
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                // Enabled password failures to trigger account lockout (Definition of Done)
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                // Lock out account after multiple failed login (Definition of Done)
+
+                // User account will be locked out account after multiple failed login 
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
@@ -89,6 +70,7 @@ namespace ETMP.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    // Server-side validation error
                     ModelState.AddModelError(string.Empty, "Wrong password or email, please try again");
                     return Page();
                 }

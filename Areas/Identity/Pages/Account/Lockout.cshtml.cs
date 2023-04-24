@@ -2,7 +2,7 @@
 
 namespace ETMP.Areas.Identity.Pages.Account
 {
-    public class ForgotPasswordConfirmation : PageModel
+    public class LockoutModel : PageModel
     {
         public void OnGet()
         {

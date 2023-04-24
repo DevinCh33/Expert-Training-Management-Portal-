@@ -1,30 +1,34 @@
-﻿using ETMP.Data;
+using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ETMP.Pages;
+using System.Configuration;
+using ETMP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//builder.Services.AddDefaultIdentity<ETMPUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddDefaultTokenProviders()
-//    .AddRoles<IdentityRole>()
-//    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddIdentity<ETMPUser, IdentityRole>(
-    options =>
-    {
+builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+    options.Lockout.MaxFailedAccessAttempts = 3;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddRoles<IdentityRole>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IMailService, ETMP.Services.MailService>();
 
 builder.Services.AddRazorPages();
 

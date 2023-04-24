@@ -1,7 +1,7 @@
 ﻿@page
-@model ForgotPasswordModel
+@model ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Forgot your password?";
+    ViewData["Title"] = "Resend email confirmation";
     Layout = "~/Pages/Shared/_LoginLayout.cshtml";
 }
 
@@ -47,10 +47,10 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="input-simplified" autocomplete="username" aria-required="true" placeholder="Email"/>
+                    <input asp-for="Input.Email" class="input-simplified" autocomplete="username" aria-required="true" placeholder="Email" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary">Reset Password</button>
+                <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
             </form>
         </div>
     </div>

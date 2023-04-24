@@ -1,7 +1,7 @@
 ﻿@page
-@model ResetPasswordConfirmationModel
+@model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Reset password confirmation";
+    ViewData["Title"] = "Confirm email";
     Layout = "~/Pages/Shared/_LoginLayout.cshtml";
 }
 
@@ -36,11 +36,10 @@
     </div>
     <div class="mb-3">
         <p>
-            Your password has been resetted.
+            Your email has been confirmed, you may now sign in.
         </p>
     </div>
     <div>
         <button type="button" class="w-100 btn btn-lg btn-primary" onclick="location.href='./Login';">Sign In</button>
     </div>
 </div>
-
