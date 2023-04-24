@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:Migrations/20230420153058_paymentConnectDB.cs
-    public partial class paymentConnectDB : Migration
-========
-    public partial class dcvbgfdf : Migration
->>>>>>>> 23a23f22c46b0412aef530ba78775d9d018c180f:Migrations/20230423115452_dcvbgfdf.cs
+    public partial class dbUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

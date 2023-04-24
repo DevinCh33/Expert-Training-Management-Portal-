@@ -1,13 +1,10 @@
 ﻿#nullable disable
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace ETMP.Areas.Identity.Pages.Account.Manage
 {
