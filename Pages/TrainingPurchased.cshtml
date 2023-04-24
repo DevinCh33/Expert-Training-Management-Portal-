@@ -1,0 +1,29 @@
+﻿@page
+@model ETMP.Pages.TrainingPurchasedModel
+@{
+    ViewData["Title"] = "TrainingPurchased";
+}
+
+<div class="text-center">
+    <h1>Purchase Successful</h1>
+    <h2>Thank you for purchasing @Model.PurchasedTraining.TrainingName</h2>
+
+    <p>String Data: @Model.data</p>
+
+    <h2>Purchased Training Object</h2>
+    <p>@Model.PurchasedTraining.TrainingName</p>
+    <p>@Model.PurchasedTraining.TrainingPrice</p>
+    <p>@Model.PurchasedTraining.TrainingCategory</p>
+    <p>@Model.PurchasedTraining.TrainingDescription</p>
+    <p>@Model.PurchasedTraining.TrainingItinerary</p>
+    <p>@Model.PurchasedTraining.Availability</p>
+
+    <hr />
+
+    <p>@Model.userdata</p>
+
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>

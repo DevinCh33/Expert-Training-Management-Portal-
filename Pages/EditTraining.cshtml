@@ -26,8 +26,8 @@
 
         <br />
         <div class="form-group">
-            <label for="price-range">Price Range: <span id="price-display">RM500</span></label><br />
-            <input type="range" id="price-range" min="500" max="10000" value="500" asp-for="Training.TrainingPrice"><br />
+            <label for="price-range">Price: RM </label>
+            <input type="number" id="price-value" value="500" asp-for="Training.TrainingPrice"><br />
         </div>
 
         <br />
@@ -62,3 +62,15 @@
         <input type="submit" value="Edit Training" asp-page-handler="EditTraining">
     </form>
 </div>
+
+<script>
+    var priceSlider = document.getElementById("price-slider");
+    var priceDisplay = document.getElementById("price-display");
+
+    priceSlider.addEventListener('change', changeDisplayValue);
+
+    function changeDisplayValue(){
+        var priceSliderValue = priceSlider.value;
+        alert("Price Changed");
+        var priceDisplay.value = "RM" + priceSliderValue;
+</script>
