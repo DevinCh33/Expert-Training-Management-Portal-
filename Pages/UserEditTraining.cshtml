@@ -29,8 +29,16 @@
             </div>
 
             <div class="form-group">
-                <span asp-validation-for="ErrorMsg" class="text-danger"></span>
-                <input type="submit" id="submitButton" value="Save" class="btn btn-primary" />
+                <div id="edit-button" style="display:block;">
+                    <input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save">
+                </div>
+                <div id="confirmation-button" style="display:none;">
+                    <p>
+                        Are you sure?
+                        <input type="submit" id="submitButton" value="Yes" class="btn btn-primary" />
+                        <input type="submit" value="No" class="btn btn-danger" asp-page-handler="CancelButton">
+                    </p>
+                </div>
             </div>
         </form>
     </div>
@@ -57,6 +65,14 @@
         } else {
             submitButton.disabled = false;
         }
+    }
+
+    function onButtonClick() {
+        var addButton = document.getElementById("edit-button");
+        var confirmationButton = document.getElementById("confirmation-button");
+
+        addButton.style.display = "none";
+        confirmationButton.style.display = "block";
     }
 
 </script>

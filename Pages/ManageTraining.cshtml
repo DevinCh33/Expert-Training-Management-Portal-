@@ -101,10 +101,17 @@
                 <input type="radio" id="traininig-availability" value="false" asp-for="Training.Availability" /> No
             </label>
         </div>
-
-        <input type="submit" value="Add Training" asp-page-handler="AddButton">
+        <div id="add-button" style="display:block;">
+            <input type="button" onclick="onButtonClick()" value="Add Training">
+        </div>
+        <div id="confirmation-button" style="display:none;">
+            <p>
+                Are you sure? 
+                <input type="submit" value="Yes" asp-page-handler="AddButton">
+                <input type="submit" value="No" asp-page-handler="CancelButton">
+            </p>
+        </div>
     </form>
-    <br />
 </div>
 <div class="leftMargin">
     <form id="edit-training" method="post" style="display:none;">
@@ -201,4 +208,13 @@
             editForm.style.display = "none";
         }
     });
+
+
+    function onButtonClick(){
+        var addButton = document.getElementById("add-button");
+        var confirmationButton = document.getElementById("confirmation-button");
+
+        addButton.style.display = "none";
+        confirmationButton.style.display = "block";
+    }
  </script>

@@ -31,6 +31,7 @@ namespace ETMP.Pages
         {
             _context = context;
         }
+
         public IActionResult OnPostRedirectToNewPage()
         {
             // Set the Id in TempData
@@ -39,13 +40,15 @@ namespace ETMP.Pages
             // Redirect to the new page
             return RedirectToPage("/EditTraining");
         }
+
         public IActionResult OnPostAddButton()
         {
             return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription });
         }
-        public IActionResult OnPostUserButton()
+
+        public IActionResult OnPostCancelButton()
         {
-            return RedirectToPage("/ConfirmPayment");
+            return RedirectToPage("/ManageTraining");
         }
 
         public async Task<IActionResult> OnGetAsync(string name)

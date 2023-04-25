@@ -9,6 +9,7 @@ using System.Data;
 
 namespace ETMP.Pages
 {
+
     [Authorize(Roles = "Admin, Member")]
     public class UserListOfTrainingModel : PageModel
     {

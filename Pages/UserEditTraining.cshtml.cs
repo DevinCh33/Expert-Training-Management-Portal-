@@ -47,6 +47,12 @@ namespace ETMP.Pages
             }
             return Page();
         }
+
+        public IActionResult OnPostCancelButton()
+        {
+            return RedirectToPage("/UserListOfTraining");
+        }
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             var user = await _userManager.GetUserAsync(User);
