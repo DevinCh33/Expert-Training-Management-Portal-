@@ -59,18 +59,25 @@
             </label>
         </div>
 
-        <input type="submit" value="Edit Training" asp-page-handler="EditTraining">
+        <div id="edit-button" style="display:block;">
+            <input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save">
+        </div>
+        <div id="confirmation-button" style="display:none;">
+            <p>
+                Are you sure?
+                <input type="submit" id="submitButton" value="Yes" class="btn btn-primary" />
+                <input type="submit" value="No" class="btn btn-danger" asp-page-handler="CancelButton">
+            </p>
+        </div>
     </form>
 </div>
 
 <script>
-    var priceSlider = document.getElementById("price-slider");
-    var priceDisplay = document.getElementById("price-display");
+    function onButtonClick() {
+        var addButton = document.getElementById("edit-button");
+        var confirmationButton = document.getElementById("confirmation-button");
 
-    priceSlider.addEventListener('change', changeDisplayValue);
-
-    function changeDisplayValue(){
-        var priceSliderValue = priceSlider.value;
-        alert("Price Changed");
-        var priceDisplay.value = "RM" + priceSliderValue;
+        addButton.style.display = "none";
+        confirmationButton.style.display = "block";
+    }
 </script>

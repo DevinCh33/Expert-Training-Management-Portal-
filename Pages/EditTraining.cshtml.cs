@@ -33,6 +33,11 @@ namespace ETMP.Pages
             return Page();
         }
 
+        public IActionResult OnPostCancelButton()
+        {
+            return RedirectToPage("/ManageTraining");
+        }
+
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var trainingToUpdate = await _context.Trainings.FindAsync(id);
