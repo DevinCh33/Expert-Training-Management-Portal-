@@ -20,7 +20,7 @@ namespace ETMP.Pages
             _context = context;
         }
 
-        public void OnGet()
+       /* public void OnGet()
         {
             PaymentModel payment = new PaymentModel();
             payment.cardNo = cardNo;
@@ -29,6 +29,6 @@ namespace ETMP.Pages
 
             _context.Payment.Add(payment);
             _context.SaveChanges();
-        }
+        }*/
     }
 }
