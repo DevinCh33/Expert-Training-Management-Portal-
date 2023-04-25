@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
@@ -21,7 +21,7 @@ builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
     options.Lockout.AllowedForNewUsers = true;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
     options.Lockout.MaxFailedAccessAttempts = 3;
-    })
+})
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddRoles<IdentityRole>()
     .AddDefaultUI()
@@ -71,12 +71,12 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<ApplicationDbContext>();
-    //context.Database.Migrate();
+    context.Database.Migrate();
 
     var userMgr = services.GetRequiredService<UserManager<ETMPUser>>();
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    //IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
+    IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
 }
 
 app.Run();
