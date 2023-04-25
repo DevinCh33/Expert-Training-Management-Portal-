@@ -1,7 +1,7 @@
 ﻿@page
-@model ResetPasswordConfirmationModel
+@model LockoutModel
 @{
-    ViewData["Title"] = "Reset password confirmation";
+    ViewData["Title"] = "Locked out";
     Layout = "~/Pages/Shared/_LoginLayout.cshtml";
 }
 
@@ -31,16 +31,15 @@
 </body>
 
 <div class="container-small">
-    <div class="mb-3">
+    <div>
         <h4>@ViewData["Title"]</h4>
     </div>
-    <div class="mb-3">
+    <div>
         <p>
-            Your password has been resetted.
+            This account has been locked out, please try again in 3 minutes.
         </p>
     </div>
     <div>
         <button type="button" class="w-100 btn btn-lg btn-primary" onclick="location.href='./Login';">Sign In</button>
     </div>
 </div>
-
