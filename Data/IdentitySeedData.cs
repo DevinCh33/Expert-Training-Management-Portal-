@@ -39,7 +39,8 @@ namespace ETMP.Data
                     UserName = "admin@internal",
                     Email = "admin@internal",
                     PhoneNumber = "1234567890",
-                    PasswordHash = hasher.HashPassword(null, internalPassword)
+                    PasswordHash = hasher.HashPassword(null, internalPassword),
+                    EmailConfirmed = true
                 };
 
                 var result = await userManager.CreateAsync(user);
@@ -58,7 +59,8 @@ namespace ETMP.Data
                     UserName = "test@internal",
                     Email = "test@internal",
                     PhoneNumber = "2468101214",
-                    PasswordHash = hasher.HashPassword(null, internalPassword)
+                    PasswordHash = hasher.HashPassword(null, internalPassword),
+                    EmailConfirmed = true
                 };
 
                 var result = await userManager.CreateAsync(user);

@@ -9,26 +9,29 @@ namespace ETMP.Pages
     {
         private readonly ApplicationDbContext _context;
 
-        public string cType { get; set; }
-        public string username { get; set; }
-        public int cardNo { get; set; }
-        public int expiration { get; set; }
-        public int CVV { get; set; }
-
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
+        public PaymentModel Payment { get; set; }
         public void OnGet()
         {
-            PaymentModel payment = new PaymentModel();
-            payment.cardNo = cardNo;
-            payment.expiration = expiration;
-            payment.CVV = CVV;
+        }
 
-            _context.Payment.Add(payment);
-            _context.SaveChanges();
+        public async Task<IActionResult> OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                await _context.Payment.AddAsync(Payment);
+                await _context.SaveChangesAsync();
+                return RedirectToPage();
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }
