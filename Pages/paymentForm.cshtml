@@ -1,10 +1,7 @@
 ﻿@page
-@model ETMP.Pages.paymentFormModel
+@model ETMP.Pages.PaymentFormModel
 @{
     ViewData["Title"] = "Payment Form";
-}
-@section Scripts {
-    <script type="text/javascript" src="@Url.Content("../MyFolder/CareerHelper.js")"></script> 
 }
 
     <style>
@@ -69,7 +66,7 @@
         }
 
         .btn {
-          background-color: #04AA6D;
+        background-color: #4169E1;
           color: white;
           padding: 12px;
           margin: 10px 0;
@@ -81,7 +78,7 @@
         }
 
         .btn:hover {
-          background-color: #45a049;
+            background-color: #2196F3;
         }
 
         a {
@@ -100,21 +97,22 @@
        
         
         </style>
+    <script type="text/javascript" src="./js/paymentValidation.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+
     <title>Payment Form</title>
 
     <h1 style="text-align: center;">Payment Details</h1>
     <div class="row">
         <div class="col-75">
             <div class="container">
-                <form action="/action_page.php">
+                <form action="paymentForm.cshtml">
 
                     <div class="row">
                         <div class="col-50">
                             <h3>Billing Address</h3>
                             <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                            <input type="text" id="fname" name="fname" placeholder="John M. Doe">
                             <label for="email"><i class="fa fa-envelope"></i> Email</label>
                             <input type="text" id="email" name="email" placeholder="john@example.com">
                             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
@@ -157,14 +155,14 @@
                                 </div>
                                 <div class="col-50">
                                     <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" placeholder="352">
+                                    <input type="number" id="cvv" name="cvv" placeholder="352">
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    
-                    <input type="submit" value="Continue to checkout" class="btn">
+
+                <input type="submit" value="Submit" class="btn" onclick="validateForm()">
                 </form>
             </div>
         </div>

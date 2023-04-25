@@ -1,22 +1,14 @@
-﻿#nullable disable
+﻿// Sprint 1 ready (done)
+#nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 
 namespace ETMP.Areas.Identity.Pages.Account
 {
@@ -27,30 +19,29 @@ namespace ETMP.Areas.Identity.Pages.Account
         private readonly IUserStore<ETMPUser> _userStore;
         private readonly IUserEmailStore<ETMPUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly Services.IMailService _mailService;
 
         public RegisterModel(
             UserManager<ETMPUser> userManager,
             IUserStore<ETMPUser> userStore,
             SignInManager<ETMPUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            Services.IMailService mailService)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            _mailService = mailService;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
-
+        // Store last active page
         public string ReturnUrl { get; set; }
 
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
+        // Data-binding with cshtml
+        [BindProperty]
+        public InputModel Input { get; set; }
         public class InputModel
         {
             [Required]
@@ -60,32 +51,32 @@ namespace ETMP.Areas.Identity.Pages.Account
 
             [DataType(DataType.Text)]
             [Display(Name = "Confirm Email")]
+            // Validation for email confirmation
             [Compare("Email", ErrorMessage = "The email do not match.")]
             public string ConfirmEmail { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            // Validation for the password length (including empty field)
+            [StringLength(100, ErrorMessage = "Password must be at least {2} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
+            // Validation for password confirmation
             [Compare("Password", ErrorMessage = "The password do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -93,11 +84,13 @@ namespace ETMP.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    // All registered new account have basic privilage (non-admin)
+                    await _userManager.AddToRoleAsync(user, "Member");
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -107,8 +100,8 @@ namespace ETMP.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    var request = new MailRequest(Input.Email, "Confirm your email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.", null);
+                    await _mailService.SendEmailAsync(request);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -122,6 +115,7 @@ namespace ETMP.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
+                    // Server-side validation
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
@@ -140,6 +134,7 @@ namespace ETMP.Areas.Identity.Pages.Account
             }
         }
 
+        // Identity service email storage object
         private IUserEmailStore<ETMPUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class pleaseWork : Migration
+    public partial class dbUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,11 +21,11 @@ namespace ETMP.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    cType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cardNo = table.Column<int>(type: "int", nullable: false),
-                    expiration = table.Column<int>(type: "int", nullable: false),
-                    CVV = table.Column<int>(type: "int", nullable: false)
+                    cType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    cardNo = table.Column<int>(type: "int", nullable: true),
+                    expiration = table.Column<int>(type: "int", nullable: true),
+                    CVV = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230422165414_pleaseWork")]
-    partial class pleaseWork
+    [Migration("20230424184446_dbUpdate")]
+    partial class dbUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,21 +120,19 @@ namespace ETMP.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CVV")
+                    b.Property<int?>("CVV")
                         .HasColumnType("int");
 
                     b.Property<string>("cType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("cardNo")
+                    b.Property<int?>("cardNo")
                         .HasColumnType("int");
 
-                    b.Property<int>("expiration")
+                    b.Property<int?>("expiration")
                         .HasColumnType("int");
 
                     b.Property<string>("username")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

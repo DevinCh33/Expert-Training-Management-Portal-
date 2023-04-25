@@ -5,14 +5,21 @@
 }
 
 @using ETMP.Models
-<!-- Include CSS -->
+<!--css for datatable-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+<!--required javascripts-->
 <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
 
 <style>
+    /*css for slideshow*/
     .slideshow-container {
         position: relative;
         width: 100%;
@@ -38,7 +45,7 @@
         }
 
     .training-name {
-        font-size: 36px;
+        font-size: 60px;
         margin-bottom: 10px;
         
     }
@@ -70,98 +77,223 @@
         
     }
 
-    .slideshow-container, .slideshow-container,.ssimgContainer{
+    .slideshow-container, .slideshow-container{
         border:dashed;
     }
+    .ssimgContainer{
+        border-right:dashed;
+    }
+    /* Style the dropdown button */
+    .dropbtn {
+        background-color: skyblue;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius:25px;
+    }
+
+    /* The container - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        white-space: nowrap; /* Prevents the items from wrapping */
+        background-color:white;
+        border: groove;
+        border-color: black;
+        padding:10px;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: inline-block; /* Displays the items inline */
+
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    /*search bar*/
+    #myInput{
+        width:600px;
+        height:60px;
+        font-size:36px;
+    }
+
+
+    #searchbarnimgcontainer{
+        display:flex;
+    }
+
+    #searchbtn{
+        border-radius:30px;
+        height:60px;
+        width:60px;
+        background-color:skyblue;
+        border:none;
+        color:white;
+        margin-left:10px;
+    }
+
+    #myInput {
+        display: none;
+        opacity: 0;
+        transition: opacity 3.0s ease-in-out;
+    }
+
+        #myInput.show {
+            display: block;
+            opacity: 1;
+        }
+
+
 
 </style>
-
-<div class="slideshow-container">
-    @foreach (var training in Model.Trainings)
-    {
-        <div class="slideshow-slide" onclick="fillSearchBar('@training.TrainingName')">
-            <div class="ssimgContainer">
-                <img src=@training.TrainingImgURL>
-            </div>
-            <div class="ssdescription" >
-                <h1 class="training-name" >@training.TrainingName</h1>
-                <p class="training-price">Price : @training.TrainingPrice</p>
-                <p class="training-description">Description :@training.TrainingDescription</p>
-            </div>
-        </div>
-    }
-</div>
-
-<div class="myTableContainer">
-    <table id="myTable">
-        <thead>
-            <tr>
-                <th>Training Id</th>
-                <th>Training Name</th>
-                <th>Training Price</th>
-                <th>Training Itinerary</th>
-                <th>Training Venue</th>
-                <th>Training Category</th>
-                <th>Availability</th>
-                <th>Training Description</th>
-                <th>Training Start Date & Time</th>
-                <th>Training End Date & Time</th>
-                <!-- add more columns as needed -->
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var training in Model.Trainings)
-            {
-                <tr>
-                    <td>@training.Id</td>
-                    <td>@training.TrainingName</td>
-                    <td>@training.TrainingPrice</td>
-                    <td>@training.TrainingItinerary</td>
-                    <td>@training.TrainingVenue</td>
-                    <td>@training.TrainingCategory</td>
-                    <td>@training.Availability</td>
-                    <td>@training.TrainingDescription</td>
-                    <td>@training.TrainingStartDateTime</td>
-                    <td>@training.TrainingEndDateTime</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-
-<div>
-    <button id="sortByName">Sort by Name (asc)</button>
-    <button id="sortByPrice">Sort by Price (asc)</button>
-</div>
-
-<div id="priceRangeContainer">
-    <label for="priceRangeSlider">Filter by Price Range:</label>
-    <div id="priceRangeSlider"></div>
-    <span id="priceRangeLabel"></span>
-</div>
-<div>
-    <label for="categoryDropdown">Filter by Category:</label>
-    <select id="categoryDropdown">
-        <option value="">All Categories</option>
+<!--slideshow-->
+<div id="container">
+    <div class="slideshow-container">
         @foreach (var training in Model.Trainings)
         {
-            <option value="@training.TrainingCategory">@training.TrainingCategory</option>
+            <div class="slideshow-slide" onclick="fillSearchBar('@training.TrainingName')">
+                <div class="ssimgContainer">
+                    <img src=@training.TrainingImgURL>
+                </div>
+                <div class="ssdescription" >
+                    <h1 class="training-name" >@training.TrainingName</h1>
+                    <p class="training-price">Price :RM @training.TrainingPrice</p>
+                    <p class="training-description">Description :@training.TrainingDescription</p>
+                </div>
+            </div>
         }
-    </select>
+    </div>
+
+    <div class="button-container">
+        <div class="dropdown">
+            <!--sort button-->
+            <button class="dropbtn">Sort</button>
+            <div class="dropdown-content">
+                <a href="#" id="sortByName">Sort by Name</a>
+                <a href="#" id="sortByPrice">Sort by Price</a>
+                <a href="#" id="sortByDate">Sort by Date</a>
+                <a href="#" id="sortByDuration">Sort by Duration</a>
+            </div>
+        </div>
+        <div id="searchbarnimgcontainer">
+            <div>
+                <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Search for training">
+                <div id="autocomplete-list"></div>
+            </div>
+            <div id="searchimgcontainer">
+                <button id="searchbtn">Search</button>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <!--filter button-->
+            <button class="dropbtn">Filter</button>
+            <div class="dropdown-content">
+                <div id="priceRangeContainer">
+                    <input type="range" id="minslider" min="0" max="15000" value="0" step="10"><br/>
+                    <label for="maxslider">Price range:$<span id="minslider-value">0</span> - $ <span id="maxslider-value">0</span></label><br/>
+                    <input type="range" id="maxslider" min="0" max="15000" value="0" step="10">
+                </div>
+                <div>
+                    <label for="categoryDropdown">Filter by Category:</label>
+                    <select id="categoryDropdown">
+                        <option value="">All Categories</option>
+                        <!--only unique categories are chosen-->
+                        @foreach (var category in Model.Trainings.Select(t => t.TrainingCategory).Distinct())
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label for="TrainingStartDate">Training Start Date:</label>
+                    <input id="TrainingStartDate" type="date" onchange="searchForStartDate()" />
+                </div>
+                <div>
+                    <label for="TrainingEndDate">Training End Date:</label>
+                    <input id="TrainingEndDate" type="date" onchange="searchForEndDate()" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--table-->
+    <div class="myTableContainer">
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>Training Id</th>
+                    <th>Training Name</th>
+                    <th>Training Price</th>
+                    <th>Training Itinerary</th>
+                    <th>Training Venue</th>
+                    <th>Training Category</th>
+                    <th>Availability</th>
+                    <th>Training Description</th>
+                    <th>Training Start Date & Time</th>
+                    <th>Training End Date & Time</th>
+                    <th>Training Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var training in Model.Trainings)
+                {
+                
+                    <tr class="training-row" data-price="@training.TrainingPrice" data-category="@training.TrainingCategory" data-start-date="@training.TrainingStartDateTime.ToString("yyyy-MM-dd")" data-end-date="@training.TrainingEndDateTime.ToString("yyyy-MM-dd")">
+                        <td>@training.Id</td>
+                        <td>@training.TrainingName</td>
+                        <td>@training.TrainingPrice</td>
+                        <td>@training.TrainingItinerary</td>
+                        <td>@training.TrainingVenue</td>
+                        <td>@training.TrainingCategory</td>
+                        <td>@training.Availability</td>
+                        <td>@training.TrainingDescription</td>
+                        <td>@training.TrainingStartDateTime</td>
+                        <td>@training.TrainingEndDateTime</td>
+                        <td>@training.Duration</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-
-
-
-
 
 <script>
     var table = $('#myTable').DataTable({
-        responsive: true
+        responsive: true,
+        "searching":false,
     });
 
+    //sort button
     let sortByName = 'asc';
     let sortByPrice = 'asc';
+    let sortByDate = 'asc';
+    let sortByDuration = 'asc';
 
     // Sorting by name
     $('#sortByName').click(() => {
@@ -184,41 +316,54 @@
             sortByPrice = 'asc';
         }
     });
-
-    // Set up the slider
-    let priceRangeSlider = $('#priceRangeSlider');
-    let priceRangeLabel = $('#priceRangeLabel');
-
-    priceRangeSlider.slider({
-        range: true,
-        min: 0,
-        max: 15000,
-        values: [0, 15000],
-        step: 10,
-        slide: function (event, ui) {
-            priceRangeLabel.text('$' + ui.values[0] + ' - $' + ui.values[1]);
-            table.draw();
+    $('#sortByDate').click(() => {
+        if (sortByDate === 'asc') {
+            table.order([8, 'asc']).draw();
+            sortByDate = 'desc';
+        } else {
+            table.order([8, 'desc']).draw();
+            sortByDate = 'asc';
         }
     });
-
-    // Add the initial price range label
-    priceRangeLabel.text('$' + priceRangeSlider.slider('values', 0) + ' - $' + priceRangeSlider.slider('values', 1));
-
-    // Filter the table based on the price range slider
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            let minPrice = priceRangeSlider.slider('values', 0);
-            let maxPrice = priceRangeSlider.slider('values', 1);
-            let price = parseFloat(data[2].replace(/[^0-9.-]/g, ''));
-            return price >= minPrice && price <= maxPrice;
+    // Sorting by duration
+    $('#sortByDuration').click(() => {
+        if (sortByDuration === 'asc') {
+            table.order([10, 'asc']).draw();
+            sortByDuration = 'desc';
+        } else {
+            table.order([10, 'desc']).draw();
+            sortByDuration = 'asc';
         }
-    );
+    });
+    //price range slider
+    var minslider = document.getElementById('minslider');
+    var minsliderValue = document.getElementById('minslider-value');
+    var maxslider = document.getElementById('maxslider');
+    var maxsliderValue = document.getElementById('maxslider-value');
 
-    // Filter the table based on the category dropdown
+    function handleSliderInput() {
+        minsliderValue.textContent = `${minslider.value}`;
+        maxsliderValue.textContent = `${maxslider.value}`;
+        let minSliderValue = parseInt($('#minslider').val());
+        let maxSliderValue = parseInt($('#maxslider').val());
+        $('.training-row').hide();
+        $('.training-row[data-price]').each(function () {
+            let price = parseInt($(this).attr('data-price'));
+            if (price >= minSliderValue && price <= maxSliderValue) {
+                $(this).show();
+            }
+        });
+    }
+
+    minslider.addEventListener('input', handleSliderInput);
+    maxslider.addEventListener('input', handleSliderInput);
+    //filter by category
     $('#categoryDropdown').change(() => {
         let category = $('#categoryDropdown').val();
-        table.column(5).search(category).draw();
+        $('.training-row').hide();
+        $('.training-row[data-category="' + category + '"]').show();
     });
+
     //slideshow
     let slides = document.querySelectorAll('.slideshow-slide');
     let currentSlide = 0;
@@ -238,21 +383,90 @@
 
 
 
-    function fillSearchBar(trainingName) {
-            table.search(trainingName).draw();
+
+    //filter the training start and end date
+    function searchForStartDate() {
+        var trainingStartDate = $('#TrainingStartDate').val();
+        $('.training-row').hide();
+        $('.training-row[data-start-date="' + trainingStartDate + '"]').show();
+    }
+    function searchForEndDate() {
+        var trainingEndDate = $('#TrainingEndDate').val();
+        $('.training-row').hide();
+        $('.training-row[data-end-date="' + trainingEndDate + '"]').show();
     }
 
+    //filter the table from search bar
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
 
-    var slideshowContainer = document.querySelector('.slideshow-slide');
-    function fillSearchBar(trainingName) {
-        if (slideshowContainer.classList.contains('active')) {
-            table.search(trainingName).draw();
-        } else {
-            console.log('The slideshow container does not have the "active" class applied to it.');
+        // Autocomplete and predict functionality
+        var autocompleteList = document.getElementById("autocomplete-list");
+        autocompleteList.innerHTML = "";
+        if (input.value.length > 0) {
+            var autocompleteItems = [];
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1]; // Assumes the second column is the training name
+                //tdc = tr[i].getElementsByTagName("td")[5];
+                if (td) {
+                    txtValue = td.textContent || td.innerText //|| tdc.textContent || tdc.innerText
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        autocompleteItems.push(txtValue);
+                    }
+                }
+            }
+            autocompleteItems.forEach(function (item) {
+                var option = document.createElement("div");
+                option.innerHTML = "<strong>" + item.substr(0, filter.length) + "</strong>";
+                option.innerHTML += item.substr(filter.length);
+                option.addEventListener("click", function () {
+                    input.value = item;
+                    filterTable();
+                    autocompleteList.innerHTML = "";
+                });
+                autocompleteList.appendChild(option);
+            });
         }
     }
 
+    // Close the autocomplete list if the user clicks outside of it
+    document.addEventListener("click", function (e) {
+        var autocompleteList = document.getElementById("autocomplete-list");
+        if (e.target != autocompleteList && e.target != document.getElementById("myInput")) {
+            autocompleteList.innerHTML = "";
+        }
+    });
 
+    //search bar is hidden until search button is clicked
+    var searchbar = document.getElementById("myInput");
+    var searchBtn = document.getElementById("searchbtn");
+
+    // Hide the searchbar element initially
+    searchbar.classList.remove("show");
+
+    // Add an event listener to the search button
+    searchBtn.addEventListener("click", () => {
+        // Toggle the visibility of the searchbar element
+        searchbar.classList.toggle("show");
+    });
 
 
 </script>
