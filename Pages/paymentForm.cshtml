@@ -106,7 +106,7 @@
     <div class="row">
         <div class="col-75">
             <div class="container">
-                <form action="./paymentForm.cshtml">
+            <form id="detail" action="./paymentForm.cshtml" onsubmit="return validateForm()">
 
                     <div class="row">
                         <div class="col-50">
@@ -162,7 +162,7 @@
 
                     </div>
 
-                <input type="submit" value="Submit" class="btn" onclick="validateForm()">
+                <input type="submit" value="Submit" class="btn" onclick="validateToStore()">
                 </form>
             </div>
         </div>

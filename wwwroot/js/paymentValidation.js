@@ -339,15 +339,9 @@ function validate() {
     }
     return result; //if false the information will not be sent to the server
 }
-function getBooking() {
-    //if sessionStorage for username is not empty
-    if (sessionStorage.firstname != undefined) {
-        //confirmation text
-        document.getElementById("confirm_fname").textContent = sessionStorage.fullname;
-        document.getElementById("confirm_email").textContent = sessionStorage.email;
-        document.getElementById("confirm_address").textContent = sessionStorage.address;
-        document.getElementById("confirm_city").textContent = sessionStorage.city;
-        document.getElementById("confirm_state").textContent = sessionStorage.state;
-        document.getElementById("confirm_subject").textContent = sessionStorage.subject;
-    }
+
+function init_validate() {
+    var detail = document.getElementById("detail");
+    detail.onsubmit = validateForm;
 }
+window.onload = init_validate;
