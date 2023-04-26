@@ -219,7 +219,7 @@ function checkCardNumber() {
 
 
 // Check if expiration month is valid
-function checkExpMonth{
+function checkExpMonth(){
     var expMonth = document.getElementById("expmonth").value;
     var pattern = /^(january|february|march|april|may|june|july|august|september|october|november|december)$/i;
 
