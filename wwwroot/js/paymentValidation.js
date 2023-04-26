@@ -240,7 +240,7 @@ function checkExpMonth(){
 }
 
 // Check if expiration year is valid
-function checkExpYear{
+function checkExpYear(){
     var expYear = document.getElementById("expyear").value;
     var pattern = /^(20[2-9][2-9]|21[0-9][0-9])$/;
 
