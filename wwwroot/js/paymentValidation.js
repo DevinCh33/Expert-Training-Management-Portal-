@@ -93,23 +93,6 @@ function checkAddress() {
     return isOk;
 }
 
-function checkCity() {
-    var city = document.getElementById("city").value;
-    var isOk = true;
-    if (city == "") {
-        isOk = false;
-        gErrorMsg = gErrorMsg + "Please enter your city\n";
-    }
-    else if (address.length > 20) {
-        isOk = false;
-        gErrorMsg = gErrorMsg + "Maximum of 20 characters in city field.\n";
-    }
-    if (!isOk) {
-        document.getElementById("city").style.cssText += "border: 2px solid red";
-    }
-
-    return isOk;
-}
 
 function checkState() {
     var state = document.getElementById("state").value;
@@ -132,7 +115,7 @@ function checkCity() {
         isOk = false;
         gErrorMsg = gErrorMsg + "Please enter your city\n";
     }
-    else if (address.length > 20) {
+    else if (city.length > 20) {
         isOk = false;
         gErrorMsg = gErrorMsg + "Maximum of 20 characters in city field.\n";
     }
