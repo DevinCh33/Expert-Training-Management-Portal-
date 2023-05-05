@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230424184446_dbUpdate")]
-    partial class dbUpdate
+    [Migration("20230425135336_paymentModelUpdate")]
+    partial class paymentModelUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,8 +129,8 @@ namespace ETMP.Migrations
                     b.Property<int?>("cardNo")
                         .HasColumnType("int");
 
-                    b.Property<int?>("expiration")
-                        .HasColumnType("int");
+                    b.Property<string>("expiration")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");
