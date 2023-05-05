@@ -126,8 +126,8 @@ namespace ETMP.Migrations
                     b.Property<int?>("cardNo")
                         .HasColumnType("int");
 
-                    b.Property<int?>("expiration")
-                        .HasColumnType("int");
+                    b.Property<string>("expiration")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");

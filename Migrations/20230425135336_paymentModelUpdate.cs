@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class dbUpdate : Migration
+    public partial class paymentModelUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,7 @@ namespace ETMP.Migrations
                     cType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     cardNo = table.Column<int>(type: "int", nullable: true),
-                    expiration = table.Column<int>(type: "int", nullable: true),
+                    expiration = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CVV = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
