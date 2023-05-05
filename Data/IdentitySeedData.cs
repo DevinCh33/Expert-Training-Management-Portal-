@@ -1,9 +1,5 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using ETMP.Models;
+﻿using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ETMP.Data
 {
