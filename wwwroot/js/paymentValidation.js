@@ -93,23 +93,6 @@ function checkAddress() {
     return isOk;
 }
 
-function checkCity() {
-    var city = document.getElementById("city").value;
-    var isOk = true;
-    if (city == "") {
-        isOk = false;
-        gErrorMsg = gErrorMsg + "Please enter your city\n";
-    }
-    else if (address.length > 20) {
-        isOk = false;
-        gErrorMsg = gErrorMsg + "Maximum of 20 characters in city field.\n";
-    }
-    if (!isOk) {
-        document.getElementById("city").style.cssText += "border: 2px solid red";
-    }
-
-    return isOk;
-}
 
 function checkState() {
     var state = document.getElementById("state").value;
@@ -132,7 +115,7 @@ function checkCity() {
         isOk = false;
         gErrorMsg = gErrorMsg + "Please enter your city\n";
     }
-    else if (address.length > 20) {
+    else if (city.length > 20) {
         isOk = false;
         gErrorMsg = gErrorMsg + "Maximum of 20 characters in city field.\n";
     }
@@ -219,7 +202,7 @@ function checkCardNumber() {
 
 
 // Check if expiration month is valid
-function checkExpMonth{
+function checkExpMonth(){
     var expMonth = document.getElementById("expmonth").value;
     var pattern = /^(january|february|march|april|may|june|july|august|september|october|november|december)$/i;
 
@@ -240,7 +223,7 @@ function checkExpMonth{
 }
 
 // Check if expiration year is valid
-function checkExpYear{
+function checkExpYear(){
     var expYear = document.getElementById("expyear").value;
     var pattern = /^(20[2-9][2-9]|21[0-9][0-9])$/;
 
@@ -339,15 +322,9 @@ function validate() {
     }
     return result; //if false the information will not be sent to the server
 }
-function getBooking() {
-    //if sessionStorage for username is not empty
-    if (sessionStorage.firstname != undefined) {
-        //confirmation text
-        document.getElementById("confirm_fname").textContent = sessionStorage.fullname;
-        document.getElementById("confirm_email").textContent = sessionStorage.email;
-        document.getElementById("confirm_address").textContent = sessionStorage.address;
-        document.getElementById("confirm_city").textContent = sessionStorage.city;
-        document.getElementById("confirm_state").textContent = sessionStorage.state;
-        document.getElementById("confirm_subject").textContent = sessionStorage.subject;
-    }
+
+function init_validate() {
+    var detail = document.getElementById("detail");
+    detail.onsubmit = validateForm;
 }
+window.onload = init_validate;
