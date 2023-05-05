@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class paymentModelUpdate : Migration
+    public partial class _123 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
