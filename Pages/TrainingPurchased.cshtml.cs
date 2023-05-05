@@ -39,25 +39,28 @@ namespace ETMP.Pages
 
             var user = await _userManager.GetUserAsync(User);
 
-            if(user.PurchasedTraining != null)
+            if (user != null)
             {
-                string userExistingTraining = user.PurchasedTraining;
+                if (user.PurchasedTraining != null)
+                {
+                    string userExistingTraining = user.PurchasedTraining;
 
-                _trainingModels = JsonConvert.DeserializeObject<List<TrainingModel>>(userExistingTraining);
-                _trainingModels.Add(PurchasedTraining);
+                    _trainingModels = JsonConvert.DeserializeObject<List<TrainingModel>>(userExistingTraining);
+                    _trainingModels.Add(PurchasedTraining);
 
-                user.PurchasedTraining = JsonConvert.SerializeObject(_trainingModels);
-                userdata = user.PurchasedTraining;
+                    user.PurchasedTraining = JsonConvert.SerializeObject(_trainingModels);
+                    userdata = user.PurchasedTraining;
 
-                await _userManager.UpdateAsync(user);
-                await _signInManager.RefreshSignInAsync(user);
-            }
-            else
-            {
-                user.PurchasedTraining = "[" + JsonConvert.SerializeObject(PurchasedTraining) + "]";
+                    await _userManager.UpdateAsync(user);
+                    await _signInManager.RefreshSignInAsync(user);
+                }
+                else
+                {
+                    user.PurchasedTraining = "[" + JsonConvert.SerializeObject(PurchasedTraining) + "]";
 
-                await _userManager.UpdateAsync(user);
-                await _signInManager.RefreshSignInAsync(user);
+                    await _userManager.UpdateAsync(user);
+                    await _signInManager.RefreshSignInAsync(user);
+                }
             }
         }
     }
