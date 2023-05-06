@@ -46,26 +46,38 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
-.notification {
-    background-color: #555;
-    color: white;
-    text-decoration: none;
-    padding: 15px 26px;
+.icon-button {
     position: relative;
-    display: inline-block;
-    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #333333;
+    background: #dddddd;
+    border: none;
+    outline: none;
+    border-radius: 50%;
 }
 
-    .notification:hover {
-        background: red;
+    .icon-button:hover {
+        cursor: pointer;
     }
 
-    .notification .badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        padding: 5px 10px;
-        border-radius: 50%;
-        background: red;
-        color: white;
+    .icon-button:active {
+        background: #cccccc;
     }
+
+.icon-button__badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
