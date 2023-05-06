@@ -5,7 +5,7 @@
 namespace ETMP.Migrations
 {
     /// <inheritdoc />
-    public partial class training : Migration
+    public partial class xddinside : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -12,8 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230505145509_training")]
-    partial class training
+<<<<<<<< HEAD:Migrations/20230505152014_migreestesfaesgfwergwerfgwergawefgWERFG.Designer.cs
+    [Migration("20230505152014_migreestesfaesgfwergwerfgwergawefgWERFG")]
+    partial class migreestesfaesgfwergwerfgwergawefgWERFG
+========
+    [Migration("20230505145522_123")]
+    partial class _123
+>>>>>>>> b375c0680097c9fad4ba28a2352b0c51f4a62463:Migrations/20230505145522_123.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
