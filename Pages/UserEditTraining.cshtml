@@ -82,9 +82,26 @@
         confirmationButton.style.display = "block";
     }
 
+
+
+
+
+    function downloadItinerary() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/MyController/MyAction', true);
+        xhr.onload = function () {
+            // handle success
+        };
+        xhr.onerror = function () {
+            // handle error
+        };
+        xhr.send();
+    }
 </script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
 

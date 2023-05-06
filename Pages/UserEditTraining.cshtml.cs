@@ -98,9 +98,56 @@ namespace ETMP.Pages
         }
 
 
+        /* public IActionResult MyAction()
+         {
+             // Connect to the database and retrieve the data
+             string connectionString = "Data Source=myServerAddress;Initial Catalog=myDataBase;User Id=myUsername;Password=myPassword;";
+             string query = "SELECT TrainingName, TrainingPrice, TrainingVenue, TrainingCategory, Availability, TrainingDescription, TrainingImgURL FROM Identity.Trainings";
+             SqlConnection connection = new SqlConnection(connectionString);
+             SqlCommand command = new SqlCommand(query, connection);
+             connection.Open();
+             SqlDataReader reader = command.ExecuteReader();
+
+             // Create a new PDF document
+             Document document = new Document();
+             PdfWriter.GetInstance(document, new FileStream("output.pdf", FileMode.Create));
+             document.Open();
+
+             // Create a new table with 7 columns
+             PdfPTable table = new PdfPTable(7);
+
+             // Add column headers to the table
+             table.AddCell("Training Name");
+             table.AddCell("Training Price");
+             table.AddCell("Training Venue");
+             table.AddCell("Training Category");
+             table.AddCell("Availability");
+             table.AddCell("Training Description");
+             table.AddCell("Training Image URL");
+
+             // Add data rows to the table
+             while (reader.Read())
+             {
+                 table.AddCell(reader["TrainingName"].ToString());
+                 table.AddCell(reader["TrainingPrice"].ToString());
+                 table.AddCell(reader["TrainingVenue"].ToString());
+                 table.AddCell(reader["TrainingCategory"].ToString());
+                 table.AddCell(reader["Availability"].ToString());
+                 table.AddCell(reader["TrainingDescription"].ToString());
+                 table.AddCell(reader["TrainingImgURL"].ToString());
+             }
+
+             // Add the table to the document and close the document
+             document.Add(table);
+             document.Close();
+
+             // Return the PDF file as a file download
+             byte[] fileBytes = System.IO.File.ReadAllBytes("output.pdf");
+             return File(fileBytes, "application/pdf", "output.pdf");
+         }*/
+
         public IActionResult MyAction()
         {
-            // Connect to the database and retrieve the data
             string connectionString = "Data Source=myServerAddress;Initial Catalog=myDataBase;User Id=myUsername;Password=myPassword;";
             string query = "SELECT TrainingName, TrainingPrice, TrainingVenue, TrainingCategory, Availability, TrainingDescription, TrainingImgURL FROM Identity.Trainings";
             SqlConnection connection = new SqlConnection(connectionString);
@@ -108,15 +155,12 @@ namespace ETMP.Pages
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
 
-            // Create a new PDF document
             Document document = new Document();
-            PdfWriter.GetInstance(document, new FileStream("output.pdf", FileMode.Create));
+            MemoryStream stream = new MemoryStream();
+            PdfWriter.GetInstance(document, stream);
             document.Open();
 
-            // Create a new table with 7 columns
             PdfPTable table = new PdfPTable(7);
-
-            // Add column headers to the table
             table.AddCell("Training Name");
             table.AddCell("Training Price");
             table.AddCell("Training Venue");
@@ -125,7 +169,6 @@ namespace ETMP.Pages
             table.AddCell("Training Description");
             table.AddCell("Training Image URL");
 
-            // Add data rows to the table
             while (reader.Read())
             {
                 table.AddCell(reader["TrainingName"].ToString());
@@ -137,13 +180,13 @@ namespace ETMP.Pages
                 table.AddCell(reader["TrainingImgURL"].ToString());
             }
 
-            // Add the table to the document and close the document
             document.Add(table);
             document.Close();
 
-            // Return the PDF file as a file download
-            byte[] fileBytes = System.IO.File.ReadAllBytes("output.pdf");
-            return File(fileBytes, "application/pdf", "output.pdf");
+            byte[] bytes = stream.ToArray();
+            stream.Close();
+
+            return File(bytes, "application/pdf", "output.pdf");
         }
 
 
