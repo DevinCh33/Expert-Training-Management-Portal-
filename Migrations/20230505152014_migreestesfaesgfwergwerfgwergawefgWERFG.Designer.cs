@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETMP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230425135336_paymentModelUpdate")]
-    partial class paymentModelUpdate
+    [Migration("20230505152014_migreestesfaesgfwergwerfgwergawefgWERFG")]
+    partial class migreestesfaesgfwergwerfgwergawefgWERFG
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
