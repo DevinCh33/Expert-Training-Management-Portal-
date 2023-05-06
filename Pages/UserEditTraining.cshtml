@@ -5,7 +5,12 @@
     ViewData["Title"] = "UserEditTraining";
 }
 
+
+
 <h1>Edit Purchased Training : @Model.EditTraining.TrainingName</h1>
+
+
+
 
 <hr />
 <div class="row">
@@ -30,8 +35,8 @@
 
             <div class="form-group">
                 <div id="edit-button" style="display:block;">
-                    <div><input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save"></div>
-                    <input type="button" class="btn btn-danger" value="Download Itinerary">
+                    <input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save">
+                    <input type="button" class="btn btn-danger" id="ItineraryButton" onclick="downloadItinerary()" value="Download Itinerary">
                     <input type="button" class="btn btn-danger" value="Download Training Material">
                 </div>
                 <div id="confirmation-button" style="display:none;">
@@ -77,9 +82,26 @@
         confirmationButton.style.display = "block";
     }
 
+
+
+
+
+    function downloadItinerary() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/MyController/MyAction', true);
+        xhr.onload = function () {
+            // handle success
+        };
+        xhr.onerror = function () {
+            // handle error
+        };
+        xhr.send();
+    }
 </script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
 
