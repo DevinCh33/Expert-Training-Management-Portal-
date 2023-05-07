@@ -1,0 +1,44 @@
+﻿@page
+@model ETMP.Pages.Notifications.AllNotificationsModel
+@{}
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <table id="tblNotification" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>Title</th>
+                <th>Detail</th>
+                <th>IsRead</th>
+                <th>Notification DateTime</th>
+            </tr>
+        </thead>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                dataType:"json",
+                url:"/Notifications/GetNotifications",
+                traditional:true;
+                contentType: "application/json;char=utf-8",
+                success: function(data){
+                    var notifications = data;
+                    $.map(notifications, function(notification){
+                        $("#tblNotification tbody").append("<tr>"
+                            + "<td>" + notification.fromUserName + "</td>"
+                            + "<td>" + notification.notiHeader + "</td>"
+                            + "<td>" + notification.notiBody + "</td>"
+                            + "<td>" + notification.isReadSt + "</td>"
+                            + "<td>" + notification.createdDateSt + "</td>"
+                            +"</tr>");
+            
+                    });
+                },
+                error:function(xhr,status, error){
+
+                }
+            });
+        });  
+    </script>
+

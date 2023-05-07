@@ -31,7 +31,7 @@ builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailService, ETMP.Services.MailService>();
-
+builder.Services.AddTransient<INotiService, ETMP.Services.NotiService>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
