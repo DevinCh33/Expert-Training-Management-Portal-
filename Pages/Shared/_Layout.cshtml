@@ -65,6 +65,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/notification/ikr.notificationplugin.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
@@ -76,17 +77,16 @@
             type: "GET",
             dataType: "json",
             url: "/Notifications/GetNotifications",
-            traditional:true;
+            traditional:true,
             contentType:"application/json;charset=utf-8",
             success: function(data){
-                var notifications = data;
-                //Declaration
+                var notifications = data; 
                 $("#noti_Container").ikrNotificationCount({
                     NotificationList: notifications,
                     NotiFromPropName: "FromUserName",
                     ListTitlePropName: "NotiHeader",
                     ListBodyPropName: "NotiBody",
-                    ControllerName: "Notifications",
+                    ControllerName: "AllNotifications",
                     ActionName: "AllNotifications"
                 });
 
@@ -94,8 +94,8 @@
             error: function(xhr,status,error){
                 
             }
-        })
-        //Declaration
+        });
+        
 
     });
  </script>

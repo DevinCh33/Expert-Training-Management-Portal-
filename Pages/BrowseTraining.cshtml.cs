@@ -21,15 +21,13 @@ namespace ETMP.Pages
 
         public List<TrainingModel> Trainings { get; set; }
         private readonly ApplicationDbContext _context;
-        private Services.IMailService _mailService;
-        private MailRequest _mailRequest;
 
 
 
-        public BrowseTraining(ApplicationDbContext context, Services.IMailService mailService, IConfiguration configuration)
+        public BrowseTraining(ApplicationDbContext context)
         {
             _context = context;
-            _mailService = mailService;
+
             
         }
 
@@ -37,8 +35,6 @@ namespace ETMP.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             Trainings = await _context.Trainings.ToListAsync();
-            _mailRequest = new MailRequest("wwonggabriel07@gmail.com", "TestSubject1", "TestBody1", null);
-            await _mailService.SendEmailAsync(_mailRequest);
             return Page();
         }
 

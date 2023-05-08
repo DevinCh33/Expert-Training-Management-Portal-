@@ -46,7 +46,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="IService\" />
     <Folder Include="Migrations\" />
+    <Folder Include="obj\" />
+    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace ETMP.Common
+﻿namespace ETMP.Models
 {
     public static class Global
     {
