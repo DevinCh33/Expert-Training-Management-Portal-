@@ -83,7 +83,7 @@
     }
 
     document.getElementById('download-btn').addEventListener('click', function () {
-        fetch('/UserEditTraining/DownloadAndEmailPdf', { method: 'POST' })
+        fetch('https://localhost:7107/UserEditTraining/DownloadAndEmailPdf', { method: 'POST' })
             .then(function (response) {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
