@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ETMP.Pages
+namespace ETMP.Pages.Modules
 {
     public class ModulesController : Controller
     {

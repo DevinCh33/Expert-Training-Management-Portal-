@@ -4,6 +4,6 @@ namespace ETMP.Services
 {
     public interface INotiService
     {
-        List<Noti> GetNotifications(int nToUserId, bool bIsGetOnlyUnread);
+        List<Noti> GetNotifications(string nFromUserId, bool bIsGetOnlyUndread);
     }
 }
