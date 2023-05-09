@@ -7,13 +7,15 @@ using System.Configuration;
 using ETMP.Services;
 using ETMP.Hubs;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Global.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+builder.Services.AddScoped<INotiService, NotiService>();
+
 
 builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
     options.SignIn.RequireConfirmedAccount = true;
@@ -30,7 +32,6 @@ builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.AddTransient<IMailService, ETMP.Services.MailService>();
 
 builder.Services.AddRazorPages();
 

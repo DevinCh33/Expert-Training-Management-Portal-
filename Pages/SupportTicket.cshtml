@@ -6,26 +6,30 @@
 
 <h1>Support Ticket Form</h1>
 
-<form>
-    <div>
-        <label class="mb-3">Name: </label>
-        <input placeholder="Leave your name here" id="input-name" class="form-control" type="text"/>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Name: </label>
+        <input asp-for="Name" placeholder="Leave your name here" id="input-name" class="form-control" type="text" />
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
-    <div>
-        <label class="mb-3">Email: </label>
-        <input placeholder="Input your email so we can contact you" id="input-email" class="form-control" type="text" />
+    <div class="mb-3">
+        <label class="form-label">Email: </label>
+        <input asp-for="Email" placeholder="Input your email so we can contact you" id="input-email" class="form-control" type="text" />
+        <span class="text-danger" asp-validation-for="Email"></span>
     </div>
-    <div>
-        <label class="mb-3">About: </label>
-        <input placeholder="Tell us what problem you are having" id="input-about" class="form-control" type="text" />
+    <div class="mb-3">
+        <label class="form-label">About: </label>
+        <input asp-for="About" placeholder="Tell us what problem you are having" id="input-about" class="form-control" type="text" />
+        <span class="text-danger" asp-validation-for="About"></span>
     </div>
-    <div>
-        <label class="mb-3">Description: </label>
-        <textarea id="input-description" placeholder="Leave a description of your issue" rows="8" class="form-control" type="text"></textarea>
+    <div class="mb-3">
+        <label class="form-label">Description: </label>
+        <textarea asp-for="Description" id="input-description" placeholder="Leave a description of your issue" rows="8" class="form-control" type="text"></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
     </div>
     <div class="mt-2">
         <input class="btn btn-primary" type="submit" value="Submit" />
-        <input class="btn btn-danger ml-3" onclick="ClearForm()" type="submit" value="Clear Form" />
+        <input class="btn btn-danger ml-3" onclick="ClearForm()" type="reset" value="Clear Form" />
     </div>
 </form>
 

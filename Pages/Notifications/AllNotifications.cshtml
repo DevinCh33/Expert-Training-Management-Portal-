@@ -1,0 +1,33 @@
+﻿@page
+@using ETMP.Models;
+@model ETMP.Pages.Notifications.AllNotificationsModel
+@{
+}
+
+<table id="tblNotification" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>From ID</th>
+            <th>From NAME</th>
+            <th>To ID</th>
+            <th>To NAME</th>
+            <th>Title</th>
+            <th>Detail</th>
+            <th>Notification DateTime</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var notification in (List<Noti>)ViewData["Notifications"])
+        {
+            <tr>
+                <td>@notification.FromUserId</td>
+                <td>@notification.FromUserName</td>
+                <td>@notification.ToUserId</td>
+                <td>@notification.ToUserName</td>
+                <td>@notification.NotiHeader</td>
+                <td>@notification.NotiBody</td>
+                <td>@notification.CreatedDateSt</td>
+            </tr>
+        }
+    </tbody>
+</table>

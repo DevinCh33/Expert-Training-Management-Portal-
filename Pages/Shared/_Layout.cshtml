@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ETMP.Models;
+<!DOCTYPE html>
 <html lang="en">
 
 <style>
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ETMP.styles.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/notification/ikr.notification.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -36,11 +38,16 @@
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
+
+                    <a asp-page="/Notifications/AllNotifications" style="text-decoration: none;">
+                        <button type="button" class="icon-button">
+                            <span class="material-icons">notifications</span>
+                        </button>   
+                    </a>
+
                 </div>
-                <button type="button" class="icon-button">
-                    <span class="material-icons">notifications</span>
-                    <span class="icon-button__badge">2</span>
-                </button>
+                
+
             </div>
         </nav>
     </header>
@@ -60,7 +67,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script src="~/notification/ikr.notificationplugin.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
