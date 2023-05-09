@@ -1,28 +1,29 @@
 ﻿using Dapper;
+using ETMP.Data;
 using ETMP.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Data.Common;
 
 namespace ETMP.Services
 {
-    public class NotiService:INotiService
+    public class NotiService : INotiService
     {
-        List<Noti> _oNotifications = new List<Noti>();
+        List<Noti>? _oNotifications {get;set;}
+        private readonly ApplicationDbContext _context;
+        public NotiService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public List<Noti> GetNotifications(string nFromUserId, bool bIsGetOnlyUnread)
         {
-            _oNotifications = new List<Noti>();
-            using (DbConnection con = new SqlConnection(Global.ConnectionString))
-            {
-                if (con.State == ConnectionState.Closed) con.Open();
-
-                var oNotis = con.Query<Noti>("SELECT * FROM VIEW_Notification WHERE FromUserId="+ nFromUserId).ToList();
-                if (oNotis != null && oNotis.Count() > 0 )
-                {
-                    _oNotifications = oNotis;
-                }
-                return _oNotifications;
-            }
+            var oNotis = _context.Set<Noti>()
+                .FromSqlRaw("SELECT * FROM [Identity].[Notifications] WHERE FromUserId = {0}", nFromUserId)
+                .ToList();
+            return oNotis;
         }
+
     }
 }

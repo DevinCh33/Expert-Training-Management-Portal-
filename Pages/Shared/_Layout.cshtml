@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ETMP.Models;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,7 +42,13 @@
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
-                    <div id="noti_Container"></div>
+
+                    <a asp-page="/Notifications/AllNotifications" style="text-decoration: none;">
+                        <button type="button" class="icon-button">
+                            <span class="material-icons">notifications</span>
+                        </button>   
+                    </a>
+
                 </div>
                 
 
@@ -65,37 +72,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/notification/ikr.notificationplugin.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function(){
-        //Initialization
-        $("#noti_Container").ikrNotificationSetup();
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "/Notifications/GetNotifications",
-            traditional:true,
-            contentType:"application/json;charset=utf-8",
-            success: function(data){
-                var notifications = data; 
-                $("#noti_Container").ikrNotificationCount({
-                    NotificationList: notifications,
-                    NotiFromPropName: "FromUserName",
-                    ListTitlePropName: "NotiHeader",
-                    ListBodyPropName: "NotiBody",
-                    ControllerName: "AllNotifications",
-                    ActionName: "AllNotifications"
-                });
 
-            },
-            error: function(xhr,status,error){
-                
-            }
-        });
-        
 
-    });
- </script>

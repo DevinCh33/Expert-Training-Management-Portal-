@@ -82,40 +82,5 @@ button.accept-policy {
     border-radius: 50%;
 }
 
-/* The container - needed to position the dropdown content */
-.dropdown2 {
-    position: relative;
-    display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown2-content {
-    display: none;
-    position: absolute;
-    z-index: 1;
-    white-space: nowrap; /* Prevents the items from wrapping */
-    background-color: white;
-    border: groove;
-    border-color: black;
-    padding: 20px;
-}
-
-    /* Links inside the dropdown */
-    .dropdown2-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: inline-block; /* Displays the items inline */
-    }
-
-        /* Change color of dropdown links on hover */
-        .dropdown2-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-/* Show the dropdown menu on hover */
-.dropdown2:hover .dropdown2-content {
-    display: block;
-}
 
 
