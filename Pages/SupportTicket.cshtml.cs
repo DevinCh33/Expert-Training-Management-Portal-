@@ -1,8 +1,11 @@
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
+using ETMP.Data;
+using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 
@@ -15,7 +18,6 @@ namespace ETMP.Pages
         private string? _about;
         private string? _description;
         private readonly Services.IMailService _mailService;
-
         public SupportTicketModel(Services.IMailService mailService)
         {
             _mailService = mailService;
@@ -62,8 +64,8 @@ namespace ETMP.Pages
             }
             else
             {
-                string subject = About;
-                string body = Description;
+                string subject = "Support Ticket On " + _about;
+                string body = "Name of Sender: " + _name + "<br/><br/>Email of Sender: " + _email + "<br/><br/>Description of Issue: " + Description;
 
                 // Replace the email address below with the actual email address where you want to receive the form submissions
                 string toEmail = "swe20001projectticket@gmail.com";

@@ -1,4 +1,5 @@
 ﻿@using ETMP.Models;
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,12 +39,15 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Test1">Test1</a>
+                        </li
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Itinerary">Itinerary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PaymentReceipt">Receipt</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
-
-                    <a asp-page="/Notifications/AllNotifications" style="text-decoration: none;">
-                        
+                    <a asp-page="/Notifications" style="text-decoration: none;">
                         <button type="button" class="icon-button">
                             <span class="material-icons">notifications</span>
                         </button>

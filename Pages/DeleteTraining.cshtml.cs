@@ -19,6 +19,7 @@ namespace ETMP.Pages
         {
             _context = context;
         }
+        public Notification notification { get; set; }
 
         [BindProperty]
       public TrainingModel TrainingModel { get; set; } = default!;
@@ -56,7 +57,7 @@ namespace ETMP.Pages
             if (trainingmodel != null)
             {
                 TrainingModel = trainingmodel;
-                _context.Trainings.Remove(TrainingModel);
+                _context.Trainings.Remove(TrainingModel);               
                 await _context.SaveChangesAsync();
             }
 

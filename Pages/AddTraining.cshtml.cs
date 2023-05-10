@@ -17,15 +17,12 @@ namespace ETMP.Pages
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
         
-        public NotificationSystem NotificationSystem { get; set; }
-
         private readonly ApplicationDbContext _context;
-
         public AddTrainingModel(ApplicationDbContext context)
         {
             _context = context;
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (string.IsNullOrEmpty(TrainingName))
             {
@@ -65,11 +62,10 @@ namespace ETMP.Pages
             }
             _context.Trainings.Add(trainingModel);
             _context.SaveChanges();
-
-            NotificationSystem.NotificationSubject = "Added New Training";
-            NotificationSystem.NotificationTime = DateTime.Now;
+            return Page();
             
 
         }
+
     }
 }

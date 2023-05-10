@@ -12,6 +12,8 @@ namespace ETMP.Pages
     {
         private readonly ApplicationDbContext _context;
         public PaymentModel Payment { get; set; }
+        public Notification notification { get; set; }
+        public MailRequest mailRequest { get; set; }
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;

@@ -23,6 +23,7 @@ namespace ETMP.Pages
         {
             _context = context;
         }
+        public Notification notification { get; set; }
         public IActionResult OnGet(int id)
         {
             var training = _context.Trainings.FirstOrDefault(t => t.Id == id);
@@ -48,7 +49,6 @@ namespace ETMP.Pages
                   t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
             {
                 await _context.SaveChangesAsync();
-              
                 return RedirectToPage("./Index");
             }
             return Page();
