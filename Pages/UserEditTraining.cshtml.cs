@@ -15,6 +15,8 @@ using Newtonsoft.Json;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Data.SqlClient;
+using PuppeteerSharp;
+using MimeKit;
 
 
 
@@ -38,7 +40,7 @@ namespace ETMP.Pages
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            
+
 
         }
 
@@ -50,11 +52,11 @@ namespace ETMP.Pages
             {
                 var _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
 
-                foreach(var i in _trainingList)
+                foreach (var i in _trainingList)
                 {
-                    if(i.Id == id)
+                    if (i.Id == id)
                     {
-                        EditTraining = i; 
+                        EditTraining = i;
                         break;
                     }
                 }
@@ -72,7 +74,7 @@ namespace ETMP.Pages
             var user = await _userManager.GetUserAsync(User);
             var _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
 
-            if(EditTraining.TrainingStartDateTime >= EditTraining.TrainingEndDateTime)
+            if (EditTraining.TrainingStartDateTime >= EditTraining.TrainingEndDateTime)
             {
                 ErrorMsg = "Please select an appropriate date";
                 return Page();
@@ -143,13 +145,108 @@ namespace ETMP.Pages
                 }*/
 
         /*public async Task<IActionResult> DownloadAndEmailPdf()*/
+
+
+
+
+
+
+
+
+        /* public async Task<IActionResult> OnPostDownloadAndEmailPdfAsync()
+         {
+             // Connection string
+             var connectionString = "Data Source=myServerAddress;Initial Catalog=myDataBase;User Id=myUsername;Password=myPassword;";
+
+             // SQL query
+             var query = "SELECT TrainingName, TrainingPrice, TrainingVenue, TrainingCategory, Availability, TrainingDescription, TrainingImgURL FROM Identity.Trainings";
+
+             // Create and open database connection
+             using var connection = new SqlConnection(connectionString);
+             await connection.OpenAsync();
+
+             // Create and execute SQL command
+             using var command = new SqlCommand(query, connection);
+             using var reader = await command.ExecuteReaderAsync();
+
+             // Create PDF document
+             using var document = new Document();
+             using var stream = new MemoryStream();
+             PdfWriter.GetInstance(document, stream);
+             document.Open();
+
+             // Create table
+             var table = new PdfPTable(7);
+             table.AddCell("Training Name");
+             table.AddCell("Training Price");
+             table.AddCell("Training Venue");
+             table.AddCell("Training Category");
+             table.AddCell("Availability");
+             table.AddCell("Training Description");
+             table.AddCell("Training Image URL");
+
+             // Add data to table
+             while (await reader.ReadAsync())
+             {
+                 table.AddCell(reader["TrainingName"].ToString());
+                 table.AddCell(reader["TrainingPrice"].ToString());
+                 table.AddCell(reader["TrainingVenue"].ToString());
+                 table.AddCell(reader["TrainingCategory"].ToString());
+                 table.AddCell(reader["Availability"].ToString());
+                 table.AddCell(reader["TrainingDescription"].ToString());
+                 table.AddCell(reader["TrainingImgURL"].ToString());
+             }
+
+             // Add table to document
+             document.Add(table);
+             document.Close();
+
+             // Get PDF bytes
+             var bytes = stream.ToArray();
+
+             // TODO: Email PDF
+
+             // Return PDF as file result
+             return File(bytes, "application/pdf", "Trainings.pdf");
+         }*/
+
+
+
+
+
+        /*document.getElementById('download-btn').addEventListener('click', function () {
+            fetch('https://localhost:7107/UserEditTraining/DownloadAndEmailPdf', { method: 'POST' })
+            .then(function(response) {
+                if (!response.ok)
+                {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(function(blob) {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Trainings.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(function(error) {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });*/
+
+
+
+
         public async Task<IActionResult> OnPostDownloadAndEmailPdfAsync()
         {
             // Connection string
             var connectionString = "Data Source=myServerAddress;Initial Catalog=myDataBase;User Id=myUsername;Password=myPassword;";
 
             // SQL query
-            var query = "SELECT TrainingName, TrainingPrice, TrainingVenue, TrainingCategory, Availability, TrainingDescription, TrainingImgURL FROM Identity.Trainings";
+            var query = "SELECT UserName FROM Identity.User";
 
             // Create and open database connection
             using var connection = new SqlConnection(connectionString);
@@ -159,48 +256,55 @@ namespace ETMP.Pages
             using var command = new SqlCommand(query, connection);
             using var reader = await command.ExecuteReaderAsync();
 
-            // Create PDF document
-            using var document = new Document();
-            using var stream = new MemoryStream();
-            PdfWriter.GetInstance(document, stream);
-            document.Open();
-
-            // Create table
-            var table = new PdfPTable(7);
-            table.AddCell("Training Name");
-            table.AddCell("Training Price");
-            table.AddCell("Training Venue");
-            table.AddCell("Training Category");
-            table.AddCell("Availability");
-            table.AddCell("Training Description");
-            table.AddCell("Training Image URL");
-
-            // Add data to table
-            while (await reader.ReadAsync())
+            // Get email address from database
+            string emailAddress = null;
+            if (await reader.ReadAsync())
             {
-                table.AddCell(reader["TrainingName"].ToString());
-                table.AddCell(reader["TrainingPrice"].ToString());
-                table.AddCell(reader["TrainingVenue"].ToString());
-                table.AddCell(reader["TrainingCategory"].ToString());
-                table.AddCell(reader["Availability"].ToString());
-                table.AddCell(reader["TrainingDescription"].ToString());
-                table.AddCell(reader["TrainingImgURL"].ToString());
+                emailAddress = reader["UserName"].ToString();
             }
 
-            // Add table to document
-            document.Add(table);
-            document.Close();
+            if (emailAddress == null)
+            {
+                // Handle case where email address is not found
+                return Page();
+            }
 
-            // Get PDF bytes
-            var bytes = stream.ToArray();
 
-            // TODO: Email PDF
 
-            // Return PDF as file result
-            return File(bytes, "application/pdf", "Trainings.pdf");
+            // Generate PDF of page
+
+
+            /*await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);*/
+
+
+            using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
+
+            using var page = await browser.NewPageAsync();
+
+            await page.GoToAsync("https://localhost:7107/UserListOfTraining");
+
+            var pdfData = await page.PdfDataAsync();
+
+            // Email PDF to user
+            var message = new MimeMessage();
+
+            message.From.Add(new MailboxAddress("Your Name", "your-email@example.com"));
+
+            /*message.To.Add(new MailboxAddress(emailAddress));*/
+            new MailboxAddress("Your Name", emailAddress);
+
+            message.Subject = "Your Itinerary";
+
+            var builder = new BodyBuilder();
+
+            builder.TextBody = "Here is your itinerary.";
+
+            builder.Attachments.Add("Itinerary.pdf", pdfData);
+
+            message.Body = builder.ToMessageBody();
+
+            return Page();
         }
-
     }
-
     
 }
