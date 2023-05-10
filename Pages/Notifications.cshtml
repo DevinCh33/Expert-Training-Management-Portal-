@@ -1,0 +1,83 @@
+﻿@page
+@model ETMP.Pages.Shared.NotificationsModel
+@{
+    ViewData["Title"] = "Notification";
+}
+
+
+@{
+    var notifications = Model.Notifications;
+}
+
+@if (notifications.Count() != 0)
+{
+    <div class="myTableContainer">
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>NotificationId</th>
+                    <th>ToUserId</th>
+                    <th>ToUserName</th>
+                    <th>NotificationHeader</th>
+                    <th>NotificationBody</th>
+                    <th>NotificationDateTime</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var notification in notifications)
+                {
+                    <tr>
+                        <td>@notification.NotificationId</td>
+                        <td>@notification.ToUserId</td>
+                        <td>@notification.ToUserName</td>
+                        <td>@notification.NotificationHeader</td>
+                        <td>@notification.NotificationBody</td>
+                        <td>@notification.NotificationDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h1>No notifications here!</h1>
+}
+<style>
+    .myTableContainer {
+        margin: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    /* Styles for the table */
+    #myTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        /* Styles for the table headers */
+        #myTable th {
+            background-color: #f2f2f2;
+            text-align: left;
+            padding: 8px;
+        }
+
+        /* Styles for the table rows */
+        #myTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+    /* Styles for the "No notifications here!" message */
+    h1 {
+        margin: 20px;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+        color: #888;
+    }
+</style>
+
+

@@ -17,15 +17,16 @@ namespace ETMP.Pages
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
         
-        public NotificationSystem NotificationSystem { get; set; }
-
         private readonly ApplicationDbContext _context;
-
-        public AddTrainingModel(ApplicationDbContext context)
+        public Notification notification { get; set; }
+        public MailRequest mailRequest { get; set; }
+        private readonly Services.IMailService _mailService;
+        public AddTrainingModel(ApplicationDbContext context, Services.IMailService mailService)
         {
             _context = context;
+            _mailService = mailService;
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (string.IsNullOrEmpty(TrainingName))
             {
@@ -63,13 +64,20 @@ namespace ETMP.Pages
             {
                 IsAvailable = "No";
             }
+            notification = new Notification();         
+            notification.NotificationHeader = "Training Added";
+            notification.NotificationBody = trainingModel.TrainingName + " is added";
+            notification.IsRead = false;
+            notification.NotificationDate = DateTime.Now;
             _context.Trainings.Add(trainingModel);
+            _context.Notification.Add(notification);
+            mailRequest = new MailRequest("wwonggabriel07@gmail.com", notification.NotificationHeader, notification.NotificationBody, null);
+            await _mailService.SendEmailAsync(mailRequest);
             _context.SaveChanges();
-
-            NotificationSystem.NotificationSubject = "Added New Training";
-            NotificationSystem.NotificationTime = DateTime.Now;
+            return Page();
             
 
         }
+
     }
 }
