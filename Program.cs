@@ -6,7 +6,11 @@ using ETMP.Pages;
 using System.Configuration;
 using ETMP.Services;
 using ETMP.Hubs;
+<<<<<<< HEAD
 using PdfSharp.Charting;
+=======
+using Microsoft.Extensions.Options;
+>>>>>>> c29e692c22246344970841c75a85a9f2260f477f
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +37,7 @@ builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IMailService, ETMP.Services.MailService>();
 
 builder.Services.AddRazorPages();
 
@@ -86,3 +91,4 @@ using (var scope = app.Services.CreateScope())
 
 app.MapHub<ChatHub>("/chatHub");
 app.Run();
+

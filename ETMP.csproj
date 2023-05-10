@@ -43,6 +43,7 @@
     <PackageReference Include="PDFsharp" Version="6.0.0-preview-2" />
     <PackageReference Include="PuppeteerSharp" Version="10.0.0" />
     <PackageReference Include="Rotativa" Version="1.7.4-rc" />
+    <PackageReference Include="SendGrid" Version="9.28.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
     <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="21.2.4" />
     <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="21.2.4" />
