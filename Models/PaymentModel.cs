@@ -8,5 +8,6 @@
         public int? cardNo { get; set; }
         public string? expiration { get; set; }
         public int? CVV { get; set; }
+
     }
 }
