@@ -1,5 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using ETMP.Models;
+<!DOCTYPE html>
 <html lang="en">
+
+<style>
+
+</style>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +20,10 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ETMP</a>
+                <a asp-page="/Index" class="navbar-brand">
+                    <img src="images/ETMP_LOGO.png" title="ETMP" width="60" height="60"/>
+                </a>
+                <a class="navbar-brand">Expert Training Provider</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,26 +31,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/BrowseTraining">Browse for Training</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/JS_testing">Java Testing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Itinerary">Itinerary</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/PaymentReceipt">Payment Receipt</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PaymentForm">Payment Form</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
-                    <div id="noti_Container"></div>
+
+                    <a asp-page="/Notifications/AllNotifications" style="text-decoration: none;">
+                        
+                        <button type="button" class="icon-button">
+                            <span class="material-icons">notifications</span>
+                        </button>
+                    </a>
+
                 </div>
                 
 
@@ -65,37 +69,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/notification/ikr.notificationplugin.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function(){
-        //Initialization
-        $("#noti_Container").ikrNotificationSetup();
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "/Notifications/GetNotifications",
-            traditional:true,
-            contentType:"application/json;charset=utf-8",
-            success: function(data){
-                var notifications = data; 
-                $("#noti_Container").ikrNotificationCount({
-                    NotificationList: notifications,
-                    NotiFromPropName: "FromUserName",
-                    ListTitlePropName: "NotiHeader",
-                    ListBodyPropName: "NotiBody",
-                    ControllerName: "AllNotifications",
-                    ActionName: "AllNotifications"
-                });
 
-            },
-            error: function(xhr,status,error){
-                
-            }
-        });
-        
 
-    });
- </script>

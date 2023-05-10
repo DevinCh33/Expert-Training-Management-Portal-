@@ -36,7 +36,10 @@
         margin-left: 30px
     }
 
-
+    select{
+        min-width:200px;
+        font-size:24px;
+    }
 </style>
 
 <div>
@@ -47,21 +50,18 @@
     <div class="mt-2">
         <label class="m-3">
             Filter type:
-            <select id="filter-categories" runat="server" name="FC">
+            <select id="filterType">
                 <option value="No filter">No filter</option>
                 <option value="Gender">Gender</option>
                 <option value="Organisation">Organisation</option>
                 <option value="Training Team">Training Team</option>
             </select>
+            
         </label>
         <label class="m-3">
             Filter by: 
-            <select id="filter-options" runat="server" name="FO">
-                <option value="No filter">-</option>
-                @foreach (var category in Model.UserList.Select(t => t.OrganisationName).Distinct())
-                {
-                    <option value="@category">@category</option>
-                }
+            <select id="filterOptions">
+                <option>-</option>
             </select>
         </label>
     </div>
@@ -115,3 +115,27 @@
         </tbody>
     </table>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#filterType').on('change', function () {
+            var filterType = $(this).val();
+            $.ajax({
+                url: '/ManageUserAccount?handler=FilterOptions',
+                type: 'GET',
+                data: { filterType: filterType },
+                success: function (data) {
+                    var options = '';
+                    for (var i = 0; i < data.length; i++) {
+                        options += '<option value="' + data[i].value + '">' + data[i].text + '</option>';
+                    }
+                    $('#filterOptions').html(options);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

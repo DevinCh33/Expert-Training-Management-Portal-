@@ -1,7 +1,10 @@
 using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace ETMP.Pages
 {
@@ -13,25 +16,30 @@ namespace ETMP.Pages
         {
             _context = context;
         }
-
+        // Data-binding with cshtml
         [BindProperty]
-        public PaymentModel Payment { get; set; }
-        public void OnGet()
+        public InputModel Input { get; set; }
+        
+        public class InputModel
         {
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
         }
 
-        public async Task<IActionResult> OnPost()
-        {
-            if (ModelState.IsValid)
-            {
-                await _context.Payment.AddAsync(Payment);
-                await _context.SaveChangesAsync();
-                return RedirectToPage();
-            }
-            else
-            {
-                return Page();
-            }
-        }
+        /* public void OnGet()
+         {
+             PaymentModel payment = new PaymentModel();
+             payment.cardNo = cardNo;
+             payment.expiration = expiration;
+             payment.CVV = CVV;
+
+             _context.Payment.Add(payment);
+             _context.SaveChanges();
+         }*/
     }
 }

@@ -60,6 +60,11 @@
             background-color: #218838; /* Set button background color on hover */
             border-color: #218838; /* Set button border color on hover */
         }
+
+    #webchat {
+        height: 500px;
+        width: 100%;
+    }
 </style>
 
 
@@ -95,6 +100,20 @@
         </form>
     </div>
 </div>
+<div id="webchat"></div>
+
+<script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+<script>
+    const webchat = window.WebChat.create({
+      directLine: { secret: '<your_direct_line_secret>' },
+      userID: '<some_user_id>',
+      username: '<some_username>',
+      locale: 'en-us',
+      botAvatarInitials: 'BF',
+      userAvatarInitials: 'WC'
+    });
+    document.getElementById('webchat').appendChild(webchat);
+</script>
 
 
 

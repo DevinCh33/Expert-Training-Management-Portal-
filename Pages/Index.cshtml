@@ -4,43 +4,34 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to ETMP</h1>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <p>You're logged in</p>
-
-        @if (User.IsInRole("Admin"))
-        {
-            <p>You're ETMP admin</p>
-        }
-        else if (User.IsInRole("Member"))
-        {
-            <p>You're ETMP member</p>
-        }
-    }
-
-
-
-    <p>Another signature</p>
-    <p>Signed by Eiton Ng Zie Teng Commit 2</p>
-    <p>Signed by Eiton</p>
-    <p>Conflict test</p>
-    <p>Signed by Gabriel</p>
-</div>
-
-<div>
-    <p style="font-size:20px;">Temporary link to Edit Training Page</p>
-    <button onclick="location.href='ManageTraining';">Edit - Admin</button>
-    <button onclick="location.href='UserListOfTraining';">Edit - User</button>
-    <button onclick="location.href='SupportTicket';">Support Ticket</button>
-    <a asp-page="./ConfirmPayment" asp-route-id="1">Purchase Training 1</a>
-    <a asp-page="./ConfirmPayment" asp-route-id="2">Purchase Training 2</a>
-    <a asp-page="./ConfirmPayment" asp-route-id="3">Purchase Training 3</a>
-    <a asp-page="./ConfirmPayment" asp-route-id="4">Purchase Training 4</a>
-    <a asp-page="./ConfirmPayment" asp-route-id="5">Purchase Training 5</a>
-</div>
-
-<div>
-    <button onclick="location.href='PaymentForm';">Payment Form</button>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Expert Training Provider</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<img src="images/ETMP_LOGO.png" alt="Expert Training Provider Logo">
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Services</a></li>
+				<li><a href="#">Clients</a></li>
+				<li><a href="#">Contact Us</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section>
+			<h1>Welcome to Expert Training Provider</h1>
+			<p>We provide in-house training for companies and employees in Sarawak, aimed at developing human capital to meet your business needs.</p>
+			<a href="#" class="cta-btn">Learn More</a>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; Expert Training Provider. All rights reserved.</p>
+	</footer>
+</body>
+</html>
