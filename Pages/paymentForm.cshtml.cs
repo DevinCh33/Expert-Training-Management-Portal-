@@ -12,12 +12,6 @@ namespace ETMP.Pages
     {
         private readonly ApplicationDbContext _context;
 
-        public string cType { get; set; }
-        public string username { get; set; }
-        public int cardNo { get; set; }
-        public int expiration { get; set; }
-        public int CVV { get; set; }
-
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;

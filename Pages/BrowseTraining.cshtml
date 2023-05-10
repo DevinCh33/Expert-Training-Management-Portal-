@@ -17,7 +17,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
-
 <style>
     /*css for slideshow*/
     .slideshow-container {
@@ -143,34 +142,22 @@
     }
 
 
-    #searchbarnimgcontainer{
-        display:flex;
-    }
-
-    #searchbtn{
-        border-radius:30px;
-        height:60px;
-        width:60px;
-        background-color:skyblue;
-        border:none;
-        color:white;
-        margin-left:10px;
-    }
 
     #myInput {
-        display: none;
-        opacity: 0;
-        transition: opacity 3.0s ease-in-out;
+        display: block;
+        opacity: 1;
     }
-
-        #myInput.show {
-            display: block;
-            opacity: 1;
-        }
+    /*making the buttons vertical*/
+    #priceRangeContainer button {
+        display: block;
+        margin-bottom: 5px;
+    }
 
 
 
 </style>
+
+
 <!--slideshow-->
 <div id="container">
     <div class="slideshow-container">
@@ -205,19 +192,36 @@
                 <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Search for training">
                 <div id="autocomplete-list"></div>
             </div>
-            <div id="searchimgcontainer">
-                <button id="searchbtn">Search</button>
-            </div>
         </div>
 
         <div class="dropdown">
             <!--filter button-->
             <button class="dropbtn">Filter</button>
             <div class="dropdown-content">
-                <div id="priceRangeContainer">
-                    <input type="range" id="minslider" min="0" max="15000" value="0" step="10"><br/>
-                    <label for="maxslider">Price range:$<span id="minslider-value">0</span> - $ <span id="maxslider-value">0</span></label><br/>
-                    <input type="range" id="maxslider" min="0" max="15000" value="0" step="10">
+                <label for="priceRangeContainer">Price range:</label>
+                <div id="priceRangeContainer" class="row">
+                    <div class="col-md-6">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            int minPrice = (i - 1) * 1000 + 1000;
+                            int maxPrice = i * 1000 + 999;
+
+                            <button id="btn@i" value="@minPrice - @maxPrice" onclick="handleButtonClick(@i)">
+                                @minPrice - @maxPrice
+                            </button>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        @for (int i = 6; i <= 10; i++)
+                        {
+                            int minPrice = (i - 1) * 1000 + 1000;
+                            int maxPrice = i * 1000 + 999;
+
+                            <button id="btn@i" value="@minPrice - @maxPrice" onclick="handleButtonClick(@i)">
+                                @minPrice - @maxPrice
+                            </button>
+                        }
+                    </div>
                 </div>
                 <div>
                     <label for="categoryDropdown">Filter by Category:</label>
@@ -281,7 +285,8 @@
             </tbody>
         </table>
     </div>
-</div>
+
+
 
 <script>
     var table = $('#myTable').DataTable({
@@ -335,34 +340,7 @@
             sortByDuration = 'asc';
         }
     });
-    //price range slider
-    var minslider = document.getElementById('minslider');
-    var minsliderValue = document.getElementById('minslider-value');
-    var maxslider = document.getElementById('maxslider');
-    var maxsliderValue = document.getElementById('maxslider-value');
-
-    function handleSliderInput() {
-        minsliderValue.textContent = `${minslider.value}`;
-        maxsliderValue.textContent = `${maxslider.value}`;
-        let minSliderValue = parseInt($('#minslider').val());
-        let maxSliderValue = parseInt($('#maxslider').val());
-        $('.training-row').hide();
-        $('.training-row[data-price]').each(function () {
-            let price = parseInt($(this).attr('data-price'));
-            if (price >= minSliderValue && price <= maxSliderValue) {
-                $(this).show();
-            }
-        });
-    }
-
-    minslider.addEventListener('input', handleSliderInput);
-    maxslider.addEventListener('input', handleSliderInput);
-    //filter by category
-    $('#categoryDropdown').change(() => {
-        let category = $('#categoryDropdown').val();
-        $('.training-row').hide();
-        $('.training-row[data-category="' + category + '"]').show();
-    });
+    
 
     //slideshow
     let slides = document.querySelectorAll('.slideshow-slide');
@@ -455,17 +433,22 @@
         }
     });
 
-    //search bar is hidden until search button is clicked
-    var searchbar = document.getElementById("myInput");
-    var searchBtn = document.getElementById("searchbtn");
+    $(document).ready(function () {
+        $("#priceRangeContainer button").click(function () {
+            var priceRange = $(this).val().split("-");
+            var minPrice = parseInt(priceRange[0]);
+            var maxPrice = parseInt(priceRange[1]);
 
-    // Hide the searchbar element initially
-    searchbar.classList.remove("show");
+            $(".training-row").each(function () {
+                var price = parseInt($(this).data("price"));
 
-    // Add an event listener to the search button
-    searchBtn.addEventListener("click", () => {
-        // Toggle the visibility of the searchbar element
-        searchbar.classList.toggle("show");
+                if (price >= minPrice && price <= maxPrice) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
     });
 
 

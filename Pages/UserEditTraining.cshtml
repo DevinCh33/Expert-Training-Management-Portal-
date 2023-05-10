@@ -5,7 +5,12 @@
     ViewData["Title"] = "UserEditTraining";
 }
 
+
+
 <h1>Edit Purchased Training : @Model.EditTraining.TrainingName</h1>
+
+
+
 
 <hr />
 <div class="row">
@@ -31,6 +36,8 @@
             <div class="form-group">
                 <div id="edit-button" style="display:block;">
                     <input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save">
+                    <input type="button" class="btn btn-danger" id="download-btn"  value="Download Itinerary">
+                    <input type="button" class="btn btn-danger" value="Download Training Material">
                 </div>
                 <div id="confirmation-button" style="display:none;">
                     <p>
@@ -75,9 +82,34 @@
         confirmationButton.style.display = "block";
     }
 
+    document.getElementById('download-btn').addEventListener('click', function () {
+        fetch('https://localhost:7107/UserEditTraining/DownloadAndEmailPdf', { method: 'POST' })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(function (blob) {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Trainings.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(function (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    });
 </script>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
 

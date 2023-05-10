@@ -16,6 +16,8 @@ namespace ETMP.Pages
         public string? TrainingDescription { get; set; }
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
+        
+        public NotificationSystem NotificationSystem { get; set; }
 
         private readonly ApplicationDbContext _context;
 
@@ -63,6 +65,11 @@ namespace ETMP.Pages
             }
             _context.Trainings.Add(trainingModel);
             _context.SaveChanges();
+
+            NotificationSystem.NotificationSubject = "Added New Training";
+            NotificationSystem.NotificationTime = DateTime.Now;
+            
+
         }
     }
 }
