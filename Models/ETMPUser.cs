@@ -11,5 +11,7 @@ namespace ETMP.Models
         public string ? FirstName { get; set; }
         public string ? LastName { get; set; }
         public string ? PurchasedTraining { get; set; }
+        public int? NotificationSystemId { get; set; }
+
     }
 }

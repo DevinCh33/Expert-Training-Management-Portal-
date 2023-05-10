@@ -1,4 +1,5 @@
 ﻿@using ETMP.Models;
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,15 +39,10 @@
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
-
-                    <a asp-page="/Notifications/AllNotifications" style="text-decoration: none;">
-                        
+                    <a asp-page="/Notifications" style="text-decoration: none;">
                         <button type="button" class="icon-button">
                             <span class="material-icons">notifications</span>
                         </button>
-                        <div class="dropdown-content">
-                            @foreach(Notifications in Model.AllNotifications)
-                        </div>
                     </a>
 
                 </div>

@@ -1,5 +1,8 @@
+using ETMP.Data;
+using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 namespace ETMP.Pages
 {
@@ -9,6 +12,12 @@ namespace ETMP.Pages
         private string? _email;
         private string? _about;
         private string? _description;
+        public Notification notification { get; set; }
+        private readonly ApplicationDbContext _context;
+        public SupportTicketModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [BindProperty]
         [Required(ErrorMessage = "Name is required")]
@@ -47,6 +56,12 @@ namespace ETMP.Pages
         {
             if (!ModelState.IsValid)
             {
+                notification = new Notification();
+                notification.NotificationHeader = "Training Purchased!";
+                notification.NotificationBody = "Training(s) had been purchased";
+                notification.IsRead = false;
+                notification.NotificationDate = DateTime.Now;
+                _context.Notification.Add(notification);
                 return Page();
             }
             else
