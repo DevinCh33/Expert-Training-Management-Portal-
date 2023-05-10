@@ -62,8 +62,8 @@ namespace ETMP.Pages
             }
             else
             {
-                string subject = About;
-                string body = Description;
+                string subject = "Support Ticket On " + _about;
+                string body = "Name of Sender: " + _name + "<br/><br/>Email of Sender: " + _email + "<br/><br/>Description of Issue: " + Description;
 
                 // Replace the email address below with the actual email address where you want to receive the form submissions
                 string toEmail = "swe20001projectticket@gmail.com";
