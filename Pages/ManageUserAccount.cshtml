@@ -45,7 +45,7 @@
 <div>
     <div>
         <input class="input-simplified" type="text" id="myInput" onkeyup="filterTable()" placeholder="Search account...">
-        <button type="button" class="search_button">Search</button>
+        <button type="button" class="search_button" id="searchButton">Search</button>
     </div>
     <div class="mt-2">
         <label class="m-3">
@@ -65,27 +65,15 @@
             </select>
         </label>
     </div>
-    <table class="table mt-3">
+    <table id="userTable" class="table mt-3">
         <thead class="container-header">
             <tr>
-                <th>
-                    Email
-                </th>
-                <th>
-                    First Name
-                </th>
-                <th>
-                    Last Name
-                </th>
-                <th>
-                    Gender
-                </th>
-                <th>
-                    Organisation
-                </th>
-                <th>
-                    Training Team
-                </th>
+                <th data-filter-column="email">Email</th>
+                <th data-filter-column="firstName">First Name</th>
+                <th data-filter-column="lastName">Last Name</th>
+                <th data-filter-column="gender">Gender</th>
+                <th data-filter-column="organisation">Organisation</th>
+                <th data-filter-column="trainingTeam">Training Team</th>
             </tr>
         </thead>
         <tbody>
@@ -116,6 +104,12 @@
     </table>
 </div>
 
+<!--required javascripts-->
+<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -139,3 +133,117 @@
         });
     });
 </script>
+
+<script>
+    var table = $('#userTable').DataTable({
+        responsive: true,
+        "searching": false,
+    });
+
+    //sort button
+    let sortByEmail = 'asc';
+    let sortByFirstName = 'asc';
+    let sortByLastName = 'asc';
+    let sortByGender = 'asc';
+    let sortByOrganisation = 'asc';
+    let sortByTrainingTeam = 'asc';
+
+    // Sorting by email
+    $('#sortByEmail').click(() => {
+        if (sortByEmail === 'asc') {
+            table.order([1, 'asc']).draw();
+            sortByEmail = 'desc';
+        } else {
+            table.order([1, 'desc']).draw();
+            sortByEmail = 'asc';
+        }
+    });
+
+    // Sorting by first name
+    $('#sortByFirstName').click(() => {
+        if (sortByFirstName === 'asc') {
+            table.order([2, 'asc']).draw();
+            sortByFirstName = 'desc';
+        } else {
+            table.order([2, 'desc']).draw();
+            sortByFirstName = 'asc';
+        }
+    });
+
+    // Sorting by last name
+    $('#sortByLastName').click(() => {
+        if (sortByLastName === 'asc') {
+            table.order([3, 'asc']).draw();
+            sortByLastName = 'desc';
+        } else {
+            table.order([3, 'desc']).draw();
+            sortByLastName = 'asc';
+        }
+    });
+
+    // Sorting by gender
+    $('#sortByGender').click(() => {
+        if (sortByGender === 'asc') {
+            table.order([4, 'asc']).draw();
+            sortByGender = 'desc';
+        } else {
+            table.order([4, 'desc']).draw();
+            sortByGender = 'asc';
+        }
+    });
+
+    // Sorting by organisation
+    $('#sortByOrganisation').click(() => {
+        if (sortByOrganisation === 'asc') {
+            table.order([5, 'asc']).draw();
+            sortByOrganisation = 'desc';
+        } else {
+            table.order([5, 'desc']).draw();
+            sortByOrganisation = 'asc';
+        }
+    });
+
+    // Sorting by duration
+    $('#sortByGender').click(() => {
+        if (sortByGender === 'asc') {
+            table.order([6, 'asc']).draw();
+            sortByGender = 'desc';
+        } else {
+            table.order([6, 'desc']).draw();
+            sortByGender = 'asc';
+        }
+    });
+</script>
+
+<script>
+    function searchTable() {
+        var input = $('#myInput').val().toLowerCase();
+        var filterColumn = $('#filterType').val();
+        var filterOption = $('#filterOptions').val();
+
+        $('#userTable tbody tr').each(function () {
+            var row = $(this);
+            if (row.text().toLowerCase().indexOf(input) > -1) {
+                if (filterColumn === 'No filter' || filterOption === '-' || row.find('td[data-' + filterColumn.toLowerCase() + '="' + filterOption.toLowerCase() + '"]').length) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            } else {
+                row.hide();
+            }
+        });
+    }
+
+
+    function filterTable() {
+        $('#userTable').DataTable().search($('#myInput').val()).draw();
+        searchTable();
+    }
+
+    $('#searchButton').click(function () {
+        searchTable();
+    });
+
+</script>
+
