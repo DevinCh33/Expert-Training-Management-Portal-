@@ -44,12 +44,12 @@
                     <partial name="_LoginPartial" />
 
                     <a asp-page="/Notifications/AllNotifications" style="text-decoration: none;">
-
+                        
                         <button type="button" class="icon-button">
                             <span class="material-icons">notifications</span>
                         </button>
                         <div class="dropdown-content">
-                            <h1>ddddd</h1>
+                            @foreach(Notifications in Model.AllNotifications)
                         </div>
                     </a>
 
