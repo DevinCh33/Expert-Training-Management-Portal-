@@ -15,13 +15,17 @@ using Newtonsoft.Json;
 /*using iTextSharp.text;
 using iTextSharp.text.pdf;*/
 using System.Data.SqlClient;
-using PuppeteerSharp;
-using MimeKit;
+/*using PuppeteerSharp;
+using MimeKit;*/
 /*using PdfSharp;
 using PdfSharp.Pdf;*/
-using PdfSharp.Drawing;
+/*using PdfSharp.Drawing;
 using Syncfusion.HtmlConverter;
-using Syncfusion.Pdf;
+using Syncfusion.Pdf;*/
+
+
+/*using System.Web.Mvc;
+using Rotativa;*/
 
 
 
@@ -376,19 +380,58 @@ namespace ETMP.Pages
                     }
                 }*/
 
-/*        protected void Button1_Click(object sender, EventArgs e)
+        /*        protected void Button1_Click(object sender, EventArgs e)
+                {
+                    //Initialize HTML to PDF converter 
+                    HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+
+                    //Get the current URL
+                    string url = HttpContext.Current.Request.Url.AbsoluteUri;
+
+                    //Convert URL to PDF document
+                    PdfDocument document = htmlConverter.Convert(url);
+
+                    //Save the document
+                    document.Save("Sample.pdf", HttpContext.Current.Response, HttpReadType.Save);
+                }*/
+
+        /*        public class HomeController : Controller
+                {
+                    public IActionResult Index()
+                    {
+                        return View();
+                    }
+                    public IActionResult ExportToPDF()
+                    {
+                        HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+
+                        //Convert URL to PDF document
+                        PdfDocument document = htmlConverter.Convert("https://www.syncfusion.com");
+
+                        //Create memory stream
+                        MemoryStream stream = new MemoryStream();
+
+                        //Save the document
+                        document.Save(stream);
+
+                        return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf, "HTML-to-PDF.pdf");
+                    }
+
+
+                }*/
+/*
+        namespace Rotativa_Simple_Example.Controllers
+    {
+        public class HomeController : Controller
         {
-            //Initialize HTML to PDF converter 
-            HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+            //Other Action Method
 
-            //Get the current URL
-            string url = HttpContext.Current.Request.Url.AbsoluteUri;
-
-            //Convert URL to PDF document
-            PdfDocument document = htmlConverter.Convert(url);
-
-            //Save the document
-            document.Save("Sample.pdf", HttpContext.Current.Response, HttpReadType.Save);
-        }*/
-    }  
+            public ActionResult ConvertToPDF()
+            {
+                var printpdf = new ActionAsPdf("Index");
+                return printpdf;
+            }
+        }
+    }*/
+}  
 }

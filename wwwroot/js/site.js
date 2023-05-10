@@ -35,3 +35,17 @@ addBtn.addEventListener("click", function () {
     localStorage.setItem("listItems", JSON.stringify(listItems));
 });
 
+
+
+/////////////
+document.getElementById("myButton").addEventListener("click", function () {
+    // Create a new jsPDF instance
+    var pdf = new jsPDF.jsPDF();
+
+    // Add the page content to the PDF document
+    pdf.text("Your page content goes here", 10, 10);
+
+    // Save the generated PDF file
+    pdf.save("UserEditTraining.pdf");
+});
+

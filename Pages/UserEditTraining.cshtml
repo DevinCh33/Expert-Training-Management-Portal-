@@ -38,7 +38,7 @@
             <div class="form-group">
                 <div id="edit-button" style="display:block;">
                     <input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save">
-                    <input type="button" class="btn btn-danger" @*id="download-btn"*@ id="Button1_Click" OnClick="Button1_Click" value="Download Itinerary">
+                    <input type="button" class="btn btn-danger" @*id="download-btn"*@ id="Button1_Click" input type="submit" value="Download Itinerary">
                     <input type="button" class="btn btn-danger" value="Download Training Material">
                 </div>
                 <div id="confirmation-button" style="display:none;">
@@ -86,16 +86,6 @@
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    document.getElementById("myButton").addEventListener("click", function () {
-        // Create a new jsPDF instance
-        var pdf = new jsPDF.jsPDF();
-
-        // Add the page content to the PDF document
-        pdf.text("Your page content goes here", 10, 10);
-
-        // Save the generated PDF file
-        pdf.save("UserEditTraining.pdf");
-    });
 
 
     
