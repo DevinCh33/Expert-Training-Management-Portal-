@@ -11,7 +11,7 @@ namespace ETMP.Pages
     public class PaymentFormModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-
+        public PaymentModel Payment { get; set; }
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;
