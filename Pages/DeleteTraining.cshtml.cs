@@ -57,12 +57,6 @@ namespace ETMP.Pages
             if (trainingmodel != null)
             {
                 TrainingModel = trainingmodel;
-                notification = new Notification();
-                notification.NotificationHeader = "Training Deleted";
-                notification.NotificationBody = TrainingModel.TrainingName + " is deleted";
-                notification.IsRead = false;
-                notification.NotificationDate = DateTime.Now;
-                _context.Notification.Add(notification);
                 _context.Trainings.Remove(TrainingModel);               
                 await _context.SaveChangesAsync();
             }
