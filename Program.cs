@@ -6,6 +6,7 @@ using ETMP.Pages;
 using System.Configuration;
 using ETMP.Services;
 using ETMP.Hubs;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,3 +86,4 @@ using (var scope = app.Services.CreateScope())
 
 app.MapHub<ChatHub>("/chatHub");
 app.Run();
+

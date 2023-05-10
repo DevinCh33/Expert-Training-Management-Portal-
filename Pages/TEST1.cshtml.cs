@@ -1,11 +1,13 @@
-/*using ETMP.Data;
+using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+/*using Microsoft.AspNetCore.Mvc;*/
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Rotativa;
 using System.Data;
+using System.Web.Mvc;
+
 
 
 
@@ -44,11 +46,29 @@ namespace ETMP.Pages
             }
         }
 
-        public ActionResult ConvertToPDF()
+
+        public void ConfigureServices(IServiceCollection services)
         {
-            var printpdf = new ActionAsPdf("Index");
-            return printpdf;
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+            });
+
         }
+
+        public class HomeController : Controller
+        {
+            
+
+            public ActionResult ConvertToPDF()
+            {
+                var printpdf = new ActionAsPdf("TEST1");
+                return printpdf;
+            }
+        }
+
+
 
     }
 }
@@ -56,4 +76,3 @@ namespace ETMP.Pages
 
 
 
-*/

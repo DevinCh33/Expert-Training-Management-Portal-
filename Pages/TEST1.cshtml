@@ -1,5 +1,5 @@
 ﻿@page
-@model ETMP.Pages.UserListOfTrainingModel
+@model ETMP.Pages.Test1Model
 @{
     ViewData["Title"] = "TEST1";
 }
@@ -30,9 +30,6 @@
                     Venue
                 </th>
                 <th>
-                    Itinerary
-                </th>
-                <th>
                     Category
                 </th>
                 <th>
@@ -44,9 +41,9 @@
                 <th>
                     End Date
                 </th>
-                <th>
-                    Action
-                </th>
+                @*                <th>
+                Action
+                </th>*@
             </tr>
         </thead>
         <tbody>
@@ -63,9 +60,6 @@
                         @Html.DisplayFor(modelItem => item.TrainingVenue)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TrainingItinerary)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.TrainingCategory)
                     </td>
                     <td>
@@ -77,11 +71,45 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.TrainingEndDateTime)
                     </td>
-                    <td>
-                        <a asp-page="./TEST1" asp-route-id="@item.Id">Edit</a>
-                    </td>
+                    @*<td>
+                <a asp-page="./TEST1" asp-route-id="@item.Id">Edit</a>
+                </td>*@
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<button id="download-btn">Download</button>
+
+
+<script>
+    const downloadBtn = document.getElementById("download-btn");
+    downloadBtn.addEventListener("click", () => {
+        const filename = "test1.txt";
+        const tableRows = document.querySelectorAll("table tr");
+        let tableData = "";
+        tableRows.forEach(row => {
+            const rowData = Array.from(row.cells).map(cell => cell.innerText);
+            const formattedData = rowData.map(value => {
+                if (value.length > 40) {
+                    value = value.substring(0, 37) + "...";
+                }
+                return value.padEnd(40, " ") + "|";
+            }).join("");
+            tableData += formattedData.substring(0, formattedData.length - 1) + "\n";
+        });
+        const content = "Name          |Price         |Venue                                        |Category      |Description                                                  |Start Date           |End Date             |\n" + tableData;
+        const blob = new Blob([content], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 0);
+    });
+</script>
