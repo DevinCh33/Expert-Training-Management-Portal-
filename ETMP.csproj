@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\paymentForm.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\paymentForm.cshtml" />
     <Content Remove="wwwroot\NewFolder1\green_gradient_background.jpg" />
     <Content Remove="wwwroot\NewFolder\green_gradient_background.jpg" />
   </ItemGroup>
@@ -23,6 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.19.3" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
@@ -34,10 +40,17 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
     <PackageReference Include="MimeKit" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PDFsharp" Version="6.0.0-preview-2" />
     <PackageReference Include="PuppeteerSharp" Version="10.0.0" />
+    <PackageReference Include="Rotativa" Version="1.7.4-rc" />
+    <PackageReference Include="SendGrid" Version="9.28.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="21.2.4" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="21.2.4" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="21.2.4" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
+	<PackageReference Include="SendGrid" Version="9.25.0" />
   </ItemGroup>
 
   <ItemGroup>

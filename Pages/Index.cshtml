@@ -1,37 +1,61 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+	ViewData["Title"] = "Home page";
+	Layout = "~/Pages/Shared/_IndexLayout.cshtml";
 }
+
+<style>
+	.bg-container {
+		width: 100%;
+		overflow: hidden;
+		padding: 150px;
+		background-color: #4158D0;
+		background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+	}
+
+	.title-text{
+		position: relative;
+		margin: auto;
+		color: white;
+	}
+
+	.showcase-pictures{
+		height:300px;
+	}
+
+	.showcase-text{
+		display: inline-block;
+		vertical-align:center;
+		margin:100px;
+		width:800px;
+	}
+</style>
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Expert Training Provider</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<header>
-		<img src="images/ETMP_LOGO.png" alt="Expert Training Provider Logo">
-		<nav>
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">About Us</a></li>
-				<li><a href="#">Services</a></li>
-				<li><a href="#">Clients</a></li>
-				<li><a href="#">Contact Us</a></li>
-			</ul>
-		</nav>
-	</header>
+	<head>
+		<title>Expert Training Provider</title>
+		
+	</head>
+	<div class="mt-5 mb-5 bg-container">
+		<center class="title-text"><h1>Welcome to Expert Training Provider</h1></center>
+	</div>
 	<main>
 		<section>
-			<h1>Welcome to Expert Training Provider</h1>
-			<p>We provide in-house training for companies and employees in Sarawak, aimed at developing human capital to meet your business needs.</p>
-			<a href="#" class="cta-btn">Learn More</a>
+			<h3>Practical Solutions for Your Business Needs</h3>
+			<p class="showcase-text">Expert Training Provider specializes in providing hands-on training solutions for companies and employees in Sarawak. Our training courses are tailored to meet your business needs and address common day-to-day challenges faced by organizations. Our experienced trainers will work with you to understand your specific requirements and develop a training program that meets your goals and objectives.</p>
+			<img class="showcase-pictures" src="images/ETMP_LOGO.png" alt="Expert Training Provider Logo">
+		</section>
+		<section>
+			<img class="showcase-pictures" src="images/ETMP_LOGO.png" alt="Expert Training Provider Logo">
+			<h3>Develop Your Human Capital</h3>
+			<p class="showcase-text">At Expert Training Provider, we believe that developing your human capital is essential for the growth and success of your organization. Our training courses cover a wide range of areas including work productivity, leadership and communication skills, language proficiency, sales, negotiation and presentation skills, workplace management, and personal development. By investing in your employees, you will be able to improve their skills and knowledge, and in turn, increase your organization's productivity and profitability.</p>
+		</section>
+		<section>
+			<h3 class="showcase-text">In-House and On-Site Training</h3>
+			<p class="showcase-text">Expert Training Provider offers in-house and on-site training options to suit your business needs. We can conduct training at your premises, saving you time and money. Our trainers will provide practical information and solutions that can be immediately applied in the workplace. We also offer public training courses throughout the year, allowing individuals to enhance their skills and knowledge in a supportive learning environment. Whatever your training needs, Expert Training Provider has the solution for you.</p>
+			<img class="showcase-pictures" src="images/ETMP_LOGO.png" alt="Expert Training Provider Logo">
 		</section>
 	</main>
-	<footer>
-		<p>&copy; Expert Training Provider. All rights reserved.</p>
-	</footer>
-</body>
 </html>

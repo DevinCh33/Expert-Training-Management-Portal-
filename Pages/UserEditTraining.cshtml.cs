@@ -12,11 +12,20 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
 
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+/*using iTextSharp.text;
+using iTextSharp.text.pdf;*/
 using System.Data.SqlClient;
-using PuppeteerSharp;
-using MimeKit;
+/*using PuppeteerSharp;
+using MimeKit;*/
+/*using PdfSharp;
+using PdfSharp.Pdf;*/
+/*using PdfSharp.Drawing;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;*/
+
+
+/*using System.Web.Mvc;
+using Rotativa;*/
 
 
 
@@ -240,71 +249,189 @@ namespace ETMP.Pages
 
 
 
-        public async Task<IActionResult> OnPostDownloadAndEmailPdfAsync()
+        /* public async Task<IActionResult> OnPostDownloadAndEmailPdfAsync()
+         {
+             // Connection string
+             var connectionString = "Data Source=myServerAddress;Initial Catalog=myDataBase;User Id=myUsername;Password=myPassword;";
+
+             // SQL query
+             var query = "SELECT UserName FROM Identity.User";
+
+             // Create and open database connection
+             using var connection = new SqlConnection(connectionString);
+             await connection.OpenAsync();
+
+             // Create and execute SQL command
+             using var command = new SqlCommand(query, connection);
+             using var reader = await command.ExecuteReaderAsync();
+
+             // Get email address from database
+             string emailAddress = null;
+             if (await reader.ReadAsync())
+             {
+                 emailAddress = reader["UserName"].ToString();
+             }
+
+             if (emailAddress == null)
+             {
+                 // Handle case where email address is not found
+                 return Page();
+             }
+
+
+
+             // Generate PDF of page
+
+
+             *//*await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);*//*
+
+
+             using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
+
+             using var page = await browser.NewPageAsync();
+
+             await page.GoToAsync("https://localhost:7107/UserListOfTraining");
+
+             var pdfData = await page.PdfDataAsync();
+
+             // Email PDF to user
+             var message = new MimeMessage();
+
+             message.From.Add(new MailboxAddress("Your Name", "your-email@example.com"));
+
+             *//*message.To.Add(new MailboxAddress(emailAddress));*//*
+             new MailboxAddress("Your Name", emailAddress);
+
+             message.Subject = "Your Itinerary";
+
+             var builder = new BodyBuilder();
+
+             builder.TextBody = "Here is your itinerary.";
+
+             builder.Attachments.Add("Itinerary.pdf", pdfData);
+
+             message.Body = builder.ToMessageBody();
+
+             return Page();
+         }
+     }*/
+
+
+
+        /// <summary>
+        /// //////////
+        /// </summary>
+        /// <returns></returns>
+        /* public IActionResult OnGetDownloadPdf()
+         {
+             // Set up the PDF document
+             var pdfDocument = new PdfDocument();
+             var pdfPage = pdfDocument.AddPage();
+             var pdfGraphics = XGraphics.FromPdfPage(pdfPage);
+             var pdfFont = new XFont("Arial", 14);
+
+             // Add your page content to the PDF document
+             pdfGraphics.DrawString("Your page content goes here", pdfFont, XBrushes.Black, new XRect(0, 0, pdfPage.Width, pdfPage.Height), XStringFormats.Center);
+
+             // Save the PDF document to a byte array
+             using (var memoryStream = new MemoryStream())
+             {
+                 pdfDocument.Save(memoryStream);
+                 var pdfBytes = memoryStream.ToArray();
+
+                 // Return the generated PDF file
+                 return File(pdfBytes, "application/pdf", "UserListOfTraining.pdf");
+             }
+         }*/
+
+
+
+        /*        public IActionResult OnGetDownloadPdf()
+                {
+                    try
+                    {
+                        // Set up the PDF document
+                        var pdfDocument = new PdfDocument();
+                        var pdfPage = pdfDocument.AddPage();
+                        var pdfGraphics = XGraphics.FromPdfPage(pdfPage);
+                        var pdfFont = new XFont("Arial", 14);
+
+                        // Add your page content to the PDF document
+                        pdfGraphics.DrawString("Your page content goes here", pdfFont, XBrushes.Black, new XRect(0, 0, pdfPage.Width, pdfPage.Height), XStringFormats.Center);
+
+                        // Save the PDF document to a byte array
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            pdfDocument.Save(memoryStream);
+                            var pdfBytes = memoryStream.ToArray();
+
+                            // Return the generated PDF file
+                            return File(pdfBytes, "application/pdf", "UserListOfTraining.pdf");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the exception for debugging purposes
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.StackTrace);
+
+                        // Return an error message to the user
+                        return Content("An error occurred while generating the PDF file.");
+                    }
+                }*/
+
+        /*        protected void Button1_Click(object sender, EventArgs e)
+                {
+                    //Initialize HTML to PDF converter 
+                    HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+
+                    //Get the current URL
+                    string url = HttpContext.Current.Request.Url.AbsoluteUri;
+
+                    //Convert URL to PDF document
+                    PdfDocument document = htmlConverter.Convert(url);
+
+                    //Save the document
+                    document.Save("Sample.pdf", HttpContext.Current.Response, HttpReadType.Save);
+                }*/
+
+        /*        public class HomeController : Controller
+                {
+                    public IActionResult Index()
+                    {
+                        return View();
+                    }
+                    public IActionResult ExportToPDF()
+                    {
+                        HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+
+                        //Convert URL to PDF document
+                        PdfDocument document = htmlConverter.Convert("https://www.syncfusion.com");
+
+                        //Create memory stream
+                        MemoryStream stream = new MemoryStream();
+
+                        //Save the document
+                        document.Save(stream);
+
+                        return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf, "HTML-to-PDF.pdf");
+                    }
+
+
+                }*/
+/*
+        namespace Rotativa_Simple_Example.Controllers
+    {
+        public class HomeController : Controller
         {
-            // Connection string
-            var connectionString = "Data Source=myServerAddress;Initial Catalog=myDataBase;User Id=myUsername;Password=myPassword;";
+            //Other Action Method
 
-            // SQL query
-            var query = "SELECT UserName FROM Identity.User";
-
-            // Create and open database connection
-            using var connection = new SqlConnection(connectionString);
-            await connection.OpenAsync();
-
-            // Create and execute SQL command
-            using var command = new SqlCommand(query, connection);
-            using var reader = await command.ExecuteReaderAsync();
-
-            // Get email address from database
-            string emailAddress = null;
-            if (await reader.ReadAsync())
+            public ActionResult ConvertToPDF()
             {
-                emailAddress = reader["UserName"].ToString();
+                var printpdf = new ActionAsPdf("Index");
+                return printpdf;
             }
-
-            if (emailAddress == null)
-            {
-                // Handle case where email address is not found
-                return Page();
-            }
-
-
-
-            // Generate PDF of page
-
-
-            /*await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);*/
-
-
-            using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
-
-            using var page = await browser.NewPageAsync();
-
-            await page.GoToAsync("https://localhost:7107/UserListOfTraining");
-
-            var pdfData = await page.PdfDataAsync();
-
-            // Email PDF to user
-            var message = new MimeMessage();
-
-            message.From.Add(new MailboxAddress("Your Name", "your-email@example.com"));
-
-            /*message.To.Add(new MailboxAddress(emailAddress));*/
-            new MailboxAddress("Your Name", emailAddress);
-
-            message.Subject = "Your Itinerary";
-
-            var builder = new BodyBuilder();
-
-            builder.TextBody = "Here is your itinerary.";
-
-            builder.Attachments.Add("Itinerary.pdf", pdfData);
-
-            message.Body = builder.ToMessageBody();
-
-            return Page();
         }
-    }
-    
+    }*/
+}  
 }

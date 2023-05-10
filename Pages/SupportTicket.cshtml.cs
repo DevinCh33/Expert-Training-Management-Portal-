@@ -1,9 +1,14 @@
+using ETMP.Models;
+using Microsoft.AspNetCore.Identity;
 using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Encodings.Web;
+
 namespace ETMP.Pages
 {
     public class SupportTicketModel : PageModel
@@ -17,6 +22,12 @@ namespace ETMP.Pages
         public SupportTicketModel(ApplicationDbContext context)
         {
             _context = context;
+        }
+        private readonly Services.IMailService _mailService;
+
+        public SupportTicketModel(Services.IMailService mailService)
+        {
+            _mailService = mailService;
         }
 
         [BindProperty]
@@ -52,7 +63,7 @@ namespace ETMP.Pages
             get { return _description; }
             set { _description = value; }
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +77,17 @@ namespace ETMP.Pages
             }
             else
             {
-                return RedirectToPage("UserListOfTraining");
+                string subject = About;
+                string body = Description;
+
+                // Replace the email address below with the actual email address where you want to receive the form submissions
+                string toEmail = "swe20001projectticket@gmail.com";
+
+
+                var request = new MailRequest(toEmail, subject, body, null);
+                await _mailService.SendEmailAsync(request);
+
+                return RedirectToPage("Index");
             }
         }
     }
