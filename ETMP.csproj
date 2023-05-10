@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\paymentForm.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\paymentForm.cshtml" />
     <Content Remove="wwwroot\NewFolder1\green_gradient_background.jpg" />
     <Content Remove="wwwroot\NewFolder\green_gradient_background.jpg" />
   </ItemGroup>
@@ -39,6 +44,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
+	<PackageReference Include="SendGrid" Version="9.25.0" />
   </ItemGroup>
 
   <ItemGroup>
