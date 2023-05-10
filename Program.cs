@@ -33,6 +33,7 @@ builder.Services.AddIdentity<ETMPUser, IdentityRole>(options => {
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IMailService, ETMP.Services.MailService>();
 
 builder.Services.AddRazorPages();
 
