@@ -6,6 +6,7 @@ using ETMP.Pages;
 using System.Configuration;
 using ETMP.Services;
 using ETMP.Hubs;
+using PdfSharp.Charting;
 
 var builder = WebApplication.CreateBuilder(args);
 
