@@ -18,9 +18,12 @@ namespace ETMP.Pages
         private string? _about;
         private string? _description;
         private readonly Services.IMailService _mailService;
-        public SupportTicketModel(Services.IMailService mailService)
+        public Notification notification { get; set; }
+        private readonly ApplicationDbContext _context;
+        public SupportTicketModel(Services.IMailService mailService, ApplicationDbContext context )
         {
             _mailService = mailService;
+            _context = context;
         }
 
         [BindProperty]
@@ -68,11 +71,20 @@ namespace ETMP.Pages
                 string body = "Name of Sender: " + _name + "<br/><br/>Email of Sender: " + _email + "<br/><br/>Description of Issue: " + Description;
 
                 // Replace the email address below with the actual email address where you want to receive the form submissions
-                string toEmail = "swe20001projectticket@gmail.com";
-
-
+                string toEmail = "emtpsdnbhd@gmail.com";
+                //notification
+                
+                notification = new Notification();
+                notification.NotificationHeader = "Support ticket has been sent!";
+                notification.NotificationBody = "Your support ticket regarding the " + _about + " has been sent!";
+                notification.NotificationDate = DateTime.Now;
+                _context.Notification.Add(notification);
+                _context.SaveChanges();
+               
+                //notifcation ended
                 var request = new MailRequest(toEmail, subject, body, null);
                 await _mailService.SendEmailAsync(request);
+
 
                 return RedirectToPage("Index");
             }

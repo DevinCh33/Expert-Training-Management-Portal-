@@ -17,6 +17,7 @@ namespace ETMP.Pages
         private readonly UserManager<ETMPUser> _userManager;
         private readonly SignInManager<ETMPUser> _signInManager;
         private readonly ApplicationDbContext _context;
+        public Notification notification { get; set; }
 
         public TrainingPurchasedModel(ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
@@ -46,18 +47,25 @@ namespace ETMP.Pages
                     string userExistingTraining = user.PurchasedTraining;
 
                     _trainingModels = JsonConvert.DeserializeObject<List<TrainingModel>>(userExistingTraining);
+                    //notification
+                    notification = new Notification();
+                    notification.NotificationHeader = "Training Purchased!";
+                    notification.NotificationBody = "Training " + PurchasedTraining.TrainingName + " has been purchased! The date for the training is "+PurchasedTraining.TrainingStartDateTime;
+                    notification.NotificationDate = DateTime.Now;
+                    _context.Notification.Add(notification);
+                    //notification ends
                     _trainingModels.Add(PurchasedTraining);
-
+                    
+ 
                     user.PurchasedTraining = JsonConvert.SerializeObject(_trainingModels);
                     userdata = user.PurchasedTraining;
-
                     await _userManager.UpdateAsync(user);
                     await _signInManager.RefreshSignInAsync(user);
                 }
                 else
                 {
-                    user.PurchasedTraining = "[" + JsonConvert.SerializeObject(PurchasedTraining) + "]";
-
+   
+                    user.PurchasedTraining = "[" + JsonConvert.SerializeObject(PurchasedTraining) + "]";                    
                     await _userManager.UpdateAsync(user);
                     await _signInManager.RefreshSignInAsync(user);
                 }

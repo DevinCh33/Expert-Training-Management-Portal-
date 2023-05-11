@@ -14,7 +14,7 @@ namespace ETMP.Pages
     {
         private readonly ApplicationDbContext _context;
         public Boolean isAvailable { get; set; }
-
+        
         public DeleteTrainingModel(ApplicationDbContext context)
         {
             _context = context;
@@ -39,9 +39,10 @@ namespace ETMP.Pages
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 TrainingModel = trainingmodel;
+
             }
             return Page();
         }
@@ -57,6 +58,11 @@ namespace ETMP.Pages
             if (trainingmodel != null)
             {
                 TrainingModel = trainingmodel;
+                notification = new Notification();
+                notification.NotificationHeader = "Training removed!";
+                notification.NotificationBody = "Training " + trainingmodel.TrainingName + " has been removed!";
+                notification.NotificationDate = DateTime.Now;
+                _context.Notification.Add(notification);
                 _context.Trainings.Remove(TrainingModel);               
                 await _context.SaveChangesAsync();
             }
