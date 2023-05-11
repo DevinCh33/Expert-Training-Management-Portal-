@@ -50,6 +50,15 @@
         <label for="training-category">Training Category:</label><br />
         <input type="text" id="training-category" placeholder="Category" required value="@Model.Training.TrainingCategory" asp-for="Training.TrainingCategory"><br>
 
+        <div>
+            <label class="form-label">Start Time</label><br />
+            <input type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.DateNow" /><br />
+        </div>
+        <div>
+            <label class="form-label">End Time</label><br />
+            <input type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" /><br />
+        </div>
+
         <br />
         <div>
             <label form="training-availability">

@@ -67,7 +67,7 @@ namespace ETMP.Pages
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ManageTraining");
         }
     }
 }

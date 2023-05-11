@@ -17,6 +17,7 @@ namespace ETMP.Pages
     {
         [BindProperty]
         public TrainingModel Training { get; set; }
+        private DateTime _dateNow;
         public List<TrainingModel> EditTraining { get; set; } = new List<TrainingModel>();
         public List<SelectListItem> TrainingNames { get; set; }
 
@@ -32,6 +33,12 @@ namespace ETMP.Pages
             _context = context;
         }
 
+        public DateTime DateNow
+        {
+            get { return _dateNow; }
+            set { _dateNow = value; }
+        }
+
         public IActionResult OnPostRedirectToNewPage()
         {
             // Set the Id in TempData
@@ -43,7 +50,7 @@ namespace ETMP.Pages
 
         public IActionResult OnPostAddButton()
         {
-            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription });
+            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime });
         }
 
         public IActionResult OnPostCancelButton()
@@ -63,6 +70,8 @@ namespace ETMP.Pages
                 .ToListAsync();
 
             EditTraining = _context.Trainings.ToList();
+
+            _dateNow = DateTime.Now;
             
             return Page();
         }

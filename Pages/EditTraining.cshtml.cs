@@ -18,6 +18,7 @@ namespace ETMP.Pages
         public string? TrainingVenue { get; set; }
         public string? TrainingCategory { get; set; }
         public Boolean Availability { get; set; }
+        private DateTime _dateNow;
         private readonly ApplicationDbContext _context;
         public Notification notification { get; set; }
         
@@ -25,6 +26,11 @@ namespace ETMP.Pages
         {
             _context = context;
 
+        }
+        public DateTime DateNow
+        {
+            get { return _dateNow; }
+            set { _dateNow = value; }
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -50,7 +56,7 @@ namespace ETMP.Pages
             if (await TryUpdateModelAsync<TrainingModel>(
                 trainingToUpdate,
                 "training",   // Prefix for form value.
-                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
+                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription, t => t.TrainingStartDateTime, t => t.TrainingEndDateTime))
             {
                 //notification
                 
@@ -65,7 +71,7 @@ namespace ETMP.Pages
                 }
                 //notification ended
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                return RedirectToPage("./ManageTraining");
             }
             return Page();
         }
