@@ -14,9 +14,11 @@ namespace ETMP.Pages
         public string? TrainingVenue { get; set; }
         public string? TrainingCategory { get; set; }
         public string? TrainingDescription { get; set; }
+        public DateTime TrainingStartDateTime { get; set; }
+        public DateTime TrainingEndDateTime { get; set; }
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
-        
+
         private readonly ApplicationDbContext _context;
         public Notification notification { get; set; }
         public AddTrainingModel(ApplicationDbContext context)
@@ -52,6 +54,8 @@ namespace ETMP.Pages
             trainingModel.TrainingVenue = TrainingVenue;
             trainingModel.TrainingCategory = TrainingCategory;
             trainingModel.TrainingDescription = TrainingDescription;
+            trainingModel.TrainingStartDateTime = TrainingStartDateTime;
+            trainingModel.TrainingEndDateTime = TrainingEndDateTime;
             trainingModel.Availability = Availability;
 
             if(Availability == true)

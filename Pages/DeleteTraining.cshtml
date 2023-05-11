@@ -51,6 +51,18 @@
             @Html.DisplayFor(model => model.TrainingModel.TrainingCategory)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainingModel.TrainingStartDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrainingModel.TrainingStartDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainingModel.TrainingEndDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrainingModel.TrainingEndDateTime)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TrainingModel.Availability)
         </dt>
         @if (Model.isAvailable == true)
