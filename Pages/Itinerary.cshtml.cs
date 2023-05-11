@@ -34,13 +34,14 @@ namespace ETMP.Pages
         private readonly ApplicationDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly IWebHostEnvironment _environment;
+        private readonly Services.IMailService _mailService;
 
         [BindProperty]
         public IFormFile UploadedFile { get; set; }
 
 
 
-        public Test1Model(IWebHostEnvironment environment, IEmailSender emailSender, ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
+        public Test1Model(Services.IMailService mailService, IWebHostEnvironment environment, IEmailSender emailSender, ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
             _context = context;
             _trainingList = new List<TrainingModel>();
@@ -48,6 +49,7 @@ namespace ETMP.Pages
             _signInManager = signInManager;
             _environment = environment;
             _emailSender = emailSender;
+            _mailService = mailService;
         }
 
         public List<TrainingModel> TrainingList
@@ -68,6 +70,56 @@ namespace ETMP.Pages
 
 
         public async Task<IActionResult> OnPostAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            else
+            {
+                if (UploadedFile != null && UploadedFile.Length > 0)
+                {
+                    // Get the file name
+                    var fileName = Path.GetFileName(UploadedFile.FileName);
+
+                    // Get the file path
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+                    // Create a stream to save the file
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        // Save the file to the stream
+                        await UploadedFile.CopyToAsync(fileStream);
+                    }
+                }
+
+                string subject = "Test Email";
+                string body = "<html><body><p>Please find the content of the script tag below:</p><pre>";
+
+                // Get the content of the script tag
+                var scriptContent = "<insert script content here>";
+
+                // Append the script content to the body of the email
+                body += scriptContent;
+
+                // Close the HTML tags
+                body += "</pre></body></html>";
+                var request = new MailRequest(user.Email, subject, body, null);
+
+                // Send the email
+                await _mailService.SendEmailAsync(request);
+                
+
+                return RedirectToPage("./Index");
+            }
+        }
+
+    }
+}
+/*        public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -105,62 +157,15 @@ namespace ETMP.Pages
                 // Close the HTML tags
                 body += "</pre></body></html>";
 
-   /*             var user = await _userManager.GetUserAsync(User);*/
-                // Send the email
-                await _emailSender.SendEmailAsync(user.Email, subject, body);
+                // Send the email using the EmailSender class
+                var message = new Message(new string[] { user.Email }, subject, body);
+                await _emailSender.SendEmailAsync(message);
 
                 return RedirectToPage("./Index");
             }
         }
+*/
 
-        /*        public async Task<IActionResult> OnPostAsync()
-                {
-                    var user = await _userManager.GetUserAsync(User);
-
-                    if (!ModelState.IsValid)
-                    {
-                        return Page();
-                    }
-                    else
-                    {
-                        if (UploadedFile != null && UploadedFile.Length > 0)
-                        {
-                            // Get the file name
-                            var fileName = Path.GetFileName(UploadedFile.FileName);
-
-                            // Get the file path
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
-
-                            // Create a stream to save the file
-                            using (var fileStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                // Save the file to the stream
-                                await UploadedFile.CopyToAsync(fileStream);
-                            }
-                        }
-
-                        string subject = "Test Email";
-                        string body = "<html><body><p>Please find the content of the script tag below:</p><pre>";
-
-                        // Get the content of the script tag
-                        var scriptContent = "<insert script content here>";
-
-                        // Append the script content to the body of the email
-                        body += scriptContent;
-
-                        // Close the HTML tags
-                        body += "</pre></body></html>";
-
-                        // Send the email using the EmailSender class
-                        var message = new Message(new string[] { user.Email }, subject, body);
-                        await _emailSender.SendEmailAsync(message);
-
-                        return RedirectToPage("./Index");
-                    }
-                }
-        */
-    }
-}
 
 
 
