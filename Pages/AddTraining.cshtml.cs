@@ -16,7 +16,7 @@ namespace ETMP.Pages
         public string? TrainingDescription { get; set; }
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
-        
+
         private readonly ApplicationDbContext _context;
         public AddTrainingModel(ApplicationDbContext context)
         {
