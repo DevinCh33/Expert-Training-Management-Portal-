@@ -67,12 +67,7 @@ namespace ETMP.Pages
         {
             if (!ModelState.IsValid)
             {
-                notification = new Notification();
-                notification.NotificationHeader = "Training Purchased!";
-                notification.NotificationBody = "Training(s) had been purchased";
-                notification.IsRead = false;
-                notification.NotificationDate = DateTime.Now;
-                _context.Notification.Add(notification);
+
                 return Page();
             }
             else

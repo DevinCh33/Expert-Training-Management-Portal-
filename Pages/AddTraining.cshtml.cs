@@ -19,12 +19,11 @@ namespace ETMP.Pages
         
         private readonly ApplicationDbContext _context;
         public Notification notification { get; set; }
-        public MailRequest mailRequest { get; set; }
-        private readonly Services.IMailService _mailService;
-        public AddTrainingModel(ApplicationDbContext context, Services.IMailService mailService)
+
+        public AddTrainingModel(ApplicationDbContext context)
         {
             _context = context;
-            _mailService = mailService;
+
         }
         public async Task<IActionResult> OnGetAsync()
         {
@@ -71,8 +70,6 @@ namespace ETMP.Pages
             notification.NotificationDate = DateTime.Now;
             _context.Trainings.Add(trainingModel);
             _context.Notification.Add(notification);
-            mailRequest = new MailRequest("wwonggabriel07@gmail.com", notification.NotificationHeader, notification.NotificationBody, null);
-            await _mailService.SendEmailAsync(mailRequest);
             _context.SaveChanges();
             return Page();
             

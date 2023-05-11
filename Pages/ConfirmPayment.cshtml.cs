@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ETMP.Data;
 using ETMP.Models;
 using Newtonsoft.Json;
+using ETMP.Services;
 
 namespace ETMP.Pages
 {
@@ -24,7 +25,9 @@ namespace ETMP.Pages
         public string? TrainingCategory { get; set; }
         public Boolean Availability { get; set; }
         private readonly ETMP.Data.ApplicationDbContext _context;
-
+        public Notification notification { get; set; }
+        public MailRequest mailRequest { get; set; }
+        public MailService mailService { get; set; }
         public ConfirmPaymentModel(ETMP.Data.ApplicationDbContext context)
         {
             _context = context;
@@ -52,7 +55,6 @@ namespace ETMP.Pages
                   t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
             {
                 await _context.SaveChangesAsync();
-
                 return RedirectToPage("./Index");
             }
             return Page();
