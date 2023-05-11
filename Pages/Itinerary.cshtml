@@ -77,16 +77,21 @@
                     @*<td>
                 <a asp-page="./TEST1" asp-route-id="@item.Id">Edit</a>
                 </td>*@
+              @*  <td>
+                    <input class="btn btn-primary" type="submit" value="Submit" />
+                    </td>*@
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
-<button id="download-btn">Download</button>
+<button id="download-btn" type="submit">Download</button>
 
 
 <script>
+
+
     const downloadBtn = document.getElementById("download-btn");
     downloadBtn.addEventListener("click", () => {
         const filename = "test1.txt";
@@ -104,15 +109,12 @@
         });
         const content = "Name          |Price         |Venue                                        |Category      |Description                                                  |Start Date           |End Date             |\n" + tableData;
         const blob = new Blob([content], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }, 0);
+        const formData = new FormData();
+        formData.append("file", blob, filename);
+        fetch("/send-email", {
+            method: "POST",
+            body: formData
+        });
     });
+
 </script>
