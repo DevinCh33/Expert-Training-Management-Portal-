@@ -269,7 +269,7 @@
             <tbody>
                 @foreach (var training in Model.Trainings)
                 {
-                
+         
                     <tr class="training-row" data-price="@training.TrainingPrice" data-category="@training.TrainingCategory" data-start-date="@training.TrainingStartDateTime.ToString("yyyy-MM-dd")" data-end-date="@training.TrainingEndDateTime.ToString("yyyy-MM-dd")">
                         <td>@training.Id</td>
                         <td>@training.TrainingName</td>
@@ -288,8 +288,6 @@
             </tbody>
         </table>
     </div>
-
-
 
 <script>
     var table = $('#myTable').DataTable({

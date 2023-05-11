@@ -49,12 +49,6 @@ namespace ETMP.Pages
                   t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription))
             {
                 await _context.SaveChangesAsync();
-                notification = new Notification();
-                notification.NotificationHeader = "Training edited";
-                notification.NotificationBody = Training.TrainingName + " is edited";
-                notification.IsRead = false;
-                notification.NotificationDate = DateTime.Now;
-                _context.Notification.Add(notification);
                 return RedirectToPage("./Index");
             }
             return Page();
