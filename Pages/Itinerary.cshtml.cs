@@ -143,7 +143,7 @@ namespace ETMP.Pages
 
                 // Close the HTML tags
                 /*body += "</pre></body></html>";*/
-                var request = new MailRequest("devinchp@gmail.com", subject, body , null);
+                var request = new MailRequest(user.Email, subject, body , null);
                 
                 // Send the email
                 await _mailService.SendEmailAsync(request);
