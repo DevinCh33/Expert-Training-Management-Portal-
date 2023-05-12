@@ -32,6 +32,7 @@ namespace ETMP.Pages.Shared
             Notifications = await _context.Notification
     .Where(n => n.ToUserId == user.Id)
     .ToListAsync();
+            
             /*
             var training = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
             DateTime currentDate = DateTime.Now;
