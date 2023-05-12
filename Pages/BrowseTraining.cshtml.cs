@@ -29,11 +29,11 @@ namespace ETMP.Pages
         public string data { get; set; }
         public string userdata { get; set; }
         private List<TrainingModel> _trainingModels;
-        public BrowseTraining(ApplicationDbContext context, Services.IMailService mailService, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
+        public BrowseTraining(ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
             _context = context;
             //newly added
-            _mailService = mailService;
+            
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -42,12 +42,7 @@ namespace ETMP.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             Trainings = await _context.Trainings.ToListAsync();
-            //newly added
-            string subject = "Support Ticket On xd";
-            string body = "Name of Sender: <br/><br/>Email of Sender: <br/><br/>Description of Issue: ";
-            string toEmail = "emtpsdnbhd@gmail.com";
-            var request = new MailRequest(toEmail, subject, body, null);
-            await _mailService.SendEmailAsync(request);
+
 
             return Page();
         }

@@ -17,14 +17,16 @@ namespace ETMP.Pages
         private readonly UserManager<ETMPUser> _userManager;
         private readonly SignInManager<ETMPUser> _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly Services.IMailService _mailService;
         public Notification notification { get; set; }
 
-        public TrainingPurchasedModel(ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
+        public TrainingPurchasedModel(ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager, Services.IMailService mailService)
         {
             _context = context;
             _trainingModels = new List<TrainingModel>();
             _userManager = userManager;
             _signInManager = signInManager;
+            _mailService = mailService;
         }
 
         public List<TrainingModel> TrainingModels
@@ -49,10 +51,18 @@ namespace ETMP.Pages
                     _trainingModels = JsonConvert.DeserializeObject<List<TrainingModel>>(userExistingTraining);
                     //notification
                     notification = new Notification();
+                    notification.ToUserId = user.Id;
+                    notification.ToUserName = user.UserName;
                     notification.NotificationHeader = "Training Purchased!";
                     notification.NotificationBody = "Training " + PurchasedTraining.TrainingName + " has been purchased! The date for the training is "+PurchasedTraining.TrainingStartDateTime;
                     notification.NotificationDate = DateTime.Now;
                     _context.Notification.Add(notification);
+                    //send email after purchasing training
+                    string subject = notification.NotificationHeader;
+                    string body = notification.NotificationBody;
+                    string toEmail = user.Email;
+                    var request = new MailRequest(toEmail, subject, body, null);
+                    await _mailService.SendEmailAsync(request);
                     //notification ends
                     _trainingModels.Add(PurchasedTraining);
                     
