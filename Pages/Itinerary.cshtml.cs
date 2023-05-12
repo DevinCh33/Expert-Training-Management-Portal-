@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using ETMP.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,8 +13,11 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using Microsoft.AspNetCore.Http;
-
-
+using System.Threading.Tasks;
+using System.Text;
+using MimeKit;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static iTextSharp.text.pdf.AcroFields;
 
 
 namespace ETMP.Pages
@@ -36,10 +35,12 @@ namespace ETMP.Pages
         private readonly IWebHostEnvironment _environment;
         private readonly Services.IMailService _mailService;
 
+
+
         [BindProperty]
         public IFormFile UploadedFile { get; set; }
 
-
+    
 
         public Test1Model(Services.IMailService mailService, IWebHostEnvironment environment, IEmailSender emailSender, ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
@@ -58,17 +59,19 @@ namespace ETMP.Pages
             set { _trainingList = value; }
         }
 
-/*        public async Task OnGetAsync()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user.PurchasedTraining != null)
-            {
-                _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
-            }
+        
 
 
-        }*/
+        /*        public async Task OnGetAsync()
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    if (user.PurchasedTraining != null)
+                    {
+                        _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
+                    }
 
+
+                }*/
 
 
         public async Task<IActionResult> OnGetAsync()
@@ -78,6 +81,8 @@ namespace ETMP.Pages
             {
                 _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
             }
+
+
 
 
             if (!ModelState.IsValid)
@@ -104,24 +109,50 @@ namespace ETMP.Pages
 
                 string subject = "Test Email";
 
-                
-                // Get the content of the script tag
-                var scriptContent = "<script>\r\n\r\n\r\n    const downloadBtn = document.getElementById(\"download-btn\");\r\n    downloadBtn.addEventListener(\"click\", () => {\r\n        const filename = \"test1.txt\";\r\n        const tableRows = document.querySelectorAll(\"table tr\");\r\n        let tableData = \"\";\r\n        tableRows.forEach(row => {\r\n            const rowData = Array.from(row.cells).map(cell => cell.innerText);\r\n            const formattedData = rowData.map(value => {\r\n                if (value.length > 40) {\r\n                    value = value.substring(0, 37) + \"...\";\r\n                }\r\n                return value.padEnd(40, \" \") + \"|\";\r\n            }).join(\"\");\r\n            tableData += formattedData.substring(0, formattedData.length - 1) + \"\\n\";\r\n        });\r\n        const content = \"Name          |Price         |Venue                                        |Category      |Description                                                  |Start Date           |End Date             |\\n\" + tableData;\r\n        const blob = new Blob([content], { type: \"text/plain\" });\r\n        const formData = new FormData();\r\n        formData.append(\"file\", blob, filename);\r\n        fetch(\"/send-email\", {\r\n            method: \"POST\",\r\n            body: formData\r\n        });\r\n    });\r\n\r\n</script>";
-                string body = "<html><body><p>Please find the content of the script tag below:</p>"+scriptContent+ "</body></html>";
-                // Append the script content to the body of the email
-                /*body += scriptContent;*/
+
+                var body = "<html><table class=\"table\">";
+                body += "<thead>";
+                body += "<tr>";
+                body += "<th>Name</th>";
+                body += "<th>Price</th>";
+                body += "<th>Venue</th>";
+                body += "<th>Category</th>";
+                body += "<th>Description</th>";
+                body += "<th>Start Date</th>";
+                body += "<th>End Date</th>";
+                body += "</tr>";
+                body += "</thead>";
+                body += "<tbody>";
+                foreach (var item in TrainingList)
+                {
+                    body += "<tr>";
+                    body += $"<td>{item.TrainingName}</td>";
+                    body += $"<td>{item.TrainingPrice}</td>";
+                    body += $"<td>{item.TrainingVenue}</td>";
+                    body += $"<td>{item.TrainingCategory}</td>";
+                    body += $"<td>{item.TrainingDescription}</td>";
+                    body += $"<td>{item.TrainingStartDateTime}</td>";
+                    body += $"<td>{item.TrainingEndDateTime}</td>";
+                    body += "</tr>";
+                }
+                body += "</tbody>";
+                body += "</table></html>";
+
+
+
 
                 // Close the HTML tags
                 /*body += "</pre></body></html>";*/
-                var request = new MailRequest("devinchp@gmail.com", subject, body + scriptContent, null);
-
+                var request = new MailRequest("devinchp@gmail.com", subject, body , null);
+                
                 // Send the email
                 await _mailService.SendEmailAsync(request);
-                
+
 
                 return RedirectToPage("./Index");
             }
         }
+
 
     }
 }
@@ -171,6 +202,8 @@ namespace ETMP.Pages
             }
         }
 */
+
+
 
 
 
