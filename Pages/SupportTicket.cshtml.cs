@@ -68,25 +68,29 @@ namespace ETMP.Pages
             else
             {
                 string subject = "Support Ticket On " + _about;
-                string body = "Name of Sender: " + _name + "<br/><br/>Email of Sender: " + _email + "<br/><br/>Description of Issue: " + Description;
+                string body = "<strong>Name of Sender: </strong>" + _name + "<br/><br/><strong>Email of Sender: </strong>" + _email + "<br/><br/><strong>Description of Issue: </strong>" + Description;
 
-                // Replace the email address below with the actual email address where you want to receive the form submissions
-                string toEmail = "emtpsdnbhd@gmail.com";
+                string toEmail = "swe20001projectticket@gmail.com";
+                //string toEmail = "emtpsdnbhd@gmail.com";
+
+                var request = new MailRequest(toEmail, subject, body, null);
+
+                //Sends Email
+                await _mailService.SendEmailAsync(request);
+
                 //notification
                 
                 notification = new Notification();
                 notification.NotificationHeader = "Support ticket has been sent!";
-                notification.NotificationBody = "Your support ticket regarding the " + _about + " has been sent!";
+                notification.NotificationBody = "Your support ticket regarding " + _about + " has been sent!";
                 notification.NotificationDate = DateTime.Now;
                 _context.Notification.Add(notification);
                 _context.SaveChanges();
                
                 //notifcation ended
-                var request = new MailRequest(toEmail, subject, body, null);
-                await _mailService.SendEmailAsync(request);
 
 
-                return RedirectToPage("Index");
+                return RedirectToPage("SupportTicket");
             }
         }
     }

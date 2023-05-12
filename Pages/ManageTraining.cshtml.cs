@@ -7,6 +7,7 @@ using ETMP.Data;
 using ETMP.Models;
 using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 #nullable disable
 
@@ -50,6 +51,7 @@ namespace ETMP.Pages
 
         public IActionResult OnPostAddButton()
         {
+            Training.TrainingItinerary = "To be Removed";
             return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime });
         }
 
