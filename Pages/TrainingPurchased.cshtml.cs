@@ -80,6 +80,6 @@ namespace ETMP.Pages
                     await _signInManager.RefreshSignInAsync(user);
                 }
             }
-        }
+        }   
     }
 }
