@@ -19,7 +19,7 @@ namespace ETMP.Pages
     [Authorize(Roles = "Admin, Member")]
     public class BrowseTraining : PageModel
     {
-
+        [BindProperty]
         public List<TrainingModel> Trainings { get; set; }
         private readonly ApplicationDbContext _context;
         //newly added

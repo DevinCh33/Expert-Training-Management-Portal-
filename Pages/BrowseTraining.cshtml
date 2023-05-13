@@ -289,7 +289,7 @@
                         }
                         else
                         {
-                            <td><a href="ConfirmPayment?Id=@training.Id">Purchase</a></td>
+                            <td><a asp-page="paymentForm" asp-route-id="@training.Id">Purchase</a></td>
                         }
                     </tr>
                 }
@@ -463,7 +463,3 @@
 
 
 </script>
-
-
-
-
