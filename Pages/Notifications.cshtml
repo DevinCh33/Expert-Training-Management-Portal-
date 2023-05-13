@@ -15,12 +15,10 @@
         <table id="myTable">
             <thead>
                 <tr>
-                    <th>NotificationId</th>
-                    <th>ToUserId</th>
-                    <th>ToUserName</th>
-                    <th>NotificationHeader</th>
-                    <th>NotificationBody</th>
-                    <th>NotificationDateTime</th>
+                    <th>Your UserName</th>
+                    <th>Notification Subject</th>
+                    <th>Notification Body</th>
+                    <th>Notification Time</th>
                 </tr>
             </thead>
 
@@ -28,8 +26,6 @@
                 @foreach (var notification in notifications)
                 {
                     <tr>
-                        <td>@notification.NotificationId</td>
-                        <td>@notification.ToUserId</td>
                         <td>@notification.ToUserName</td>
                         <td>@notification.NotificationHeader</td>
                         <td>@notification.NotificationBody</td>
