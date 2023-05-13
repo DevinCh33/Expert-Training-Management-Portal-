@@ -97,7 +97,7 @@
        
         
         </style>
-    <script type="text/javascript" src="./js/paymentValidation.js"></script>
+<script type="text/javascript" src="./js/paymentValidation.js"></script>
 
 
     <title>Payment Form</title>
@@ -106,7 +106,7 @@
     <div class="row">
         <div class="col-75">
             <div class="container">
-            <form id="detail" action="completePayment.cshtml" onsubmit="return validateForm()">
+            <form id="detail" method="post" asp-page-handler="RedirectToDestination">
 
                     <div class="row">
                         <div class="col-50">
@@ -160,12 +160,12 @@
                             </div>
                         </div>
 
-                    </div>
-
-                <input type="submit" value="Submit" class="btn" onclick="validateToStore()">
-                </form>
+                </div>
+                <input type="hidden" name="Id" value="@Model.ToBuyId" />
+                <input type="submit" class="btn btn-primary" value="Submit" />
+            </form>
             </div>
-        </div>
+    </div>
 
        
     </div>

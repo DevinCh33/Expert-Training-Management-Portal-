@@ -56,7 +56,7 @@ namespace ETMP.Pages
             if (await TryUpdateModelAsync<TrainingModel>(
                 trainingToUpdate,
                 "training",   // Prefix for form value.
-                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription, t => t.TrainingStartDateTime, t => t.TrainingEndDateTime))
+                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingItinerary == "To be Removed", t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription, t => t.TrainingStartDateTime, t => t.TrainingEndDateTime))
             {
                 //notification
                 

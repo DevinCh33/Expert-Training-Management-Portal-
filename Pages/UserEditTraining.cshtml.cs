@@ -93,7 +93,7 @@ namespace ETMP.Pages
             {
                 if (edited.Id == id)
                 {
-                    edited.TrainingItinerary = EditTraining.TrainingItinerary;
+                    edited.TrainingItinerary = "To be Removed";
                     edited.TrainingVenue = EditTraining.TrainingVenue;
                     edited.TrainingStartDateTime = EditTraining.TrainingStartDateTime;
                     edited.TrainingEndDateTime = EditTraining.TrainingEndDateTime;

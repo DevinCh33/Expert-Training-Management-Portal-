@@ -282,7 +282,15 @@
                         <td>@training.TrainingStartDateTime</td>
                         <td>@training.TrainingEndDateTime</td>
                         <td>@training.Duration</td>
-                        <td><a href="ConfirmPayment?Id=@training.Id">Purchase</a></td>
+
+                        @if(training.Availability == false)
+                        {
+                            <td>Unavailable</td>
+                        }
+                        else
+                        {
+                            <td><a asp-page="paymentForm" asp-route-id="@training.Id">Purchase</a></td>
+                        }
                     </tr>
                 }
             </tbody>
@@ -455,7 +463,3 @@
 
 
 </script>
-
-
-
-
