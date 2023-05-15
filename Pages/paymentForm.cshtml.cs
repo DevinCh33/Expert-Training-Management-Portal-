@@ -16,6 +16,9 @@ namespace ETMP.Pages
         [TempData]
         public string ErrorMessage { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int ToBuyId { get; set; } // Add the ToBuyId property
+
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;
@@ -25,7 +28,7 @@ namespace ETMP.Pages
         {
             // Initialize the Payment model and other properties as needed
             Payment = new PaymentModel();
-            // ...
+            ToBuyId = Id; // Assign the value to the ToBuyId property
         }
 
         public IActionResult OnPost()
