@@ -83,6 +83,8 @@ namespace ETMP.Pages
         [RegularExpression(@"^\d{3,4}$", ErrorMessage = "Please enter a valid CVV")]
         public string CVV { get; set; }
 
+        public string ToBuyId { get; set; }
+
         // Add additional payment properties as needed
     }
 }

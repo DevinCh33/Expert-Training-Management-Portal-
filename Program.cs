@@ -2,10 +2,7 @@ using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ETMP.Pages;
-using System.Configuration;
 using ETMP.Services;
-using Microsoft.Extensions.Options;
 using ETMP.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -68,7 +68,7 @@
         </select>
     </form>
 
-    <form id="add-training" method="post">
+    <form id="add-training" method="post" enctype="multipart/form-data">
         <label for="training-name">Training Name:</label>
         <input type="text" id="training-name" placeholder="Training Name" required asp-for="Training.TrainingName"><br>
 
@@ -98,8 +98,8 @@
             <textarea id="training-itinerary" placeholder="Enter the training description" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
         </div>
         <div class="form-group">
-            <label for="file">Training Material</label>
-            <input type="file" class="form-control-file" id="file" name="file">
+            <label for="TrainingMaterial">Training Material:</label>
+            <input type="file" name="TrainingMaterial" id="TrainingMaterial" accept=".zip">
         </div>
         <div>
             <label form="training-availability">Is this training Available?

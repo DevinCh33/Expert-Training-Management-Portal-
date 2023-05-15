@@ -8,6 +8,8 @@ using ETMP.Models;
 using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 #nullable disable
 
@@ -30,9 +32,12 @@ namespace ETMP.Pages
 
         private readonly ApplicationDbContext _context;
 
-        public ManageTrainingModel(ApplicationDbContext context)
+        private readonly ILogger<IndexModel> _logger;
+
+        public ManageTrainingModel(ApplicationDbContext context, ILogger<IndexModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public DateTime DateNow
@@ -52,7 +57,9 @@ namespace ETMP.Pages
 
         public async Task<IActionResult> OnPostAddButton()
         {
-            var file = Request.Form.Files.FirstOrDefault();
+            var file = Request.Form.Files.GetFile("TrainingMaterial");
+            _logger.LogInformation("Checking File Length");
+            _logger.LogInformation(file.Length.ToString());
 
             if (file != null && file.Length > 0)
             {
