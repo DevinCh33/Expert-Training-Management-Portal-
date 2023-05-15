@@ -5,6 +5,17 @@
 }
 @using ETMP.Models
 
+<!--css for datatable-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+<!--required javascripts-->
+<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <style>
 
     .container-header {
@@ -44,24 +55,23 @@
 
 <div>
     <div>
-        <input class="input-simplified" type="text" id="myInput" onkeyup="filterTable()" placeholder="Search account...">
+        <input class="input-simplified" type="text" id="myInput" onkeyup="searchTable()" placeholder="Search account...">
         <button type="button" class="search_button" id="searchButton">Search</button>
     </div>
     <div class="mt-2">
         <label class="m-3">
             Filter type:
             <select id="filterType">
-                <option value="No filter">No filter</option>
+                <option value="NoFilter">No filter</option>
                 <option value="Gender">Gender</option>
-                <option value="Organisation">Organisation</option>
-                <option value="Training Team">Training Team</option>
+                <option value="OrganisationName">Organisation</option>
+                <option value="TrainingTeamName">Training Team</option>
             </select>
-            
         </label>
         <label class="m-3">
-            Filter by: 
+            Filter by:
             <select id="filterOptions">
-                <option>-</option>
+                <option value="-">-</option>
             </select>
         </label>
     </div>
@@ -72,8 +82,8 @@
                 <th data-filter-column="firstName">First Name</th>
                 <th data-filter-column="lastName">Last Name</th>
                 <th data-filter-column="gender">Gender</th>
-                <th data-filter-column="organisation">Organisation</th>
-                <th data-filter-column="trainingTeam">Training Team</th>
+                <th data-filter-column="organisationName">Organisation</th>
+                <th data-filter-column="trainingTeamName">Training Team</th>
             </tr>
         </thead>
         <tbody>
@@ -104,17 +114,12 @@
     </table>
 </div>
 
-<!--required javascripts-->
-<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        let filterType;
+        // Update filter option based on filter category
         $('#filterType').on('change', function () {
-            var filterType = $(this).val();
+            filterType = $(this).val();
             $.ajax({
                 url: '/ManageUserAccount?handler=FilterOptions',
                 type: 'GET',
@@ -122,7 +127,7 @@
                 success: function (data) {
                     var options = '';
                     for (var i = 0; i < data.length; i++) {
-                        options += '<option value="' + data[i].value + '">' + data[i].text + '</option>';
+                        options += '<option value="' + data[i].text + '">' + data[i].text + '</option>';
                     }
                     $('#filterOptions').html(options);
                 },
@@ -135,87 +140,59 @@
 </script>
 
 <script>
-    var table = $('#userTable').DataTable({
-        responsive: true,
-        "searching": false,
-    });
+    $(document).ready(function () {
+        // Filter the user list when the filter option is changed
+        $('#filterOptions').on('change', function () {
+            var filterColumn = $('#filterType').val();
+            var filterValue = $('#filterOptions').val();
+            filterColumn = filterColumn.trim();
+            filterValue = filterValue.trim();
 
-    //sort button
-    let sortByEmail = 'asc';
-    let sortByFirstName = 'asc';
-    let sortByLastName = 'asc';
-    let sortByGender = 'asc';
-    let sortByOrganisation = 'asc';
-    let sortByTrainingTeam = 'asc';
+            console.log("Type: " + filterColumn);
+            console.log("Option: " + filterValue);
+            // Make an AJAX request to get the filtered list of users
+            $.ajax({
+                url: '/ManageUserAccount?handler=FilterTable',
+                type: 'GET',
+                data: { filterColumn: filterColumn, filterValue: filterValue },
+                dataType: 'json',
+                success: function (data) {
+                    // Clear the table body
+                    $('#userTable tbody').empty();
+                    console.log("Cleared Table");
 
-    // Sorting by email
-    $('#sortByEmail').click(() => {
-        if (sortByEmail === 'asc') {
-            table.order([1, 'asc']).draw();
-            sortByEmail = 'desc';
-        } else {
-            table.order([1, 'desc']).draw();
-            sortByEmail = 'asc';
-        }
-    });
-
-    // Sorting by first name
-    $('#sortByFirstName').click(() => {
-        if (sortByFirstName === 'asc') {
-            table.order([2, 'asc']).draw();
-            sortByFirstName = 'desc';
-        } else {
-            table.order([2, 'desc']).draw();
-            sortByFirstName = 'asc';
-        }
-    });
-
-    // Sorting by last name
-    $('#sortByLastName').click(() => {
-        if (sortByLastName === 'asc') {
-            table.order([3, 'asc']).draw();
-            sortByLastName = 'desc';
-        } else {
-            table.order([3, 'desc']).draw();
-            sortByLastName = 'asc';
-        }
-    });
-
-    // Sorting by gender
-    $('#sortByGender').click(() => {
-        if (sortByGender === 'asc') {
-            table.order([4, 'asc']).draw();
-            sortByGender = 'desc';
-        } else {
-            table.order([4, 'desc']).draw();
-            sortByGender = 'asc';
-        }
-    });
-
-    // Sorting by organisation
-    $('#sortByOrganisation').click(() => {
-        if (sortByOrganisation === 'asc') {
-            table.order([5, 'asc']).draw();
-            sortByOrganisation = 'desc';
-        } else {
-            table.order([5, 'desc']).draw();
-            sortByOrganisation = 'asc';
-        }
-    });
-
-    // Sorting by duration
-    $('#sortByGender').click(() => {
-        if (sortByGender === 'asc') {
-            table.order([6, 'asc']).draw();
-            sortByGender = 'desc';
-        } else {
-            table.order([6, 'desc']).draw();
-            sortByGender = 'asc';
-        }
+                    // Append the filtered users to the table body
+                    for (var i = 0; i < data.length; i++) {
+                        var user = data[i];
+                        console.log("Email: " + user.email);
+                        console.log("First Name: " + user.firstName);
+                        console.log("Last Name: " + user.email);
+                        console.log("Gender: " + user.gender);
+                        console.log("Organisation: " + user.organisationName);
+                        console.log("Training Team: " + user.trainingTeamName);
+                        $('#userTable tbody').append(
+                            '<tr>' +
+                            '<td>' + user.email + '</td>' +
+                            '<td>' + user.firstName + '</td>' +
+                            '<td>' + user.lastName + '</td>' +
+                            '<td>' + user.gender + '</td>' +
+                            '<td>' + user.organisationName + '</td>' +
+                            '<td>' + user.trainingTeamName + '</td>' +
+                            '</tr>'
+                        );
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    // Handle the error
+                }
+            });
+        });
     });
 </script>
 
 <script>
+    // Search table based on entered text
+
     function searchTable() {
         var input = $('#myInput').val().toLowerCase();
         var filterColumn = $('#filterType').val();
@@ -224,26 +201,17 @@
         $('#userTable tbody tr').each(function () {
             var row = $(this);
             if (row.text().toLowerCase().indexOf(input) > -1) {
-                if (filterColumn === 'No filter' || filterOption === '-' || row.find('td[data-' + filterColumn.toLowerCase() + '="' + filterOption.toLowerCase() + '"]').length) {
-                    row.show();
-                } else {
-                    row.hide();
-                }
+                row.show();
             } else {
                 row.hide();
             }
         });
     }
 
-
-    function filterTable() {
-        $('#userTable').DataTable().search($('#myInput').val()).draw();
-        searchTable();
-    }
-
     $('#searchButton').click(function () {
         searchTable();
     });
-
 </script>
+
+
 
