@@ -122,11 +122,14 @@
 			<img class="showcase-pictures" src="images/on_site_icon.png" alt="Expert Training Provider Logo">
 		</section>
 	</main>
+
+<h1>Public Chat</h1>
 <div class="container">
 	<div class="row">&nbsp;</div>
 	<div class="row">
 		<div class="col-2">User</div>
-		<div class="col-4"><input type="text" id="userInput" /></div>
+		<div class="col-4"><input type="text" id="userInput" ReadOnly value="@User.Identity.Name" /></div>
+		
 	</div>
 	<div class="row">
 		<div class="col-2">Message</div>
@@ -150,7 +153,7 @@
 	</div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+<script src="~/js/chat.js"></script>																																																						
 
 
 </html>
