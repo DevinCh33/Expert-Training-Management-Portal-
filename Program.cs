@@ -82,7 +82,7 @@ using (var scope = app.Services.CreateScope())
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
 
     //IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
-    TrainingSeedData.InitTrainings(context).Wait();
+    //TrainingSeedData.InitTrainings(context).Wait();
 }
 
 

@@ -84,7 +84,5 @@ namespace ETMP.Pages
         [Required(ErrorMessage = "Please enter the card's CVV")]
         [RegularExpression(@"^\d{3,4}$", ErrorMessage = "Please enter a valid CVV")]
         public string CVV { get; set; }
-        public int ToBuyId { get; set; }
-
     }
 }
