@@ -16,6 +16,8 @@ namespace ETMP.Pages
         [TempData]
         public string ErrorMessage { get; set; }
 
+        
+
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;
@@ -82,6 +84,8 @@ namespace ETMP.Pages
         [Required(ErrorMessage = "Please enter the card's CVV")]
         [RegularExpression(@"^\d{3,4}$", ErrorMessage = "Please enter a valid CVV")]
         public string CVV { get; set; }
+
+
 
         // Add additional payment properties as needed
     }
