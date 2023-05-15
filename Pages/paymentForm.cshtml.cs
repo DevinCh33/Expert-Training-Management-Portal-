@@ -1,57 +1,88 @@
 using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
-using PuppeteerSharp;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace ETMP.Pages
 {
     public class PaymentFormModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private int _toBuyId;
+
+        [BindProperty]
         public PaymentModel Payment { get; set; }
-        public Notification notification { get; set; }
-        public MailRequest mailRequest { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;
         }
-        // Data-binding with cshtml
-        [BindProperty]
-        public InputModel Input { get; set; }
 
-        public int ToBuyId
+        public void OnGet(int Id)
         {
-            get { return _toBuyId; }
-            set { _toBuyId = value; }
+            // Initialize the Payment model and other properties as needed
+            Payment = new PaymentModel();
+            // ...
         }
 
-        public class InputModel
+        public IActionResult OnPost()
         {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-        }
-        public IActionResult OnGet(int Id)
-        {
-            ToBuyId = Id;
+            // Perform payment processing and save to the database
+            // ...
 
-            return Page();
+            return RedirectToPage("ConfirmationPage"); // Redirect to a confirmation page
         }
+    }
 
-        public IActionResult OnPostRedirectToDestination(int Id)
-        {
-            return RedirectToPage("ConfirmPayment", new { Id });
-        }
+    public class PaymentModel
+    {
+        [Required(ErrorMessage = "Please enter your name")]
+        public string FullName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your email")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Please enter your address")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "Please enter your city")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "Please enter your state")]
+        public string State { get; set; }
+
+        [Required(ErrorMessage = "Please enter your ZIP code")]
+        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Please enter a valid ZIP code")]
+        public string Zip { get; set; }
+
+        [Required(ErrorMessage = "Please enter the name on your card")]
+        public string CardName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your card number")]
+        [CreditCard(ErrorMessage = "Please enter a valid credit card number")]
+        public string CardNumber { get; set; }
+
+        [Required(ErrorMessage = "Please enter the card's expiration month")]
+        [RegularExpression(@"^(0[1-9]|1[0-2])$", ErrorMessage = "Please enter a valid expiration month")]
+        public string ExpiryMonth { get; set; }
+
+        [Required(ErrorMessage = "Please enter the card's expiration year")]
+        [RegularExpression(@"^\d{4}$", ErrorMessage = "Please enter a valid expiration year")]
+        public string ExpiryYear { get; set; }
+
+        [Required(ErrorMessage = "Please enter the card's CVV")]
+        [RegularExpression(@"^\d{3,4}$", ErrorMessage = "Please enter a valid CVV")]
+        public string CVV { get; set; }
+
+        // Add additional payment properties as needed
     }
 }
