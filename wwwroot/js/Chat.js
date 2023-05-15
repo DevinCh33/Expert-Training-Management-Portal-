@@ -1,7 +1,7 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/ChatHub").build();
 document.getElementById("sendButton").disabled = true;
-connection.on("newMessage", function (user, message) {
+connection.on("ReceiveMessage", function (user, message) {
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
 
