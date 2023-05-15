@@ -23,6 +23,7 @@ namespace ETMP.Pages
         public List<SelectListItem> TrainingNames { get; set; }
 
         public string TrainingName { get; set; }
+        public string TrainingMaterialFilePath { get; set; }
 
         [BindProperty]
         public string SelectedTraining { get; set; }
@@ -49,10 +50,23 @@ namespace ETMP.Pages
             return RedirectToPage("/EditTraining");
         }
 
-        public IActionResult OnPostAddButton()
+        public async Task<IActionResult> OnPostAddButton()
         {
+            var file = Request.Form.Files.FirstOrDefault();
+
+            if (file != null && file.Length > 0)
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", file.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                Training.TrainingMaterialFilePath = filePath;
+            }
+            //await _context.SaveChangesAsync();
             Training.TrainingItinerary = "To be Removed";
-            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime });
+            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime, Training.TrainingMaterialFilePath });
         }
 
         public IActionResult OnPostCancelButton()
