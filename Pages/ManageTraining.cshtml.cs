@@ -61,12 +61,10 @@ namespace ETMP.Pages
                 {
                     await file.CopyToAsync(stream);
                 }
-
                 Training.TrainingMaterialFilePath = filePath;
             }
-            //await _context.SaveChangesAsync();
-            Training.TrainingItinerary = "To be Removed";
-            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime, Training.TrainingMaterialFilePath });
+
+            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime, Training.TrainingMaterialFilePath });
         }
 
         public IActionResult OnPostCancelButton()
@@ -76,15 +74,6 @@ namespace ETMP.Pages
 
         public async Task<IActionResult> OnGetAsync(string name)
         {
-            TrainingNames = await _context.Trainings
-                .Select(t => new SelectListItem
-                {
-                    Value = t.TrainingName,
-                    Text = t.TrainingName
-
-                })
-                .ToListAsync();
-
             EditTraining = _context.Trainings.ToList();
 
             _dateNow = DateTime.Now;

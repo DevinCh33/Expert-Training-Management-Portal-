@@ -21,39 +21,42 @@
     <h1>Training Editor</h1>
 
     <form id="edit-training" method="post">
-        <label for="training-name">Training Name:</label><br />
-        <input type="text" id="training-name" placeholder="Training Name" required value="@Model.Training.TrainingName" asp-for="Training.TrainingName"><br>
-
-        <br />
-        <div class="form-group">
-            <label for="price-range">Price: RM </label>
-            <input type="number" id="price-value" value="500" asp-for="Training.TrainingPrice"><br />
+        <div class="mb-3"
+            <label class="form-label"for="training-name">Training Name:</label>
+            <input class="form-control w-25" type="text" id="training-name" placeholder="Training Name" required value="@Model.Training.TrainingName" asp-for="Training.TrainingName">
         </div>
 
-        <br />
-        <div class="form-group">
-            <label for="training-description">Training Description:</label><br />
-            <textarea id="training-description" value="@Model.Training.TrainingDescription" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea><br />
+        <div class="mb-3">
+            <label class="form-label" for="price-range">Price: RM
+                <input class="form-control" type="number" id="price-value" value="500" asp-for="Training.TrainingPrice">
+            </label>
         </div>
 
-        <br />
-        <label for="training-venue">Training Venue:</label><br />
-        <input type="text" id="training-venue placeholder="Venue" required value="@Model.Training.TrainingVenue" asp-for="Training.TrainingVenue"><br>
-
-        <br />
-        <label for="training-category">Training Category:</label><br />
-        <input type="text" id="training-category" placeholder="Category" required value="@Model.Training.TrainingCategory" asp-for="Training.TrainingCategory"><br>
-
-        <div>
-            <label class="form-label">Start Time</label><br />
-            <input type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.DateNow" /><br />
-        </div>
-        <div>
-            <label class="form-label">End Time</label><br />
-            <input type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" /><br />
+        <div class="mb-3">
+            <label class="form-label" for="training-description">Training Description:</label>
+            <textarea class="form-control" id="training-description" value="@Model.Training.TrainingDescription" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
         </div>
 
-        <br />
+        <div class="mb-3">
+            <label class="form-label" for="training-venue">Training Venue:</label>
+            <input class="form-control w-25" type="text" id="training-venue" placeholder="Venue" required value="@Model.Training.TrainingVenue" asp-for="Training.TrainingVenue">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="training-category">Training Category:</label>
+            <input class="form-control w-25" type="text" id="training-category" placeholder="Category" required value="@Model.Training.TrainingCategory" asp-for="Training.TrainingCategory">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Start Time</label>
+            <input class="form-control w-auto" type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.DateNow" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">End Time</label>
+            <input class="form-control w-auto" type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" />
+        </div>
+
         <div>
             <label form="training-availability">
                 Is this training Available?
