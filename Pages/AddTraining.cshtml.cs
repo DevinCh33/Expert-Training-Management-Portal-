@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ETMP.Data;
 using ETMP.Models;
+using System.Web.Mvc;
 
 namespace ETMP.Pages
 {
@@ -16,6 +17,7 @@ namespace ETMP.Pages
         public string? TrainingDescription { get; set; }
         public DateTime TrainingStartDateTime { get; set; }
         public DateTime TrainingEndDateTime { get; set; }
+        public string? TrainingMaterialFilePath { get; set; }
         public Boolean Availability { get; set; }
         public string IsAvailable { get; set; } = "";
 
@@ -57,6 +59,7 @@ namespace ETMP.Pages
             trainingModel.TrainingStartDateTime = TrainingStartDateTime;
             trainingModel.TrainingEndDateTime = TrainingEndDateTime;
             trainingModel.Availability = Availability;
+            trainingModel.TrainingMaterialFilePath = TrainingMaterialFilePath;
 
             if(Availability == true)
             {
