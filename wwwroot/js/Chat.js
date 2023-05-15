@@ -1,11 +1,11 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/ChatHub").build();
 document.getElementById("sendButton").disabled = true;
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("newMessage", function (user, message) {
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
 
-    li.textContent = `System says ${message}`;
+    li.textContent = `${user} says ${message}`;
 });
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
@@ -14,11 +14,7 @@ connection.start().then(function () {
 });
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.getElementById("userInput").value;
-    var message = "";
-    var pElements = document.getElementsByTagName("p");
-    for (var i = 0; i < pElements.length; i++) {
-        message += pElements[i].innerHTML + "\n";
-    }
+    var message = document.getElementById("messageInput").value;
     connection.invoke("SendMessage", user, message).catch(function (err) {
         return console.error(err.toString());
     });

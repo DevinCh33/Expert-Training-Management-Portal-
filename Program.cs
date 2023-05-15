@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using ETMP.Pages;
 using System.Configuration;
 using ETMP.Services;
-using ETMP.Hubs;
 using Microsoft.Extensions.Options;
+using ETMP.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +39,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 
@@ -83,6 +84,7 @@ using (var scope = app.Services.CreateScope())
     IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
 }
 
-app.MapHub<ChatHub>("/chatHub");
+
+app.MapHub<ChatHub>("/ChatHub");
 app.Run();
 

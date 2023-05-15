@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +15,8 @@ using Newtonsoft.Json;
 /*using iTextSharp.text;
 using iTextSharp.text.pdf;*/
 using System.Data.SqlClient;
+using PuppeteerSharp;
+using SendGrid.Helpers.Mail;
 /*using PuppeteerSharp;
 using MimeKit;*/
 /*using PdfSharp;
@@ -39,16 +41,20 @@ namespace ETMP.Pages
         public System.DateTime ReleaseDate { get; set; } = System.DateTime.Now;
         private readonly UserManager<ETMPUser> _userManager;
         private readonly SignInManager<ETMPUser> _signInManager;
+        private readonly ApplicationDbContext _context;
+        private readonly Services.IMailService _mailService;
 
         /*private readonly IUserStore<ETMPUser> _userStore;
         private readonly IUserEmailStore<ETMPUser> _emailStore;
         private readonly ILogger<UserEditTrainingModel> _logger;
         private readonly Services.IMailService _mailService;*/
 
-        public UserEditTrainingModel(UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
+        public UserEditTrainingModel(Services.IMailService mailService, ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
+            _mailService = mailService;
 
 
         }
@@ -97,9 +103,46 @@ namespace ETMP.Pages
                     edited.TrainingVenue = EditTraining.TrainingVenue;
                     edited.TrainingStartDateTime = EditTraining.TrainingStartDateTime;
                     edited.TrainingEndDateTime = EditTraining.TrainingEndDateTime;
+
+                    
+
+                    foreach (var role in _context.UserRoles.ToList())
+                    {
+                        foreach (var person in _context.Users.ToList())
+                        {
+                            if (person.Id == role.UserId)
+                            {
+                                if (role.RoleId == "15add88b-1619-4f5c-a9c6-8275e46026ce")
+                                {
+                                    Notification notiToAdmin = new Notification();
+                                    notiToAdmin.ToUserId = person.Id;
+                                    notiToAdmin.ToUserName = person.UserName;
+                                    notiToAdmin.NotificationHeader = "Training Venue and/or Training date changed";
+                                    notiToAdmin.NotificationBody = user.UserName + " with the id of " + user.Id + " has changed his/her training!\n" +
+                                    "Training Edited: " + edited.TrainingName + "\n" +
+                                    "New Training Venue " + edited.TrainingVenue + "\n" +
+                                    "New Training Start Date " + edited.TrainingStartDateTime + "\n" +
+                                    "New Training End Date " + edited.TrainingEndDateTime + "\n";
+
+                                    notiToAdmin.NotificationDate = DateTime.Now;
+                                    _context.Notification.Add(notiToAdmin);
+
+                                    string subj = notiToAdmin.NotificationHeader;
+                                    string Body = notiToAdmin.NotificationBody;
+                                    string toAdminEmail = person.Email;
+                                    var mailRequest = new MailRequest(toAdminEmail, subj, Body, null);
+                                    await _mailService.SendEmailAsync(mailRequest);
+
+                                }
+                            }
+                        }
+                    }
                 }
+
+                
             }
             var toSave = JsonConvert.SerializeObject(_trainingList);
+            
             user.PurchasedTraining = toSave;
 
             await _userManager.UpdateAsync(user);
