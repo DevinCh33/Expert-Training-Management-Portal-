@@ -100,9 +100,17 @@
 <script type="text/javascript" src="./js/paymentValidation.js"></script>
 
 
+
     <title>Payment Form</title>
 
     <h1 style="text-align: center;">Payment Details</h1>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+
     <div class="row">
         <div class="col-75">
             <div class="container-form">
@@ -158,7 +166,7 @@
                         </div>
 
                 </div>
-                <input type="hidden" name="Id" value="@Model.ToBuyId" />
+                <input type="hidden" name="Payment.ToBuyId" value="@Model.ToBuyId" />
                 <input type="submit" class="btn btn-primary" value="Submit" />
             </form>
             </div>
