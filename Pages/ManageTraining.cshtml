@@ -28,18 +28,9 @@
     .form-group textarea {
         width: 100%;
         box-sizing: border-box;
-     }
-
-
-    #training-action, #training-name{
-        margin-top: 20px;
     }
 
-    #price-range{
-        margin-top:10px;
-    }
-
-    input[type="text"], textarea, #training-options, #select-training {
+    #training-options {
         border-radius: 10px; 
         padding: 5px; 
         border: 1px solid #EEEEEE;
@@ -67,36 +58,47 @@
             <option value="edit-training">Edit Training</option>
         </select>
     </form>
+    
+    <br/>
 
-    <form id="add-training" method="post" enctype="multipart/form-data">
-        <label for="training-name">Training Name:</label>
-        <input type="text" id="training-name" placeholder="Training Name" required asp-for="Training.TrainingName"><br>
+    <form id="add-training" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="training-name">Training Name:</label>
+            <input class="form-control w-25" type="text" id="training-name" placeholder="Training Name" required asp-for="Training.TrainingName">
+        </div>
 
-        <div class="form-group">
-            <label for="price-range">Price Range: RM 
-                <input type="number" id="price-value" value="500" asp-for="Training.TrainingPrice">
+        <div class="mb-3">
+            <label class="form-label" for="price-range">
+                Price: RM
+                <input class="form-control" type="number" id="price-value" value="500" asp-for="Training.TrainingPrice">
             </label>
         </div>
 
-        <label for="training-venue">Training Venue:</label>
-        <input type="text" id="training-venue placeholder="Venue" required asp-for="Training.TrainingVenue"><br>
-
-        <label for="training-venue">Training Category:</label>
-        <input type="text" id="training-category" placeholder="Category" required asp-for="Training.TrainingCategory"><br>
+        <div class="mb-3">
+            <label class="form-label" for="training-venue">Training Venue:</label>
+            <input class="form-control w-25" type="text" id="training-venue" placeholder="Venue" required asp-for="Training.TrainingVenue">
+        </div>
         
-        <div>
-            <label class="form-label">Start Time</label><br/>
-            <input type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.DateNow"/><br />
-        </div>
-        <div>
-            <label class="form-label">End Time</label><br />
-            <input type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" /><br />
+        <div class="mb-3">
+            <label class="form-label" for="training-category">Training Category:</label>
+            <input class="form-control w-25" type="text" id="training-category" placeholder="Category" required asp-for="Training.TrainingCategory">
         </div>
 
-        <div class="form-group">
-            <label for="training-itinerary">Training Description:</label>
-            <textarea id="training-itinerary" placeholder="Enter the training description" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
+        <div class="mb-3">
+            <label class="form-label">Start Time</label><br/>
+            <input class="form-control w-auto" type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.DateNow"/>
         </div>
+
+        <div class="mb-3">
+            <label class="form-label">End Time</label><br />
+            <input class="form-control w-auto" type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" />
+        </div>
+
+        <div class="mb-3">
+            <label for="training-description">Training Description:</label>
+            <textarea class="form-control" id="training-description" placeholder="Enter the training description" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
+        </div>
+
         <div class="form-group">
             <label for="TrainingMaterial">Training Material:</label>
             <input type="file" name="TrainingMaterial" id="TrainingMaterial" accept=".zip">
@@ -107,9 +109,11 @@
                 <input type="radio" id="traininig-availability" value="false" asp-for="Training.Availability" /> No
             </label>
         </div>
+
         <div id="add-button" style="display:block;">
             <input type="button" onclick="onButtonClick()" value="Add Training">
         </div>
+
         <div id="confirmation-button" style="display:none;">
             <p>
                 Are you sure? 
@@ -129,9 +133,6 @@
                     </th>
                     <th>
                         Price
-                    </th>
-                    <th>
-                        Itinerary
                     </th>
                     <th>
                         Venue
@@ -167,9 +168,6 @@
                             @Html.DisplayFor(modelItem => item.TrainingPrice)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrainingItinerary)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.TrainingVenue)
                         </td>
                         <td>
@@ -197,8 +195,8 @@
                             @Html.DisplayFor(modelItem => item.TrainingDescription)
                         </td>
                         <td>
-                            <a asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a> 
-                            <a asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
+                            <a class="btn btn-primary" asp-page="./EditTraining" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-page="./DeleteTraining" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }

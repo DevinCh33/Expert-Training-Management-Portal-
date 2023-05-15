@@ -16,6 +16,9 @@ namespace ETMP.Pages
         [TempData]
         public string ErrorMessage { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int ToBuyId { get; set; }
+
         public PaymentFormModel(ApplicationDbContext context)
         {
             _context = context;
@@ -23,9 +26,8 @@ namespace ETMP.Pages
 
         public void OnGet(int Id)
         {
-            // Initialize the Payment model and other properties as needed
             Payment = new PaymentModel();
-            // ...
+            ToBuyId = Id;
         }
 
         public IActionResult OnPost()
@@ -82,9 +84,5 @@ namespace ETMP.Pages
         [Required(ErrorMessage = "Please enter the card's CVV")]
         [RegularExpression(@"^\d{3,4}$", ErrorMessage = "Please enter a valid CVV")]
         public string CVV { get; set; }
-
-        public string ToBuyId { get; set; }
-
-        // Add additional payment properties as needed
     }
 }
