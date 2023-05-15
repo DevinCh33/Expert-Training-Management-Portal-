@@ -39,7 +39,7 @@
           padding: 0 16px;
         }
 
-        .container {
+        .container-form {
           background-color: #f2f2f2;
           padding: 5px 20px 15px 20px;
           border: 1px solid lightgrey;
@@ -100,60 +100,65 @@
 <script type="text/javascript" src="./js/paymentValidation.js"></script>
 
 
+
     <title>Payment Form</title>
 
     <h1 style="text-align: center;">Payment Details</h1>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+
     <div class="row">
         <div class="col-75">
-            <div class="container">
+            <div class="container-form">
             <form id="detail" method="post" asp-page-handler="RedirectToDestination">
 
                     <div class="row">
                         <div class="col-50">
                             <h3>Billing Address</h3>
-                            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                            <input type="text" id="fname" name="fname" placeholder="John M. Doe">
-                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                            <input type="text" id="email" name="email" placeholder="john@example.com">
-                            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-                            <label for="city"><i class="fa fa-institution"></i> City</label>
-                            <input type="text" id="city" name="city" placeholder="New York">
-
-                            <div class="row">
-                                <div class="col-50">
-                                    <label for="state">State</label>
-                                    <input type="text" id="state" name="state" placeholder="NY">
-                                </div>
-                                <div class="col-50">
-                                    <label for="zip">Zip</label>
-                                    <input type="text" id="zip" name="zip" placeholder="10001">
-                                </div>
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fname" name="Payment.FullName" placeholder="John M. Doe">
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="Payment.Email" placeholder="john@example.com">
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="Payment.Address" placeholder="542 W. 15th Street">
+                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                        <input type="text" id="city" name="Payment.City" placeholder="New York">
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="Payment.State" placeholder="NY">
+                            </div>
+                            <div class="col-50">
+                                <label for="zip">Zip</label>
+                                <input type="text" id="zip" name="Payment.Zip" placeholder="10001">
                             </div>
                         </div>
-
-                        <div class="col-50">
-                            <h3>Payment</h3>
-                            <label for="fname">Accepted Cards</label>
-                            <div class="icon-container">
-                                <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                <i class="fa fa-cc-discover" style="color:orange;"></i>
+                    </div>
+                    <div class="col-50">
+                        <h3>Payment</h3>
+                        <label for="fname">Accepted Cards</label>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Name on Card</label>
+                        <input type="text" id="cname" name="Payment.CardName" placeholder="John More Doe">
+                        <label for="ccnum">Credit card number</label>
+                        <input asp-for="Payment.CardNumber" type="text" id="ccnum" name="Payment.CardNumber" placeholder="1111-2222-3333-4444">
+                        <label for="expmonth">Exp Month</label>
+                        <input asp-for="Payment.ExpiryMonth" type="text" id="expmonth" name="Payment.ExpiryMonth" placeholder="09">
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="expyear">Exp Year</label>
+                                <input type="text" id="expyear" name="Payment.ExpiryYear" placeholder="2023">
                             </div>
-                            <label for="cname">Name on Card</label>
-                            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-                            <label for="ccnum">Credit card number</label>
-                            <input asp-for="@Model.Payment.cardNo" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                            <label for="expmonth">Exp Month</label>
-                        <input asp-for="@Model.Payment.expiration" type="text" id="expmonth" name="expmonth" placeholder="September">
-
-                            <div class="row">
-                                <div class="col-50">
-                                    <label for="expyear">Exp Year</label>
-                                    <input type="text" id="expyear" name="expyear" placeholder="2018">
-                                </div>
-                                <div class="col-50">
+                            <div class="col-50">
                                     <label for="cvv">CVV</label>
                                 <input asp-for="@Model.Payment.CVV" type="text" id="cvv" name="cvv" placeholder="352">
                                 </div>
@@ -161,7 +166,7 @@
                         </div>
 
                 </div>
-                <input type="hidden" name="Id" value="@Model.ToBuyId" />
+                <input type="hidden" name="Payment.ToBuyId" value="@Model.ToBuyId" />
                 <input type="submit" class="btn btn-primary" value="Submit" />
             </form>
             </div>
