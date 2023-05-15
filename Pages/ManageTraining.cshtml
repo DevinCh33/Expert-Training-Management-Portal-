@@ -97,7 +97,10 @@
             <label for="training-itinerary">Training Description:</label>
             <textarea id="training-itinerary" placeholder="Enter the training description" rows="5" cols="30" required asp-for="Training.TrainingDescription"></textarea>
         </div>
-
+        <div class="form-group">
+            <label for="file">Training Material</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
         <div>
             <label form="training-availability">Is this training Available?
                 <input type="radio" id="traininig-availability" value="true" asp-for="Training.Availability" /> Yes

@@ -1,12 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using ETMP.Data;
-using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ETMP.Models
+﻿namespace ETMP.Models
 {
-    public class TrainingModel
+	public class TrainingModel
     {
         public int Id { get; set; }
         public string? TrainingName { get; set; }
@@ -21,8 +15,8 @@ namespace ETMP.Models
         public DateTime TrainingEndDateTime { get; set; }
         public TimeSpan Duration => TrainingEndDateTime - TrainingStartDateTime;
 
-    }
-
+		public string? TrainingMaterialFilePath { get; set; }
+	}
 }
 
 

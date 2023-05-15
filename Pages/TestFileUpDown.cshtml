@@ -4,18 +4,3 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="fileInput">Select ZIP file to upload:</label>
-        <input type="file" class="form-control-file" id="fileInput" name="fileInput">
-    </div>
-    <button type="submit" class="btn btn-primary">Upload</button>
-</form>
-
-@if (Model.FileName != null)
-{
-    <div class="mt-3">
-        <a href="~/Download/@Model.FileName">Download Uploaded File</a>
-    </div>
-}
