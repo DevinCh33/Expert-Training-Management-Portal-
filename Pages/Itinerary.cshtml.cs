@@ -107,7 +107,7 @@ namespace ETMP.Pages
                     }
                 }
 
-                string subject = "Test Email";
+                string subject = "Itinerary";
 
 
                 var body = "<html><table class=\"table\">";
