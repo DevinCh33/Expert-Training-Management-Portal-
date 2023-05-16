@@ -243,7 +243,7 @@
 		</div>
 		<label for="usr"><b>Currently Logged In as:</b></label>
 		<div><input type="text" id="userInput" ReadOnly value="@User.Identity.Name" /></div>
-		<label for="msg"><b>Message</b></label>@User.Identity.AuthenticationType
+		<label for="msg"><b>Message</b></label>
 		<textarea placeholder="Type message.." type="text" id="messageInput" name="msg" required></textarea>
 		<button type="button" class="btn" id="sendButton" value="Send Message">Send</button>
 		<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
