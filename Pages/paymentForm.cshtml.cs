@@ -17,56 +17,7 @@ namespace ETMP.Pages
 
         [TempData]
         public string ErrorMessage { get; set; }
-
-        /*
-        //Validation
-        [BindProperty]
-        public InputModel UserInput { get; set; }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "Name is required")]
-            public string FullName { get; set; }
-
-            [Required(ErrorMessage = "Email is required")]
-            [EmailAddress(ErrorMessage = "Invalid email format")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "Address is required")]
-            public string Address { get; set; }
-
-            [Required(ErrorMessage = "City is required")]
-            public string City { get; set; }
-
-            [Required(ErrorMessage = "State is required")]
-            public string State { get; set; }
-
-            [Required(ErrorMessage = "Zip Code is required")]
-            [Range(1000, 99999, ErrorMessage = "Enter valid zip code")]
-            public int ZipCode { get; set; }
-
-            [Required]
-            public string CardName { get; set; }
-
-            [Required]
-            [Range(1000000000000000, 9999999999999999, ErrorMessage = "Enter a valid card number")]
-            public int CardNum { get; set; }
-
-            [Required]
-            [Range(1, 12, ErrorMessage = "Enter a valid month")]
-            public int CardExpiryMonth { get; set; }
-
-            [Required]
-            [Range(1970, int.MaxValue, ErrorMessage = "Enter a valid year")]
-            public int CardExpiryYear { get; set; }
-
-            [Required]
-            [Range(100, 9999, ErrorMessage = "Enter a valid CVV")]
-            public int CardCVV { get; set; }
-        }
-        */
-
-
+        
         [BindProperty(SupportsGet = true)]
         public int ToBuyId { get; set; }
 
