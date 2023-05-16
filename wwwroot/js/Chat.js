@@ -8,7 +8,7 @@ connection.on("ReceiveMessage", function (user, message) {
     // Get the current time
     var currentTime = new Date().toLocaleTimeString();
 
-    li.textContent = `${user} : ${message} (${currentTime})`;
+    li.textContent = `${user} [${currentTime}] : ${message}`;
 });
 
 connection.start().then(function () {
