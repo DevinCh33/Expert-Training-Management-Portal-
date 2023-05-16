@@ -4,137 +4,151 @@
     ViewData["Title"] = "Payment Form";
 }
 
-    <style>
+<style>
 
-        * {
-          box-sizing: border-box;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        .row {
-          display: -ms-flexbox; /* IE10 */
-          display: flex;
-          -ms-flex-wrap: wrap; /* IE10 */
-          flex-wrap: wrap;
-          margin: 0 -16px;
-        }
+    .row {
+        display: -ms-flexbox; /* IE10 */
+        display: flex;
+        -ms-flex-wrap: wrap; /* IE10 */
+        flex-wrap: wrap;
+        margin: 0 -16px;
+    }
 
-        .col-25 {
-          -ms-flex: 25%; /* IE10 */
-          flex: 25%;
-        }
+    .col-25 {
+        -ms-flex: 25%; /* IE10 */
+        flex: 25%;
+    }
 
-        .col-50 {
-          -ms-flex: 50%; /* IE10 */
-          flex: 50%;
-        }
+    .col-50 {
+        -ms-flex: 50%; /* IE10 */
+        flex: 50%;
+    }
 
-        .col-75 {
-          -ms-flex: 75%; /* IE10 */
-          flex: 75%;
-        }
+    .col-75 {
+        -ms-flex: 75%; /* IE10 */
+        flex: 75%;
+    }
 
-        .col-25,
-        .col-50,
-        .col-75 {
-          padding: 0 16px;
-        }
+    .col-25,
+    .col-50,
+    .col-75 {
+        padding: 0 16px;
+    }
 
-        .container-form {
-          background-color: #f2f2f2;
-          padding: 5px 20px 15px 20px;
-          border: 1px solid lightgrey;
-          border-radius: 3px;
-        }
+    .container-form {
+        background-color: #f2f2f2;
+        padding: 5px 20px 15px 20px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+    }
 
-        input[type=text] {
-          width: 100%;
-          margin-bottom: 20px;
-          padding: 12px;
-          border: 1px solid #ccc;
-          border-radius: 3px;
-        }
+    label {
+        margin-top:15px;
+    }
 
-        label {
-          margin-bottom: 10px;
-          display: block;
-        }
+    input[type=text], input[type=number] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
 
-        .icon-container {
-          margin-bottom: 20px;
-          padding: 7px 0;
-          font-size: 24px;
-        }
+    span{
+        margin-bottom: 10px;
+    }
 
-        .btn {
+    label {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .icon-container {
+        margin-bottom: 20px;
+        padding: 7px 0;
+        font-size: 24px;
+    }
+
+    .btn {
         background-color: #4169E1;
-          color: white;
-          padding: 12px;
-          margin: 10px 0;
-          border: none;
-          width: 100%;
-          border-radius: 3px;
-          cursor: pointer;
-          font-size: 17px;
-        }
+        color: white;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+    }
 
         .btn:hover {
             background-color: #2196F3;
         }
 
-        a {
-          color: #2196F3;
-        }
+    a {
+        color: #2196F3;
+    }
 
-        hr {
-          border: 1px solid lightgrey;
-        }
+    hr {
+        border: 1px solid lightgrey;
+    }
 
-        span.price {
-          float: right;
-          color: grey;
-        }
-
-       
-        
-        </style>
+    span.price {
+        float: right;
+        color: grey;
+    }
+</style>
 <script type="text/javascript" src="./js/paymentValidation.js"></script>
 
 
 
-    <title>Payment Form</title>
+<title>Payment Form</title>
 
-    <h1 style="text-align: center;">Payment Details</h1>
+<h1 style="text-align: center;">Payment Details</h1>
     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
-    <div class="alert alert-danger">
-        @Model.ErrorMessage
-    </div>
+<div class="alert alert-danger">
+    @Model.ErrorMessage
+</div>
 }
 
-    <div class="row">
-        <div class="col-75">
-            <div class="container-form">
-            <form id="detail" method="post" asp-page-handler="RedirectToDestination">
+<div class="row">
+    <div class="col-75">
+        <div class="container-form">
+            <form id="detail" method="post">
 
-                    <div class="row">
-                        <div class="col-50">
-                            <h3>Billing Address</h3>
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Billing Address</h3>
                         <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="Payment.FullName" placeholder="John M. Doe">
+                        <input asp-for="Payment.FullName" type="text" id="fname" name="Payment.FullName" placeholder="John M. Doe">
+                        <span class="text-danger" asp-validation-for="Payment.FullName"></span>
+
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="Payment.Email" placeholder="john@example.com">
+                        <input asp-for="Payment.Email" type="text" id="email" name="Payment.Email" placeholder="john@example.com">
+                        <span class="text-danger" asp-validation-for="Payment.Email"></span>
+
                         <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="Payment.Address" placeholder="542 W. 15th Street">
+                        <input asp-for="Payment.Address" type="text" id="adr" name="Payment.Address" placeholder="542 W. 15th Street">
+                        <span class="text-danger" asp-validation-for="Payment.Address"></span>
+
                         <label for="city"><i class="fa fa-institution"></i> City</label>
-                        <input type="text" id="city" name="Payment.City" placeholder="New York">
+                        <input asp-for="Payment.City" type="text" id="city" name="Payment.City" placeholder="New York">
+                        <span class="text-danger" asp-validation-for="Payment.City"></span>
+
                         <div class="row">
                             <div class="col-50">
                                 <label for="state">State</label>
-                                <input type="text" id="state" name="Payment.State" placeholder="NY">
+                                <input asp-for="Payment.State" type="text" id="state" name="Payment.State" placeholder="NY">
+                                <span class="text-danger" asp-validation-for="Payment.State"></span>
                             </div>
                             <div class="col-50">
                                 <label for="zip">Zip</label>
-                                <input type="text" id="zip" name="Payment.Zip" placeholder="10001">
+                                <input asp-for="Payment.ZipCode" type="text" id="zip" name="Payment.ZipCode" placeholder="10001">
+                                <span class="text-danger" asp-validation-for="Payment.ZipCode"></span>
                             </div>
                         </div>
                     </div>
@@ -148,31 +162,39 @@
                             <i class="fa fa-cc-discover" style="color:orange;"></i>
                         </div>
                         <label for="cname">Name on Card</label>
-                        <input type="text" id="cname" name="Payment.CardName" placeholder="John More Doe">
+                        <input asp-for="Payment.CardName" type="text" id="cname" name="Payment.CardName" placeholder="John More Doe">
+                        <span class="text-danger" asp-validation-for="Payment.CardName"></span>
+
                         <label for="ccnum">Credit card number</label>
-                        <input asp-for="Payment.CardNumber" type="text" id="ccnum" name="Payment.CardNumber" placeholder="1111-2222-3333-4444">
+                        <input asp-for="Payment.CardNum" type="text" id="ccnum" name="Payment.CardNum" placeholder="1111-2222-3333-4444">
+                        <span class="text-danger" asp-validation-for="Payment.CardNum"></span>
+
                         <label for="expmonth">Exp Month</label>
-                        <input asp-for="Payment.ExpiryMonth" type="text" id="expmonth" name="Payment.ExpiryMonth" placeholder="09">
+                        <input asp-for="Payment.CardExpiryMonth" type="text" id="expmonth" name="Payment.CardExpiryMonth" placeholder="09">
+                        <span class="text-danger" asp-validation-for="Payment.CardExpiryMonth"></span>
+
                         <div class="row">
                             <div class="col-50">
                                 <label for="expyear">Exp Year</label>
-                                <input type="text" id="expyear" name="Payment.ExpiryYear" placeholder="2023">
+                                <input asp-for="Payment.CardExpiryYear" type="text" id="expyear" name="Payment.CardExpiryYear" placeholder="2023">
+                                <span class="text-danger" asp-validation-for="Payment.CardExpiryYear"></span>
                             </div>
                             <div class="col-50">
-                                    <label for="cvv">CVV</label>
-                                <input asp-for="@Model.Payment.CVV" type="text" id="cvv" name="cvv" placeholder="352">
-                                </div>
+                                <label for="cvv">CVV</label>
+                                <input asp-for="Payment.CardCVV" type="text" id="cvv" name="Payment.CardCVV" placeholder="352">
+                                <span class="text-danger" asp-validation-for="Payment.CardCVV"></span>
                             </div>
                         </div>
+                    </div>
 
                 </div>
                 <input type="hidden" name="Payment.ToBuyId" value="@Model.ToBuyId" />
-                <input type="submit" class="btn btn-primary" value="Submit" />
+                <input type="submit" class="btn btn-primary mt-5" value="Submit" />
             </form>
-            </div>
+        </div>
     </div>
 
-       
-    </div>
+
+</div>
 
 

@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\paymentForm.cshtml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\paymentForm.cshtml" />
     <Content Remove="wwwroot\NewFolder1\green_gradient_background.jpg" />
     <Content Remove="wwwroot\NewFolder\green_gradient_background.jpg" />
   </ItemGroup>
