@@ -8,13 +8,14 @@
 
 <style>
     body{
-        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://theengineeringmindset.com/wp-content/uploads/2019/05/Blueprint-background.png);
+        background-image: white;
+        /*background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://theengineeringmindset.com/wp-content/uploads/2019/05/Blueprint-background.png);*/
         background-repeat: no-repeat;
         background-size: cover;
     }
 
     .leftMargin{
-        margin-left: 50px;
+        margin-left: 0px;
     }
 
     .form-group {
@@ -31,9 +32,9 @@
     }
 
     #training-options {
-        border-radius: 10px; 
+        /*border-radius: 10px;*/
         padding: 5px; 
-        border: 1px solid #EEEEEE;
+        /*border: 1px solid black;*/
         table-layout: fixed;
     }
 
@@ -45,6 +46,10 @@
         color: black;
         border: 5px solid;
         border-color: black;
+    }
+
+    input[type="file"] {
+        display: none;
     }
 </style>
 
@@ -61,7 +66,7 @@
     
     <br/>
 
-    <form id="add-training" method="post">
+    <form id="add-training" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label" for="training-name">Training Name:</label>
             <input class="form-control w-25" type="text" id="training-name" placeholder="Training Name" required asp-for="Training.TrainingName">
@@ -100,18 +105,21 @@
         </div>
 
         <div class="form-group">
-            <label for="TrainingMaterial">Training Material:</label>
-            <input type="file" name="TrainingMaterial" id="TrainingMaterial" accept=".zip">
+            <label class="custom-file-upload btn btn-primary" for="TrainingMaterial" style="display: inline-block;">
+                <input type="file" name="TrainingMaterial" id="TrainingMaterial" accept=".zip" onchange="updateFileName()">
+                Upload Training Material
+            </label>
+            <span id="file-name" style="display: inline-block;"></span>
         </div>
         <div>
-            <label form="training-availability">Is this training Available?
+            <label form="training-availability">Make this training Available?
                 <input type="radio" id="traininig-availability" value="true" asp-for="Training.Availability" /> Yes
                 <input type="radio" id="traininig-availability" value="false" asp-for="Training.Availability" /> No
             </label>
         </div>
 
         <div id="add-button" style="display:block;">
-            <input type="button" onclick="onButtonClick()" value="Add Training">
+            <input class="btn btn-primary" type="button" onclick="onButtonClick()" value="Add Training">
         </div>
 
         <div id="confirmation-button" style="display:none;">
@@ -224,6 +232,10 @@
         });
     });
 
+    function updateFileName() {
+        var fileName = $('#TrainingMaterial').val().split('\\').pop();
+        $('#file-name').text(fileName);
+    }
 
     function onButtonClick(){
         var addButton = document.getElementById("add-button");
