@@ -87,8 +87,8 @@ using (var scope = app.Services.CreateScope())
     var userMgr = services.GetRequiredService<UserManager<ETMPUser>>();
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    //IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
-    //TrainingSeedData.InitTrainings(context).Wait();
+    IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
+    TrainingSeedData.InitTrainings(context).Wait();
 }
 
 

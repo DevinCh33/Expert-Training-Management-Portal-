@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using PuppeteerSharp;
 using ETMP.Data;
 using ETMP.Models;
 
@@ -12,11 +9,9 @@ namespace ETMP.Pages
     {
         public TrainingModel Training { get; set; }
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<TestFileUpDownModel> _logger;
-        public TestFileUpDownModel(ApplicationDbContext context, ILogger<TestFileUpDownModel> logger)
+        public TestFileUpDownModel(ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)

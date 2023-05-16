@@ -1,15 +1,9 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using ETMP.Data;
 using ETMP.Models;
-using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
 #nullable disable
 
