@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ETMP.Pages.Shared
+namespace ETMP.Pages
 {
-    public class testimonialModel : PageModel
+    public class TestimonialModel : PageModel
     {
         public void OnGet()
         {

@@ -136,7 +136,7 @@ namespace ETMP.Pages
                         {
                             if (person.Id == role.UserId)
                             {
-                                if (role.RoleId == "15add88b-1619-4f5c-a9c6-8275e46026ce")
+                                if (role.RoleId == "af6b77bf-e0f4-4df2-839b-b1c1fd3b62c4")
                                 {
                                     Notification notiToAdmin = new Notification();
                                     notiToAdmin.ToUserId = person.Id;

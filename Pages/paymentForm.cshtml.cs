@@ -32,6 +32,11 @@ namespace ETMP.Pages
             ToBuyId = Id;
         }
 
+        public RedirectToPageResult OnPostPayWithCash()
+        {
+            return RedirectToPage("PaymentReceipt");
+        }
+
         public IActionResult OnPost(int Id)
         {
             if (!ModelState.IsValid)
@@ -86,26 +91,5 @@ namespace ETMP.Pages
         [Required(ErrorMessage = "Please enter the card's CVV")]
         [RegularExpression(@"^\d{3}$", ErrorMessage = "Please enter the card's CVV")]
         public int? CardCVV { get; set; }
-        /*0
-        [Required(ErrorMessage = "Please enter your ZIP code")]
-        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Please enter a valid ZIP code")]
-        public string ZipCode { get; set; }
-
-        [Required(ErrorMessage = "Please enter your card number")]
-        [CreditCard(ErrorMessage = "Please enter a valid credit card number")]
-        public string CardNum { get; set; }
-
-        [Required(ErrorMessage = "Please enter the card's expiration month")]
-        [RegularExpression(@"^(0[1-9]|1[0-2])$", ErrorMessage = "Please enter a valid expiration month")]
-        public string CardExpiryMonth { get; set; }
-
-        [Required(ErrorMessage = "Please enter the card's expiration year")]
-        [RegularExpression(@"^\d{4}$", ErrorMessage = "Please enter a valid expiration year")]
-        public string CardExpiryYear { get; set; }
-
-        [Required(ErrorMessage = "Please enter the card's CVV")]
-        [RegularExpression(@"^\d{3,4}$", ErrorMessage = "Please enter a valid CVV")]
-        public string CardCVV { get; set; }
-        */
     }
 }

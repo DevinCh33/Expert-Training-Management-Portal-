@@ -26,12 +26,9 @@ namespace ETMP.Pages
 
         private readonly ApplicationDbContext _context;
 
-        private readonly ILogger<ManageTrainingModel> _logger;
-
-        public ManageTrainingModel(ApplicationDbContext context, ILogger<ManageTrainingModel> logger)
+        public ManageTrainingModel(ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         public DateTime DateNow
@@ -69,8 +66,6 @@ namespace ETMP.Pages
         public async Task<IActionResult> OnPostAddButton()
         {
             var file = Request.Form.Files.GetFile("TrainingMaterial");
-            _logger.LogInformation("Checking File Length");
-            _logger.LogInformation(file.Length.ToString());
 
             if (file != null && file.Length > 0)
             {
