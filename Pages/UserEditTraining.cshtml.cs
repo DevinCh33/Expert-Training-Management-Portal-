@@ -79,6 +79,23 @@ namespace ETMP.Pages
             return Page();
         }
 
+        public IActionResult Download(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return BadRequest();
+            }
+
+            var path = Path.Combine("uploads", filePath);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "application/octet-stream", Path.GetFileName(path));
+        }
+
         public IActionResult OnPostCancelButton()
         {
             return RedirectToPage("/UserListOfTraining");
