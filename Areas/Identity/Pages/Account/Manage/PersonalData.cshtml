@@ -21,11 +21,11 @@
     .row {
         display: flex; /* Use flexbox for row layout */
         justify-content: center; /* Center align row items */
-        margin-top: 50px; /* Add top margin */
+        /*margin-top: 50px;  Add top margin */
     }
 
     .col-md-6 {
-        width: 50%; /* Set column width */
+        width: 100%; /* Set column width */
         padding: 20px; /* Add padding */
         background-color: #ffffff; /* Set background color */
         border: 1px solid #dddddd; /* Add border */
@@ -62,9 +62,7 @@
         }
 </style>
 
-
-<h3>@ViewData["Title"]</h3>
-
+@*<h3>@ViewData["Title"]</h3>*@
 <div class="row">
     <div class="col-md-6">
         <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
@@ -72,11 +70,11 @@
             <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
         </p>
         <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="btn btn-primary" type="submit">Download</button>
+            <div>
+                <button class="btn btn-primary" style="display:inline-block; margin-right: 10px;" type="submit">Download</button>
+                <a id="delete" style="display:inline-block" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
+            </div>
         </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
-        </p>
     </div>
 </div>
 
