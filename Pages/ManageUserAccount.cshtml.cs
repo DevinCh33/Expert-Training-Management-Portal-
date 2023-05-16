@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace ETMP.Pages
 {
@@ -13,13 +16,15 @@ namespace ETMP.Pages
         private readonly UserManager<ETMPUser> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly ILogger<ManageUserAccountModel> _logger;
+        private readonly Services.IMailService _mailService;
 
-        public ManageUserAccountModel(ApplicationDbContext context, UserManager<ETMPUser> userManager, ILogger<ManageUserAccountModel> logger)
+        public ManageUserAccountModel(ApplicationDbContext context, UserManager<ETMPUser> userManager, ILogger<ManageUserAccountModel> logger, Services.IMailService mailService)
         {
             _context = context;
             _userList = new List<ETMPUser>();
             _userManager = userManager;
             _logger = logger;
+            _mailService = mailService;
         }
 
         public List<ETMPUser> UserList
@@ -84,6 +89,51 @@ namespace ETMP.Pages
                 filteredUsers = _userList;
             }
             return new JsonResult(filteredUsers);  
+        }
+
+        public async Task<IActionResult> OnPostDeleteAccountAsync(string userId)
+        {
+            System.Diagnostics.Debug.WriteLine("!!!!Delete Account: ");
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                // Handle the delete error
+                return BadRequest();
+            }
+
+            // Delete successful
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSendResetPasswordAsync(string userId)
+        {
+            System.Diagnostics.Debug.WriteLine("!!!!Reset Password: ");
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ResetPassword",
+                pageHandler: null,
+                values: new { area = "Identity", code },
+                protocol: Request.Scheme);
+
+            // Send the email
+            var request = new MailRequest(user.Email, "Reset Password", $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.", null);
+            await _mailService.SendEmailAsync(request);
+
+            // Password reset email sent successfully
+            return Page();
         }
     }
 }

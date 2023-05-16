@@ -10,7 +10,6 @@ namespace ETMP.Pages.Shared
 {
     public class NotificationsModel : PageModel
     {
-        
         public List<Notification> Notifications { get; set; }
         public readonly ApplicationDbContext _context;
         //newly added

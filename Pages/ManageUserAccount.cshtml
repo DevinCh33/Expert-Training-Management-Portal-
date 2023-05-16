@@ -1,9 +1,17 @@
-﻿@page
+﻿@page "/ManageUserAccount"
 @model ETMP.Pages.ManageUserAccountModel
 @{
     ViewData["Title"] = "ManageUserAccount";
 }
 @using ETMP.Models
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+public string GetAntiXsrfRequestToken()
+{
+    return Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken;
+}
+}
 
 <!--css for datatable-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
@@ -116,6 +124,8 @@
                 <th class="sortable" data-filter-column="gender">Gender</th>
                 <th class="sortable" data-filter-column="organisationName">Organisation</th>
                 <th class="sortable" data-filter-column="trainingTeamName">Training Team</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -140,12 +150,21 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.TrainingTeamName)
                     </td>
+                    <td>
+                        <form class="delete-account" data-user-id="@item.Id">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="reset-password" data-user-id="@item.Id">
+                            <button type="submit">Reset Password</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
 <script>
     function updateFilter() {
         var filterType = $('#filterType').val();
@@ -271,6 +290,65 @@
                 table.children('tbody').append(row);
             });
         });
+
+        // Delete Account AJAX request
+        $("form.delete-account").on("submit", function(e) {
+            e.preventDefault();
+            var userId = $(this).data("user-id");
+
+            // Show confirmation dialog with input field
+            var confirmationInput = prompt("To confirm deletion, type 'DELETE' in the input field:");
+            if (confirmationInput === "DELETE") {
+                deleteAccount(userId);
+            } else {
+                alert("Invalid confirmation input. Account deletion canceled.");
+            }
+        });
+
+        function deleteAccount(userId) {
+            $.ajax({
+                type: "POST",
+                url: "/ManageUserAccount?handler=DeleteAccount&userId=" + userId,
+                headers: {
+                    "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                },
+                success: function(response) {
+                    // Handle success response
+                    console.log("Account deleted successfully.");
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response
+                    console.log("An error occurred while deleting the account.");
+                }
+            });
+        }
+
+        // Reset Password AJAX request
+        $("form.reset-password").on("submit", function(e) {
+            e.preventDefault();
+            var userId = $(this).data("user-id");
+            sendResetPassword(userId);
+        });
+
+        function sendResetPassword(userId) {
+            $.ajax({
+                type: "POST",
+                url: "/ManageUserAccount?handler=SendResetPassword&userId=" + userId,
+                headers:{
+                    "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                },
+                success: function(response) {
+                    // Handle success response
+                    console.log("Reset password request sent successfully.");
+                    // You can perform any additional actions here if needed
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response
+                    console.log("An error occurred while sending the reset password request.");
+                    // You can display an error message or perform any other error handling here
+                }
+            });
+        }
     });
 </script>
 

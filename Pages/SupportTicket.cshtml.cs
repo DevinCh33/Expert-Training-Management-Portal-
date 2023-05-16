@@ -1,13 +1,8 @@
 using ETMP.Models;
-using Microsoft.AspNetCore.Identity;
 using ETMP.Data;
-using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
 
 namespace ETMP.Pages
 {
