@@ -2,10 +2,7 @@ using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ETMP.Pages;
-using System.Configuration;
 using ETMP.Services;
-using Microsoft.Extensions.Options;
 using ETMP.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -81,7 +78,7 @@ using (var scope = app.Services.CreateScope())
     var userMgr = services.GetRequiredService<UserManager<ETMPUser>>();
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    //IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
+    IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
     //TrainingSeedData.InitTrainings(context).Wait();
 }
 

@@ -14,7 +14,6 @@
         public DateTime TrainingStartDateTime { get; set; }
         public DateTime TrainingEndDateTime { get; set; }
         public TimeSpan Duration => TrainingEndDateTime - TrainingStartDateTime;
-
 		public string? TrainingMaterialFilePath { get; set; }
 	}
 }

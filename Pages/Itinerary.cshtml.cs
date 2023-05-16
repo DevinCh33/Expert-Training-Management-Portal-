@@ -152,8 +152,6 @@ namespace ETMP.Pages
                 return RedirectToPage("./Index");
             }
         }
-
-
     }
 }
 /*        public async Task<IActionResult> OnPostAsync()

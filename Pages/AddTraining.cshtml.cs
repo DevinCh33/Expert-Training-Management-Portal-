@@ -11,7 +11,6 @@ namespace ETMP.Pages
     {
         public string? TrainingName { get; set; }
         public int TrainingPrice { get; set; }
-        public string? TrainingItinerary { get; set; }
         public string? TrainingVenue { get; set; }
         public string? TrainingCategory { get; set; }
         public string? TrainingDescription { get; set; }
@@ -34,11 +33,6 @@ namespace ETMP.Pages
                 TrainingName = "TestTraining12334";
             }
 
-            if (string.IsNullOrEmpty(TrainingItinerary))
-            {
-                TrainingItinerary = "TrainingItinerary234545";
-            }
-
             if (string.IsNullOrEmpty(TrainingVenue))
             {
                 TrainingVenue = "TrainingVenue2231";
@@ -52,7 +46,6 @@ namespace ETMP.Pages
             TrainingModel trainingModel = new TrainingModel();
             trainingModel.TrainingName = TrainingName;
             trainingModel.TrainingPrice = TrainingPrice;
-            trainingModel.TrainingItinerary = TrainingItinerary;
             trainingModel.TrainingVenue = TrainingVenue;
             trainingModel.TrainingCategory = TrainingCategory;
             trainingModel.TrainingDescription = TrainingDescription;
