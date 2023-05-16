@@ -78,16 +78,7 @@ namespace ETMP.Pages
                 //Sends Email
                 await _mailService.SendEmailAsync(request);
 
-                //notification
-                
-                notification = new Notification();
-                notification.NotificationHeader = "Support ticket has been sent!";
-                notification.NotificationBody = "Your support ticket regarding " + _about + " has been sent!";
-                notification.NotificationDate = DateTime.Now;
-                _context.Notification.Add(notification);
-                _context.SaveChanges();
-               
-                //notifcation ended
+
 
 
                 return RedirectToPage("SupportTicket");
