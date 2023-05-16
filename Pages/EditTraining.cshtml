@@ -15,12 +15,16 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+
+    input[type="file"] {
+        display: none;
+    }
 </style>
 
 <div class="leftMargin">
     <h1>Training Editor</h1>
 
-    <form id="edit-training" method="post">
+    <form id="edit-training" method="post" enctype="multipart/form-data" asp-page="/EditTraining">
         <div class="mb-3"
             <label class="form-label"for="training-name">Training Name:</label>
             <input class="form-control w-25" type="text" id="training-name" placeholder="Training Name" required value="@Model.Training.TrainingName" asp-for="Training.TrainingName">
@@ -57,6 +61,16 @@
             <input class="form-control w-auto" type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" />
         </div>
 
+        <div class="form-group">
+            <label class="custom-file-upload btn btn-primary" for="TrainingMaterial" style="display: inline-block;">
+                <input type="file" name="TrainingMaterial" id="TrainingMaterial" accept=".zip" onchange="updateFileName()">
+                Upload Training Material
+            </label>
+            <span id="file-name" style="display: inline-block;"></span>
+        </div>
+
+        <a class="btn btn-primary mb-3" href="/@Model.Training.TrainingMaterialFilePath" download>Download File</a>
+
         <div>
             <label form="training-availability">
                 Is this training Available?
@@ -79,6 +93,11 @@
 </div>
 
 <script>
+    function updateFileName() {
+        var fileName = $('#TrainingMaterial').val().split('\\').pop();
+        $('#file-name').text(fileName);
+    }
+
     function onButtonClick() {
         var addButton = document.getElementById("edit-button");
         var confirmationButton = document.getElementById("confirmation-button");

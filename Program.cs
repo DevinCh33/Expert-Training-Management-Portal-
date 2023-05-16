@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ETMP.Services;
 using ETMP.Hubs;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,14 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
+    RequestPath = "/uploads",
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "application/octet-stream"
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -78,7 +87,7 @@ using (var scope = app.Services.CreateScope())
     var userMgr = services.GetRequiredService<UserManager<ETMPUser>>();
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
+    //IdentitySeedData.InitRolesAndAccount(context, userMgr, roleMgr).Wait();
     //TrainingSeedData.InitTrainings(context).Wait();
 }
 

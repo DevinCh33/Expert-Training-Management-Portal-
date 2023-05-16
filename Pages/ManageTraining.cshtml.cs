@@ -52,14 +52,31 @@ namespace ETMP.Pages
             return RedirectToPage("/EditTraining");
         }
 
+        public IActionResult Download(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return BadRequest();
+            }
+
+            var path = Path.Combine("uploads", filePath);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(Path.Combine("wwwroot", path), FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "application/octet-stream", Path.GetFileName(path));
+        }
+
         public async Task<IActionResult> OnPostAddButton()
         {
             var file = Request.Form.Files.GetFile("TrainingMaterial");
 
             if (file != null && file.Length > 0)
             {
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", file.FileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                var filePath = Path.Combine("uploads", file.FileName);
+                using (var stream = new FileStream(Path.Combine("wwwroot", filePath), FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
