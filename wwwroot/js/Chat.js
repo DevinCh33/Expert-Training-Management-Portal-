@@ -4,11 +4,11 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
-    var role = document.getElementById("roleInput");
+    /*var role = document.getElementById("roleInput").value;*/
     // Get the current time
     var currentTime = new Date().toLocaleTimeString();
 
-    li.textContent = `${user} [${role}]: ${message} (${currentTime})`;
+    li.textContent = `${user} : ${message} (${currentTime})`;
 });
 
 connection.start().then(function () {

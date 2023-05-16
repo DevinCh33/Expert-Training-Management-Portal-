@@ -14,7 +14,7 @@ namespace ETMP.Pages
         private readonly ApplicationDbContext _context;
 		private readonly UserManager<ETMPUser> _userManager;
 		private readonly SignInManager<ETMPUser> _signInManager;
-        public string? role { get; set; }
+        /*public string? role { get; set; }*/
 		public IndexModel(ILogger<IndexModel> logger,ApplicationDbContext context, UserManager<ETMPUser> userManager, SignInManager<ETMPUser> signInManager)
         {
             _logger = logger;
@@ -23,9 +23,8 @@ namespace ETMP.Pages
 			_signInManager = signInManager;
 		}
 
-        public async Task OnGetAsync()
-        {
-			var user = await _userManager.GetUserAsync(User);
+		/*public async Task OnGetAsync()*/
+		/*			var user = await _userManager.GetUserAsync(User);
             if (user != null) {
                 foreach (var _user in _context.UserRoles.ToList())
                 {
@@ -45,8 +44,12 @@ namespace ETMP.Pages
             else
             {
                 role = "Guest";
-            }
-
+            }*/
+		public void OnGet()
+        {
         }
+
+
+        
     }
 }
