@@ -1,3 +1,4 @@
+using System.IO;
 using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,12 @@ namespace ETMP.Pages
         private DateTime _dateNow;
         private readonly ApplicationDbContext _context;
         public Notification notification { get; set; }
-        
-        public EditTrainingModel(ApplicationDbContext context)
+        private readonly ILogger<EditTrainingModel> _logger;
+
+        public EditTrainingModel(ApplicationDbContext context, ILogger<EditTrainingModel> logger)
         {
             _context = context;
-
+            _logger = logger;
         }
         public DateTime DateNow
         {
@@ -49,14 +51,47 @@ namespace ETMP.Pages
             return RedirectToPage("/ManageTraining");
         }
 
+        public IActionResult Download(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return BadRequest();
+            }
+
+            var path = Path.Combine("uploads", filePath);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "application/octet-stream", Path.GetFileName(path));
+        }
+
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var trainingToUpdate = await _context.Trainings.FindAsync(id);
-            
+
+            var file = Request.Form.Files.GetFile("TrainingMaterial");
+            _logger.LogInformation("Checking File Length");
+            _logger.LogInformation(file.Length.ToString());
+
+            if (file != null && file.Length > 0)
+            {
+                var filePath = Path.Combine("uploads", file.FileName);
+                using (var stream = new FileStream(Path.Combine("wwwroot", filePath), FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                trainingToUpdate.TrainingMaterialFilePath = filePath;
+                _context.Entry(trainingToUpdate).Property(x => x.TrainingMaterialFilePath).IsModified = true; // Mark the property as modified
+
+            }
+
             if (await TryUpdateModelAsync<TrainingModel>(
                 trainingToUpdate,
                 "training",   // Prefix for form value.
-                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription, t => t.TrainingStartDateTime, t => t.TrainingEndDateTime))
+                  t => t.TrainingName, t => t.TrainingPrice, t => t.TrainingVenue, t => t.TrainingCategory, t => t.Availability, t => t.TrainingDescription, t => t.TrainingStartDateTime, t => t.TrainingEndDateTime, t => t.TrainingMaterialFilePath))
             {
                 //notification
                 
@@ -70,6 +105,7 @@ namespace ETMP.Pages
                     _context.SaveChanges();
                 }
                 //notification ended
+                // _context.SaveChangesAsync();
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./ManageTraining");
             }

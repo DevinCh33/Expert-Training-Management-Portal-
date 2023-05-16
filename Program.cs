@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ETMP.Services;
 using ETMP.Hubs;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,14 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
+    RequestPath = "/uploads",
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "application/octet-stream"
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
