@@ -9,14 +9,11 @@
 
 <h1>Edit Purchased Training : @Model.EditTraining.TrainingName</h1>
 
-
 <style>
     input[type="file"] {
         display: none;
     }
 </style>
-
-
 
 <hr />
 <div class="row">
@@ -36,14 +33,11 @@
             </div>
 
             <div class="form-group">
-                <div id="edit-button" style="display:block;">
+                <div id="edit-button" style="display:block;" class="mt-3">
                     <input type="button" class="btn btn-primary" onclick="onButtonClick()" value="Save">
                     <input type="button" class="btn btn-danger" @*id="download-btn"*@ id="Button1_Click" input type="submit" value="Download Itinerary">
-                    <input type="button" class="btn btn-danger" value="Download Training Material">
-                
-                    <a class="btn btn-danger" href="/EditTraining.TrainingMaterialFilePath" download>Download File</a>
+                    <a class="btn btn-danger" href="@Model.EditTraining.TrainingMaterialFilePath" download>Download File</a>
 
-                
                 </div>
                 <div id="confirmation-button" style="display:none;">
                     <p>
@@ -87,22 +81,7 @@
         addButton.style.display = "none";
         confirmationButton.style.display = "block";
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    
-
 </script>
-
-
-
-
-    
-
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

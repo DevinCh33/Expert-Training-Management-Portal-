@@ -96,6 +96,15 @@
         border: 1px solid lightgrey;
     }
 
+    .button-cash{
+        background-color: #28A745;
+    }
+
+    .button-cash:hover{
+        background-color: #13D49F;
+        color: #FFFFFF; 
+    }
+
     span.price {
         float: right;
         color: grey;
@@ -189,6 +198,9 @@
 
                 </div>
                 <input type="submit" class="btn btn-primary mt-5" value="Submit" />
+            </form>
+            <form method="post" asp-page-handler="PayWithCash">
+                <button type="submit" class="btn btn-default button-cash" asp-page="PaymentReceipt" value="Pay With Cash">Pay With Cash</button>
             </form>
         </div>
     </div>
