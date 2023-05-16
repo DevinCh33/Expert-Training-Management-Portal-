@@ -4,12 +4,16 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
+    var role = document.getElementById("roleInput");
+    // Get the current time
+    var currentTime = new Date().toLocaleTimeString();
 
-    li.textContent = `${user} says ${message}`;
+    li.textContent = `${user} [${role}]: ${message} (${currentTime})`;
 });
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
+}).catch(function (err)     {
     return console.error(err.toString());
 });
 document.getElementById("sendButton").addEventListener("click", function (event) {
