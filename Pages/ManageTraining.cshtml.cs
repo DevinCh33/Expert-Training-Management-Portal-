@@ -8,6 +8,8 @@ using ETMP.Models;
 using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 #nullable disable
 
@@ -30,9 +32,12 @@ namespace ETMP.Pages
 
         private readonly ApplicationDbContext _context;
 
-        public ManageTrainingModel(ApplicationDbContext context)
+        private readonly ILogger<IndexModel> _logger;
+
+        public ManageTrainingModel(ApplicationDbContext context, ILogger<IndexModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public DateTime DateNow
@@ -52,7 +57,9 @@ namespace ETMP.Pages
 
         public async Task<IActionResult> OnPostAddButton()
         {
-            var file = Request.Form.Files.FirstOrDefault();
+            var file = Request.Form.Files.GetFile("TrainingMaterial");
+            _logger.LogInformation("Checking File Length");
+            _logger.LogInformation(file.Length.ToString());
 
             if (file != null && file.Length > 0)
             {
@@ -61,12 +68,10 @@ namespace ETMP.Pages
                 {
                     await file.CopyToAsync(stream);
                 }
-
                 Training.TrainingMaterialFilePath = filePath;
             }
-            //await _context.SaveChangesAsync();
-            Training.TrainingItinerary = "To be Removed";
-            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingItinerary, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime, Training.TrainingMaterialFilePath });
+
+            return RedirectToPage("/AddTraining", new { Training.TrainingName, Training.TrainingPrice, Training.TrainingCategory, Training.TrainingVenue, Training.Availability, Training.TrainingDescription, Training.TrainingStartDateTime, Training.TrainingEndDateTime, Training.TrainingMaterialFilePath });
         }
 
         public IActionResult OnPostCancelButton()
@@ -76,15 +81,6 @@ namespace ETMP.Pages
 
         public async Task<IActionResult> OnGetAsync(string name)
         {
-            TrainingNames = await _context.Trainings
-                .Select(t => new SelectListItem
-                {
-                    Value = t.TrainingName,
-                    Text = t.TrainingName
-
-                })
-                .ToListAsync();
-
             EditTraining = _context.Trainings.ToList();
 
             _dateNow = DateTime.Now;

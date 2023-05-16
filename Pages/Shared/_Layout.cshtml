@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a asp-page="/Index" class="navbar-brand">
-                    <img src="images/ETMP_LOGO.png" title="ETMP" width="60" height="60"/>
+                    <img src="images/ETMP_LOGO.png" title="ETMP" width="60" height="60" />
                 </a>
                 <a class="navbar-brand">Expert Training Provider</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,20 +31,27 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/BrowseTraining">Browse for Training</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/PaymentForm">Payment Form</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Test1">Test1</a>
-                        </li
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Itinerary">Itinerary</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/PaymentReceipt">Receipt</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/ManageTraining">Manage Trainings</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Member"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/BrowseTraining">Browse for Training</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/UserListofTraining">View purchased Trainings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/SupportTicket">Need Help?</a>
+                                </li>
+                            }
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                     <a asp-page="/Notifications" style="text-decoration: none;">

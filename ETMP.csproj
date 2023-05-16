@@ -8,8 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\NewFolder1\green_gradient_background.jpg" />
-    <Content Remove="wwwroot\NewFolder\green_gradient_background.jpg" />
+    <Compile Remove="wwwroot\NewFolder1\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\NewFolder1\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\NewFolder1\**" />
+    <None Remove="wwwroot\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,8 +68,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\images\green_gradient_background.jpg" />
-    <None Include="wwwroot\NewFolder1\green_gradient_background.jpg" />
-    <None Include="wwwroot\NewFolder\green_gradient_background.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +75,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="obj\" />
     <Folder Include="Views\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
