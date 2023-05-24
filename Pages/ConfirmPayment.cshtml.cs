@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ETMP.Data;
 using ETMP.Models;
 using Newtonsoft.Json;
 using ETMP.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin, Member")]
     public class ConfirmPaymentModel : PageModel
     {
         [BindProperty]

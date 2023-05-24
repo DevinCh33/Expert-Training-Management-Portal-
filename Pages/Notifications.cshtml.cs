@@ -4,10 +4,12 @@ using ETMP.Models;
 using ETMP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETMP.Pages.Shared
 {
+    [Authorize(Roles = "Admin, Member")]
     public class NotificationsModel : PageModel
     {
         public List<Notification> Notifications { get; set; }

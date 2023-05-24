@@ -7,7 +7,7 @@
         public string? ToUserName { get; set; }
         public string? NotificationHeader { get; set; }
         public string? NotificationBody { get; set; }
-        public DateTime NotificationDate { get; set; } // add this line
+        public DateTime NotificationDate { get; set; }
         public Boolean? IsRead { get; set; }
     }
 }

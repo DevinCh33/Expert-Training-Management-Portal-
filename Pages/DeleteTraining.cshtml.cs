@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ETMP.Data;
 using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteTrainingModel : PageModel
     {
         private readonly ApplicationDbContext _context;

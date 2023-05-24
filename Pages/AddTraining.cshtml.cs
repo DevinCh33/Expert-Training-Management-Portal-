@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ETMP.Data;
 using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin")]
     [BindProperties(SupportsGet = true)]
     public class AddTrainingModel : PageModel
     {

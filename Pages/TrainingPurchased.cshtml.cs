@@ -1,14 +1,14 @@
 using ETMP.Data;
 using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Asn1.X509;
-using PuppeteerSharp;
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin, Member")]
     [BindProperties(SupportsGet = true)]
     public class TrainingPurchasedModel : PageModel
     {

@@ -17,8 +17,8 @@ namespace ETMP.Data
             training.TrainingVenue = "HotelA";
             training.Availability = true;
             training.TrainingDescription = "Training Description";
-            training.TrainingStartDateTime = new DateTime(2023, 10, 10);
-            training.TrainingEndDateTime = new DateTime(2023, 10, 11);
+            training.TrainingStartDateTime = new DateTime(2023, 5, 19);
+            training.TrainingEndDateTime = new DateTime(2023, 5, 19);
             context.Trainings.Add(training);
 
 			TrainingModel training2 = new TrainingModel();
@@ -28,8 +28,8 @@ namespace ETMP.Data
 			training2.TrainingVenue = "HotelB";
 			training2.Availability = true;
 			training2.TrainingDescription = "Training Description";
-			training2.TrainingStartDateTime = new DateTime(2023, 10, 10);
-			training2.TrainingEndDateTime = new DateTime(2023, 10, 11);
+			training2.TrainingStartDateTime = new DateTime(2023, 5, 25);
+			training2.TrainingEndDateTime = new DateTime(2023, 5, 25);
 			context.Trainings.Add(training2);
 
 			TrainingModel training3 = new TrainingModel();
@@ -39,8 +39,8 @@ namespace ETMP.Data
 			training3.TrainingVenue = "HotelC";
 			training3.Availability = true;
 			training3.TrainingDescription = "Training Description";
-			training3.TrainingStartDateTime = new DateTime(2023, 10, 10);
-			training3.TrainingEndDateTime = new DateTime(2023, 10, 11);
+			training3.TrainingStartDateTime = new DateTime(2023, 6, 10);
+			training3.TrainingEndDateTime = new DateTime(2023, 6, 11);
 			context.Trainings.Add(training3);
 
 			TrainingModel training4 = new TrainingModel();

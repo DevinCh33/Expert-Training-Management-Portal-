@@ -67,6 +67,78 @@ namespace ETMP.Data
                     await userManager.AddToRoleAsync(user, memberRole);
                 }
             }
+
+            if (await userManager.FindByNameAsync("user1@domain") == null)
+            {
+                var user = new ETMPUser
+                {
+                    UserName = "user1@domain",
+                    Email = "user1@domain",
+                    FirstName = "AAA",
+                    LastName = "BBB",
+                    Gender = "CCC",
+                    OrganisationName = "DDD",
+                    TrainingTeamName = "EEE",
+                    PasswordHash = hasher.HashPassword(null, internalPassword),
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    //await userManager.AddPasswordAsync(user, internalPassword);
+                    await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await userManager.AddToRoleAsync(user, memberRole);
+                }
+            }
+
+            if (await userManager.FindByNameAsync("user2@domain") == null)
+            {
+                var user = new ETMPUser
+                {
+                    UserName = "user2@domain",
+                    Email = "user2@domain",
+                    FirstName = "EEE",
+                    LastName = "DDD",
+                    Gender = "CCC",
+                    OrganisationName = "BBB",
+                    TrainingTeamName = "AAA",
+                    PasswordHash = hasher.HashPassword(null, internalPassword),
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    //await userManager.AddPasswordAsync(user, internalPassword);
+                    await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await userManager.AddToRoleAsync(user, memberRole);
+                }
+            }
+
+            if (await userManager.FindByNameAsync("eltong85@gmail.com") == null)
+            {
+                var user = new ETMPUser
+                {
+                    UserName = "eltong85@gmail.com",
+                    Email = "eltong85@gmail.com",
+                    FirstName = "Eiton",
+                    LastName = "Ng",
+                    Gender = "Male",
+                    OrganisationName = "Swinburne",
+                    TrainingTeamName = "ETMP",
+                    PasswordHash = hasher.HashPassword(null, internalPassword),
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    //await userManager.AddPasswordAsync(user, internalPassword);
+                    await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await userManager.AddToRoleAsync(user, memberRole);
+                }
+            }
         }
     }
 }

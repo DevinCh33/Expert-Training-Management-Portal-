@@ -6,18 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Threading.Tasks;
-using System.Net.Mail;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System.Text;
-using MimeKit;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static iTextSharp.text.pdf.AcroFields;
 
 
 namespace ETMP.Pages
@@ -59,20 +47,6 @@ namespace ETMP.Pages
             set { _trainingList = value; }
         }
 
-        
-
-
-        /*        public async Task OnGetAsync()
-                {
-                    var user = await _userManager.GetUserAsync(User);
-                    if (user.PurchasedTraining != null)
-                    {
-                        _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
-                    }
-
-
-                }*/
-
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -81,9 +55,6 @@ namespace ETMP.Pages
             {
                 _trainingList = JsonConvert.DeserializeObject<List<TrainingModel>>(user.PurchasedTraining);
             }
-
-
-
 
             if (!ModelState.IsValid)
             {
@@ -108,8 +79,6 @@ namespace ETMP.Pages
                 }
 
                 string subject = "Itinerary";
-
-
                 var body = "<html><table class=\"table\">";
                 body += "<thead>";
                 body += "<tr>";
@@ -138,13 +107,9 @@ namespace ETMP.Pages
                 body += "</tbody>";
                 body += "</table></html>";
 
-
-
-
                 // Close the HTML tags
                 /*body += "</pre></body></html>";*/
                 var request = new MailRequest(user.Email, subject, body , null);
-                
                 // Send the email
                 await _mailService.SendEmailAsync(request);
 

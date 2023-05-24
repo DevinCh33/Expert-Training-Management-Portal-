@@ -1,12 +1,12 @@
 using ETMP.Data;
-using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin, Member")]
     public class PaymentFormModel : PageModel
     {
         private readonly ApplicationDbContext _context;

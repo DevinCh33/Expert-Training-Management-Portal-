@@ -95,8 +95,8 @@ public string GetAntiXsrfRequestToken()
 
 <div>
     <div>
-        <input class="input-simplified" type="text" id="myInput" onkeyup="searchTable()" placeholder="Search account...">
-        <button type="button" class="search_button" id="searchButton">Search</button>
+        <input class="input-simplified" type="text" id="myInput" placeholder="Search account...">
+        <button type="button" class="search_button" id="searchButton" onclick="searchTable()">Search</button>
     </div>
     <div class="mt-2">
         <label class="m-3">
@@ -151,13 +151,13 @@ public string GetAntiXsrfRequestToken()
                         @Html.DisplayFor(modelItem => item.TrainingTeamName)
                     </td>
                     <td>
-                        <form class="delete-account" data-user-id="@item.Id">
-                            <button type="submit">Delete</button>
+                        <form class="reset-password" data-user-id="@item.Id">
+                            <button type="submit" class="btn-primary">Reset Password</button>
                         </form>
                     </td>
                     <td>
-                        <form class="reset-password" data-user-id="@item.Id">
-                            <button type="submit">Reset Password</button>
+                        <form class="delete-account" data-user-id="@item.Id">
+                            <button type="submit" class="btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -217,15 +217,39 @@ public string GetAntiXsrfRequestToken()
                     console.log("Gender: " + user.gender);
                     console.log("Organisation: " + user.organisationName);
                     console.log("Training Team: " + user.trainingTeamName);
+                    
+                    // Create the form element for reset password
+                    var deleteAccountForm = $('<form>', {
+                        class: 'delete-account',
+                        'data-user-id': user.id
+                    }).append($('<button>', {
+                        class: 'btn-danger',
+                        type: 'submit',
+                        text: 'Delete'
+                    }));
+
+                    // Create the form element for reset password
+                    var resetPasswordForm = $('<form>', {
+                        class: 'reset-password',
+                        'data-user-id': user.id
+                    }).append($('<button>', {
+                        class: 'btn-primary',
+                        type: 'submit',
+                        text: 'Reset Password'
+                    }));
+
+                    // Append the elements to the table row
                     $('#userTable tbody').append(
-                        '<tr>' +
-                        '<td>' + user.email + '</td>' +
-                        '<td>' + user.firstName + '</td>' +
-                        '<td>' + user.lastName + '</td>' +
-                        '<td>' + user.gender + '</td>' +
-                        '<td>' + user.organisationName + '</td>' +
-                        '<td>' + user.trainingTeamName + '</td>' +
-                        '</tr>'
+                        $('<tr>').append(
+                            $('<td>').text(user.email),
+                            $('<td>').text(user.firstName),
+                            $('<td>').text(user.lastName),
+                            $('<td>').text(user.gender),
+                            $('<td>').text(user.organisationName),
+                            $('<td>').text(user.trainingTeamName),
+                            $('<td>').append(resetPasswordForm),
+                            $('<td>').append(deleteAccountForm)
+                        )
                     );
                 }
             },
@@ -262,9 +286,7 @@ public string GetAntiXsrfRequestToken()
     $('#searchButton').click(function () {
         searchTable();
     });
-</script>
 
-<script>
     $(document).ready(function () {
         // Add click event listener to sortable headers
         $('.sortable').click(function () {
@@ -292,7 +314,7 @@ public string GetAntiXsrfRequestToken()
         });
 
         // Delete Account AJAX request
-        $("form.delete-account").on("submit", function(e) {
+        $(document).on("submit", "form.delete-account", function (e) {
             e.preventDefault();
             var userId = $(this).data("user-id");
 
@@ -305,6 +327,13 @@ public string GetAntiXsrfRequestToken()
             }
         });
 
+        // Reset Password AJAX request
+        $(document).on("submit", "form.reset-password", function (e) {
+            e.preventDefault();
+            var userId = $(this).data("user-id");
+            sendResetPassword(userId);
+        });
+
         function deleteAccount(userId) {
             $.ajax({
                 type: "POST",
@@ -315,6 +344,11 @@ public string GetAntiXsrfRequestToken()
                 success: function(response) {
                     // Handle success response
                     console.log("Account deleted successfully.");
+
+                    // Update the table by filtering out the deleted user
+                    var filterColumn = $('#filterType').val();
+                    var filterValue = $('#filterOptions').val();
+                    filterTable(filterColumn, filterValue);
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
@@ -322,13 +356,6 @@ public string GetAntiXsrfRequestToken()
                 }
             });
         }
-
-        // Reset Password AJAX request
-        $("form.reset-password").on("submit", function(e) {
-            e.preventDefault();
-            var userId = $(this).data("user-id");
-            sendResetPassword(userId);
-        });
 
         function sendResetPassword(userId) {
             $.ajax({
@@ -340,12 +367,10 @@ public string GetAntiXsrfRequestToken()
                 success: function(response) {
                     // Handle success response
                     console.log("Reset password request sent successfully.");
-                    // You can perform any additional actions here if needed
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
                     console.log("An error occurred while sending the reset password request.");
-                    // You can display an error message or perform any other error handling here
                 }
             });
         }

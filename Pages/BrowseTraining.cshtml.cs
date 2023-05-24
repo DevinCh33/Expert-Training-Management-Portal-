@@ -25,22 +25,15 @@ namespace ETMP.Pages
         {
             _context = context;
             //newly added
-            
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-
         public async Task<IActionResult> OnGetAsync()
         {
             Trainings = await _context.Trainings.ToListAsync();
-
-
             return Page();
         }
-
-        
-        
     }
 }
 

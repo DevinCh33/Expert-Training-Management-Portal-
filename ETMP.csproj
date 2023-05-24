@@ -19,6 +19,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\PaymentReceipt.cshtml.cs" />
+    <Compile Remove="Pages\Shared\completePayment.cshtml.cs" />
+    <Compile Remove="Pages\TestFileUpDown.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\PaymentReceipt.cshtml" />
+    <Content Remove="Pages\Shared\completePayment.cshtml" />
+    <Content Remove="Pages\TestFileUpDown.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\style.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <COMReference Include="{bee4bfec-6683-3e67-9167-3c0cbc68f40a}">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>4</VersionMinor>
@@ -40,6 +56,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="JestDotnet" Version="1.4.1" />
     <PackageReference Include="MailKit" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.14" />

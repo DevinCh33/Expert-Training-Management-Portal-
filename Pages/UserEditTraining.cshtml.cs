@@ -4,26 +4,11 @@ using ETMP.Data;
 using ETMP.Models;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
-
-
-/*using iTextSharp.text;
-using iTextSharp.text.pdf;*/
-/*using PuppeteerSharp;
-using MimeKit;*/
-/*using PdfSharp;
-using PdfSharp.Pdf;*/
-/*using PdfSharp.Drawing;
-using Syncfusion.HtmlConverter;
-using Syncfusion.Pdf;*/
-
-
-/*using System.Web.Mvc;
-using Rotativa;*/
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin, Member")]
     public class UserEditTrainingModel : PageModel
     {
         [BindProperty]

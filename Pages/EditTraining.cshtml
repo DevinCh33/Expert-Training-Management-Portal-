@@ -53,15 +53,15 @@
 
         <div class="mb-3">
             <label class="form-label">Start Time</label>
-            <input class="form-control w-auto" type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.DateNow" />
+            <input class="form-control w-auto" type="datetime-local" id="StartFrom" asp-for="Training.TrainingStartDateTime" value="@Model.Training.TrainingStartDateTime.ToString("yyyy-MM-ddTHH:mm")" />
         </div>
 
         <div class="mb-3">
             <label class="form-label">End Time</label>
-            <input class="form-control w-auto" type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.DateNow" />
+            <input class="form-control w-auto" type="datetime-local" id="EndOn" asp-for="Training.TrainingEndDateTime" value="@Model.Training.TrainingEndDateTime.ToString("yyyy-MM-ddTHH:mm")" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label class="custom-file-upload btn btn-primary" for="TrainingMaterial" style="display: inline-block;">
                 <input type="file" name="TrainingMaterial" id="TrainingMaterial" accept=".zip" onchange="updateFileName()">
                 Upload Training Material

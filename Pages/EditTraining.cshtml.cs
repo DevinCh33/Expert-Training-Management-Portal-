@@ -1,14 +1,14 @@
-using System.IO;
 using ETMP.Data;
 using ETMP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace ETMP.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class EditTrainingModel : PageModel
     {
         public TrainingModel Training { get; set; }
@@ -73,8 +73,6 @@ namespace ETMP.Pages
             var trainingToUpdate = await _context.Trainings.FindAsync(id);
 
             var file = Request.Form.Files.GetFile("TrainingMaterial");
-            _logger.LogInformation("Checking File Length");
-            _logger.LogInformation(file.Length.ToString());
 
             if (file != null && file.Length > 0)
             {
