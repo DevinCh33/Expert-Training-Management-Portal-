@@ -176,7 +176,6 @@ namespace ETMP.Pages
 
                     user.PurchasedTraining = JsonConvert.SerializeObject(_trainingModels);
                     userdata = user.PurchasedTraining;
-                    //
                     
 
                     await _userManager.UpdateAsync(user);

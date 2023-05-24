@@ -199,8 +199,8 @@
                 </div>
                 <input type="submit" class="btn btn-primary mt-5" value="Submit" />
             </form>
-            <form method="post" asp-page-handler="PayWithCash">
-                <button type="submit" class="btn btn-default button-cash" asp-page="PaymentReceipt" value="Pay With Cash">Pay With Cash</button>
+            <form method="post" asp-page-handler="OnPostPayWithCash">
+                <button type="submit" class="btn btn-default button-cash" asp-for="PaymentMethod" value="Pay With Cash">Pay With Cash</button>
             </form>
         </div>
     </div>
