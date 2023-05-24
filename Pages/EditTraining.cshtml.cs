@@ -73,9 +73,6 @@ namespace ETMP.Pages
             var trainingToUpdate = await _context.Trainings.FindAsync(id);
 
             var file = Request.Form.Files.GetFile("TrainingMaterial");
-            _logger.LogInformation("Checking File Length");
-            _logger.LogInformation(file.Length.ToString());
-
             if (file != null && file.Length > 0)
             {
                 var filePath = Path.Combine("uploads", file.FileName);
