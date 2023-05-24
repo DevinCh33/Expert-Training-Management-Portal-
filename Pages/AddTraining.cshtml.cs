@@ -63,7 +63,8 @@ namespace ETMP.Pages
             }
 
             _context.Trainings.Add(trainingModel);
-            
+            await _context.SaveChangesAsync();
+
             return Page();
             
 

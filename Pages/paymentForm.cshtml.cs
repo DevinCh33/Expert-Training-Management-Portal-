@@ -1,5 +1,6 @@
 using ETMP.Data;
 using ETMP.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -13,12 +14,14 @@ namespace ETMP.Pages
         private readonly Services.IMailService _mailService;
         private TrainingModel _training;
         private string _paymentMethod;
+        private readonly UserManager<ETMPUser> _userManager;
 
-        public PaymentFormModel(Services.IMailService mailService, ApplicationDbContext context)
+        public PaymentFormModel(Services.IMailService mailService, ApplicationDbContext context, UserManager<ETMPUser> userManager)
         {
             _mailService = mailService;
             _context = context;
             _paymentMethod = "Credit Card";
+            _userManager = userManager;
         }
 
         //Before asp validation addition
@@ -122,18 +125,31 @@ namespace ETMP.Pages
                 return Page();
             }
 
+            //Saves card info
+
+            PaymentModel paymentInfo = new PaymentModel();
+            long card_number;
+            long.TryParse(Payment.CardNum, out card_number);
+            paymentInfo.cType = "Credit Card";
+            paymentInfo.username = Payment.CardName;
+            paymentInfo.cardNo = card_number;
+            paymentInfo.expiration = Payment.CardExpiryMonth.ToString() + "/" + Payment.CardExpiryYear.ToString();
+            paymentInfo.CVV = Payment.CardCVV;
+
+            await _context.Payment.AddAsync(paymentInfo);
+            await _context.SaveChangesAsync();
+
             var selectedTraining = _context.Trainings.FirstOrDefault(t => t.Id == Id);
             _training = selectedTraining;
 
-            // Perform payment processing and save to the database
-            // ...
+            var user = await _userManager.GetUserAsync(User);
             int length = Payment.CardNum.Length;
             string maskedCardNum = new string('*', length - 4) + Payment.CardNum.Substring(length - 4);
 
             string subject = "Payment Receipt for - " + _training.TrainingName;
             string body = "<strong>Training Name: </strong>" + _training.TrainingName + "<br/><br/><strong>Price Paid: </strong> RM" + _training.TrainingPrice + "<br/><br/><strong>Name of Buyer: </strong>" + Payment.CardName + "<br/><br/><strong>Card Number: </strong>" + maskedCardNum + "<br/><br/><strong>Payment Method: </strong>" + _paymentMethod;
 
-            string toEmail = "devinchp@gmail.com";
+            string toEmail = user.Email;
 
             var request = new MailRequest(toEmail, subject, body, null);
 
