@@ -139,33 +139,39 @@ namespace ETMP.Pages
                     edited.TrainingStartDateTime = EditTraining.TrainingStartDateTime;
                     edited.TrainingEndDateTime = EditTraining.TrainingEndDateTime;
 
-                    foreach (var role in _context.UserRoles.ToList())
+
+                    foreach (var role in _context.Roles.ToList())
                     {
-                        foreach (var person in _context.Users.ToList())
+                        if (role.Name == "Admin")
                         {
-                            if (person.Id == role.UserId)
+                            foreach (var userRole in _context.UserRoles.ToList())
                             {
-                                if (role.RoleId == "af6b77bf-e0f4-4df2-839b-b1c1fd3b62c4")
+                                if (role.Id == userRole.RoleId)
                                 {
-                                    Notification notiToAdmin = new Notification();
-                                    notiToAdmin.ToUserId = person.Id;
-                                    notiToAdmin.ToUserName = person.UserName;
-                                    notiToAdmin.NotificationHeader = "Training Venue and/or Training date changed";
-                                    notiToAdmin.NotificationBody = user.UserName + " with the id of " + user.Id + " has changed his/her training!\n" +
-                                    "Training Edited: " + edited.TrainingName + "\n" +
-                                    "New Training Venue " + edited.TrainingVenue + "\n" +
-                                    "New Training Start Date " + edited.TrainingStartDateTime + "\n" +
-                                    "New Training End Date " + edited.TrainingEndDateTime + "\n";
+                                    foreach (var person in _context.Users.ToList())
+                                    {
+                                        if (person.Id == userRole.UserId)
+                                        {
+											Notification notiToAdmin = new Notification();
+											notiToAdmin.ToUserId = person.Id;
+											notiToAdmin.ToUserName = person.UserName;
+											notiToAdmin.NotificationHeader = "Training Venue and/or Training date changed";
+											notiToAdmin.NotificationBody = user.UserName + " with the id of " + user.Id + " has changed his/her training!\n" +
+											"Training Edited: " + edited.TrainingName + "\n" +
+											"New Training Venue " + edited.TrainingVenue + "\n" +
+											"New Training Start Date " + edited.TrainingStartDateTime + "\n" +
+											"New Training End Date " + edited.TrainingEndDateTime + "\n";
 
-                                    notiToAdmin.NotificationDate = DateTime.Now;
-                                    _context.Notification.Add(notiToAdmin);
+											notiToAdmin.NotificationDate = DateTime.Now;
+											_context.Notification.Add(notiToAdmin);
 
-                                    string subj = notiToAdmin.NotificationHeader;
-                                    string Body = notiToAdmin.NotificationBody;
-                                    string toAdminEmail = person.Email;
-                                    var mailRequest = new MailRequest(toAdminEmail, subj, Body, null);
-                                    await _mailService.SendEmailAsync(mailRequest);
-
+											string subj = notiToAdmin.NotificationHeader;
+											string Body = notiToAdmin.NotificationBody;
+											string toAdminEmail = person.Email;
+											var mailRequest = new MailRequest(toAdminEmail, subj, Body, null);
+											await _mailService.SendEmailAsync(mailRequest);
+										}
+                                    }
                                 }
                             }
                         }
