@@ -23,6 +23,28 @@ namespace ETMP.Pages
 			_signInManager = signInManager;
 		}
 
+		/*public async Task OnGetAsync()*/
+		/*			var user = await _userManager.GetUserAsync(User);
+            if (user != null) {
+                foreach (var _user in _context.UserRoles.ToList())
+                {
+                    if (user.Id == _user.UserId)
+                    {
+                        if (_user.RoleId == "af6b77bf-e0f4-4df2-839b-b1c1fd3b62c4")
+                        {
+                            role = "Admin";
+                        }
+                        else
+                        {
+                            role = "Member";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                role = "Guest";
+            }*/
 		public void OnGet()
         {
         }

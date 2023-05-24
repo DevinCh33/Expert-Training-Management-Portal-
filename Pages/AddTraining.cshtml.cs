@@ -62,13 +62,9 @@ namespace ETMP.Pages
             {
                 IsAvailable = "No";
             }
-            notification = new Notification();
-            notification.NotificationHeader = "Training added";
-            notification.NotificationBody = "Training " + trainingModel.TrainingName + " is added";
-            notification.NotificationDate = DateTime.Now;
-            _context.Notification.Add(notification);
+
             _context.Trainings.Add(trainingModel);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Page();
             
 
